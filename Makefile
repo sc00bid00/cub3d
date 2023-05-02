@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 16:11:38 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 21:10:39 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,13 @@ URL_MLX42 = https://github.com/codam-coding-college/MLX42
 LIBFT = $(LIB_DIR)libft
 LIBFT_LNK = -l ft -L $(LIBFT)
 
-LIBGLFW = "/Users/$(USER)/.brew/opt/glfw/lib"
+LIBGLFW_HOME = "/usr/local/opt/glfw"
+LIBGLFW_SCHOOL = "/Users/$(USER)/.brew/opt/glfw/lib"
+ifeq ($(shell(test -d $(LIBGLFW_SCHOOL))), true)
+	LIBGLFW = $(LIBGLFW_SCHOOL)
+else
+	LIBGLFW = $(LIBGLFW_HOME)
+endif
 LIBGLFW_LNK = -l glfw -L$(LIBGLFW)
 
 LIBMLX	= $(LIB_DIR)MLX42
