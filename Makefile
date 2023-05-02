@@ -6,9 +6,21 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 15:24:44 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 15:36:02 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#COLORS-----------------------------------------------------------------------#
+BRED	=	\033[1;31m
+BGREEN	=	\033[1;32m
+BYELLOW	=	\033[1;33m
+BLUE	=	\033[1;34m
+WHITE	=	\033[0m
+#-----------------------------------------------------------------------------#
+
+COLOR_MAKE = $(BGREEN)
+COLOR_INSTALL = $(BYELLOW)
+COLOR_CLEAN = $(BRED)
 
 NAME = cub3D
 CC = cc
@@ -43,6 +55,7 @@ OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(LIBFT) $(LIBGLFW) $(LIBMLX) $(OBJ)
+	@echo "$(COLOR_MAKE)Make cub3d...$(DEFCL)"
 	@$(CC) $(OBJ) -o $(NAME) $(LIBFT_LNK) $(LIBMLX_LNK) $(LIBGLFW_LNK) $(FFLAGS)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -52,18 +65,40 @@ $(OBJ_DIR):
 	@mkdir -p ./obj
 
 $(LIBFT):
-	git clone --recurse-submodules $(URL_LIBFT) $(LIBFT)
-	$(MAKE) -C $(LIBFT)
+	@echo "$(COLOR_INSTALL)Clone libft...$(DEFCL)"
+	@git clone --recurse-submodules $(URL_LIBFT) $(LIBFT)
+	@echo "$(COLOR_MAKE)Make libft...$(DEFCL)"
+	@$(MAKE) -s -C $(LIBFT)
 
 $(LIBGLFW): $(BREW)
-	brew install glfw
+	@echo "$(COLOR_INSTALL)Install glfw...$(DEFCL)"
+	@brew install glfw
 
 $(BREW):
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	@echo "$(COLOR_INSTALL)Install brew...$(DEFCL)"
+	@/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 $(LIBMLX):
-	git clone $(URL_MLX42) $(LIBMLX)
-	cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@echo "$(COLOR_INSTALL)Install MLX42...$(DEFCL)"
+	@git clone $(URL_MLX42) $(LIBMLX)
+	@echo "$(COLOR_MAKE)Make MLX42...$(DEFCL)"
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+
+clean:
+	@echo "$(BRED)Clean objects...$(DEFCL)"
+	@rm -rf $(OBJ_DIR)
+	@echo "$(BRED)Clean libft...$(DEFCL)"
+	@make clean -s -C $(LIBFT)
+	@echo "$(BRED)Clean MLX42...$(DEFCL)"
+	@make clean -s -C $(LIBMLX)
+
+fclean: clean
+	@echo "$(BRED)Clean exec...$(DEFCL)"
+	@rm -f $(NAME)
+	@make fclean -s -C $(LIBFT)
+	@make fclean -s -C $(LIBMLX)
+
+re: fclean all
 
 .PHONY: all clean fclean re
 
