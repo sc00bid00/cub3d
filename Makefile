@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 15:46:20 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 16:11:38 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ clean:
 fclean: clean
 	@echo "$(BRED)Clean exec...$(DEFCL)"
 	@rm -f $(NAME)
-	@echo "$(BRED)Clean libraries...$(DEFCL)"
+	@echo "$(BRED)Remove lib...$(DEFCL)"
 	@rm -rf $(LIB_DIR)
 
 re: fclean all
