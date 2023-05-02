@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 14:31:56 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 15:24:44 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,17 @@ FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 LIB_DIR = ./lib/
+BREW = /Users/$(USER)/.brew/
+HOMEBREW = /Users/$(USER)/homebrew/
 
 URL_LIBFT = https://github.com/Kathinka42/42_libft
-URL_GLFW = https://github.com/glfw/glfw
 URL_MLX42 = https://github.com/codam-coding-college/MLX42
 
 LIBFT = $(LIB_DIR)libft
 LIBFT_LNK = -l ft -L $(LIBFT)
 
-LIBGLFW_LNK = -l glfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+LIBGLFW = "/Users/$(USER)/.brew/opt/glfw/lib"
+LIBGLFW_LNK = -l glfw -L$(LIBGLFW)
 
 LIBMLX	= $(LIB_DIR)MLX42
 LIBMLX_LNK = -l mlx42 -L $(LIBMLX)/build
@@ -53,8 +55,11 @@ $(LIBFT):
 	git clone --recurse-submodules $(URL_LIBFT) $(LIBFT)
 	$(MAKE) -C $(LIBFT)
 
-$(LIBGLFW):
+$(LIBGLFW): $(BREW)
 	brew install glfw
+
+$(BREW):
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 $(LIBMLX):
 	git clone $(URL_MLX42) $(LIBMLX)
