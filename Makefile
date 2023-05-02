@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 14:31:56 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 15:32:15 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ LIBGLFW_LNK = -l glfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 LIBMLX	= $(LIB_DIR)MLX42
 LIBMLX_LNK = -l mlx42 -L $(LIBMLX)/build
 
-INC_DIR =	-I ./include \
+INC_DIR =	-I ./inc \
 			-I ./lib/libft \
 			-I ./lib/MLX42/include/MLX42
 
