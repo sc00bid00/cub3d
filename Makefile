@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 15:36:02 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 15:46:20 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,13 +90,13 @@ clean:
 	@echo "$(BRED)Clean libft...$(DEFCL)"
 	@make clean -s -C $(LIBFT)
 	@echo "$(BRED)Clean MLX42...$(DEFCL)"
-	@make clean -s -C $(LIBMLX)
+	@make clean -s -C $(LIBMLX)/build
 
 fclean: clean
 	@echo "$(BRED)Clean exec...$(DEFCL)"
 	@rm -f $(NAME)
-	@make fclean -s -C $(LIBFT)
-	@make fclean -s -C $(LIBMLX)
+	@echo "$(BRED)Clean libraries...$(DEFCL)"
+	@rm -rf $(LIB_DIR)
 
 re: fclean all
 
