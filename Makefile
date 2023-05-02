@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 21:10:39 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/02 22:28:33 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,11 @@ WHITE	=	\033[0m
 COLOR_MAKE = $(BGREEN)
 COLOR_INSTALL = $(BYELLOW)
 COLOR_CLEAN = $(BRED)
+DEFCL = $(WHITE)
 
 NAME = cub3D
 CC = cc
-CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
@@ -38,12 +39,12 @@ URL_MLX42 = https://github.com/codam-coding-college/MLX42
 LIBFT = $(LIB_DIR)libft
 LIBFT_LNK = -l ft -L $(LIBFT)
 
-LIBGLFW_HOME = "/usr/local/opt/glfw"
 LIBGLFW_SCHOOL = "/Users/$(USER)/.brew/opt/glfw/lib"
+LIBGLFW_OTHER = "/usr/local/opt/glfw"
 ifeq ($(shell(test -d $(LIBGLFW_SCHOOL))), true)
 	LIBGLFW = $(LIBGLFW_SCHOOL)
 else
-	LIBGLFW = $(LIBGLFW_HOME)
+	LIBGLFW = $(LIBGLFW_OTHER)
 endif
 LIBGLFW_LNK = -l glfw -L$(LIBGLFW)
 
@@ -72,23 +73,24 @@ $(OBJ_DIR):
 
 $(LIBFT):
 	@echo "$(COLOR_INSTALL)Clone libft...$(DEFCL)"
-	@git clone --recurse-submodules $(URL_LIBFT) $(LIBFT)
+	@git clone -q --recurse-submodules $(URL_LIBFT) $(LIBFT)
 	@echo "$(COLOR_MAKE)Make libft...$(DEFCL)"
 	@$(MAKE) -s -C $(LIBFT)
 
 $(LIBGLFW): $(BREW)
 	@echo "$(COLOR_INSTALL)Install glfw...$(DEFCL)"
-	@brew install glfw
+	@brew install -q glfw
+
+$(LIBMLX):
+	@echo "$(COLOR_INSTALL)Install MLX42...$(DEFCL)"
+	@git clone -q $(URL_MLX42) $(LIBMLX)
+	@echo "$(COLOR_MAKE)Make MLX42...$(DEFCL)"
+	@cmake -H$(LIBMLX) -B $(LIBMLX)/build
+	@make -s -C $(LIBMLX)/build -j4
 
 $(BREW):
 	@echo "$(COLOR_INSTALL)Install brew...$(DEFCL)"
 	@/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-$(LIBMLX):
-	@echo "$(COLOR_INSTALL)Install MLX42...$(DEFCL)"
-	@git clone $(URL_MLX42) $(LIBMLX)
-	@echo "$(COLOR_MAKE)Make MLX42...$(DEFCL)"
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 clean:
 	@echo "$(BRED)Clean objects...$(DEFCL)"
@@ -107,5 +109,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
-
