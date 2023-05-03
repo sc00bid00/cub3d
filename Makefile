@@ -6,7 +6,7 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/02 22:28:33 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/03 09:35:43 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,10 @@ LIBFT_LNK = -l ft -L $(LIBFT)
 
 LIBGLFW_SCHOOL = "/Users/$(USER)/.brew/opt/glfw/lib"
 LIBGLFW_OTHER = "/usr/local/opt/glfw"
-ifeq ($(shell(test -d $(LIBGLFW_SCHOOL))), true)
-	LIBGLFW = $(LIBGLFW_SCHOOL)
-else
+ifeq ($(shell(test -d "/usr/local/opt/glfw")), true)
 	LIBGLFW = $(LIBGLFW_OTHER)
+else
+	LIBGLFW = $(LIBGLFW_SCHOOL)
 endif
 LIBGLFW_LNK = -l glfw -L$(LIBGLFW)
 
