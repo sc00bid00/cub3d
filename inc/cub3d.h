@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/03 13:26:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:04:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 # include <MLX42.h>
 # include <math.h>
 
-#define WIDTH 1025
-#define HEIGTH 512
+#define WIDTH 1024
+#define HEIGHT 1024
 #define COLOR 0
+#define PI 3.14159265359
 
 // position of the player
 
@@ -29,6 +30,9 @@ typedef	struct s_pos
 {
 	float	x;
 	float	y;
+	float	dx; //	delta x
+	float	dy; //	delta y
+	float	a;	//	angle
 	
 }	t_pos;
 
@@ -37,30 +41,21 @@ typedef	struct s_pos
 #define mapX  8      //map width
 #define mapY  8      //map height
 #define mapS 64      //map cube size
-// int map[]=           //the map array. Edit to change level but keep the outer walls
-// {
-//  1,1,1,1,1,1,1,1,
-//  1,0,1,0,0,0,0,1,
-//  1,0,1,0,0,0,0,1,
-//  1,0,1,0,0,0,0,1,
-//  1,0,0,0,0,0,0,1,
-//  1,0,0,0,0,1,0,1,
-//  1,0,0,0,0,0,0,1,
-//  1,1,1,1,1,1,1,1,	
-// };
 
 typedef struct s_maps
 {
 	int x;
 	int y;
+	int xo;
+	int yo;
 	int map_x;
 	int map_y;
 	int map_s;
-	int x_scaled;
-	int y_scaled;
+	int	x_coeff;
+	int	y_coeff;
 }	t_maps;
-// overall struct to hold pointers to all structs
 
+// overall struct to hold pointers to all structs
 typedef struct s_display
 {
 	mlx_t			*mlx;
@@ -71,7 +66,6 @@ typedef struct s_display
 
 
 // functions
-
 void		init_display(int argc, char **argv, t_display *display);
 void		draw_player(t_display *display);
 void		my_hook(void *param);

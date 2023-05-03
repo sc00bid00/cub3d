@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/03 09:40:44 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/03 16:09:23 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DEFCL = $(WHITE)
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
+#CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
