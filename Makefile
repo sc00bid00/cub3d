@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/03 16:09:23 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/04 11:51:26 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ LIBFT_LNK = -l ft -L $(LIBFT)
 
 LIBGLFW_SCHOOL = "/Users/$(USER)/.brew/opt/glfw/lib"
 LIBGLFW_OTHER = "/usr/local/opt/glfw"
-ifeq ($(shell(test -d "/usr/local/opt/glfw")), true)
+ifeq ($(shell test -d $(LIBGLFW_OTHER) && echo exists), exists)
 	LIBGLFW = $(LIBGLFW_OTHER)
 else
 	LIBGLFW = $(LIBGLFW_SCHOOL)
