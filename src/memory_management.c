@@ -40,13 +40,16 @@ void	init_display(int argc, char **argv, t_display *display)
 			exit(EXIT_FAILURE);
 	display->pos->x = 300.0;
 	display->pos->y = 300.0;
+	display->pos->dx = cos(display->pos->a) * 5;
+	display->pos->dy = sin(display->pos->a) * 5; 
+	display->pos->a = PI;
+
 	display->maps->x = 0;
 	display->maps->y = 0;
 	display->maps->xo = 0;
 	display->maps->yo = 0;
 	display->maps->map_x = 8; //number of columns in map;
 	display->maps->map_y = 8; //number of lines in map;
-	display->maps->map_s = display->maps->map_x * display->maps->map_y; //total number of tiles in map
 	display->maps->x_coeff = WIDTH / display->maps->map_x;
 	display->maps->y_coeff = HEIGHT / display->maps->map_y;
 }

@@ -31,6 +31,7 @@ void	cub3d(char **argv, t_display *display)
 	// draw_fractal(display);
 	drawMap2D(display);
 	draw_player(display);
+	draw_line(display);
 	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;
@@ -83,28 +84,93 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->y -= 5.0;
+		display->pos->x += display->pos->dx;
+		display->pos->y += display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->y += 5.0;
+		display->pos->x -= display->pos->dx;
+		display->pos->y -= display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->x -= 5.0;
+		display->pos->a -=0.1;
+		if(display->pos->a < 0)
+			display->pos->a += 2*PI;
+		display->pos->dx = cos(display->pos->a) * 5;
+		display->pos->dy = sin(display->pos->a) * 5;
+		// display->pos->x -= display->pos->dx;
+		// display->pos->x -= 5.0;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->x += 5.0;
+		display->pos->a +=0.1;
+		if(display->pos->a > 2*PI)
+			display->pos->a -= 2*PI;
+		display->pos->dx = cos(display->pos->a) * 5;
+		display->pos->dy = sin(display->pos->a) * 5;
+		// display->pos->x += display->pos->dx;
+		// display->pos->x += 5.0;
 	}
 	drawMap2D(display);
+	draw_line(display);
 	draw_player(display);
+}
+
+void	draw_line(t_display *display)
+{
+	float	x_end;
+	float	y_end;
+	int		length;
+
+	length = 20;
+	x_end = display->pos->x + length * cos(display->pos->a);
+	y_end = display->pos->y + length * sin(display->pos->a);
+	draw_line_bresenham(display, display->pos->x, display->pos->y, x_end, y_end);
+}
+
+void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end)
+{
+	// Calculate the differences between the start and end points
+    int dx = abs(x_end - x_start);
+    int dy = abs(y_end - y_start);
+
+    // Determine the direction of the line in both the x and y directions
+    int sx = x_start < x_end ? 1 : -1;
+    int sy = y_start < y_end ? 1 : -1;
+
+    // Initialize the error term and the step values
+    int err = dx - dy;
+    int e2;
+
+    // Loop through each point along the line and plot the pixels
+    while (1 && x_start < WIDTH && y_start < HEIGHT )
+    {
+        mlx_put_pixel(display->g_img, x_start, y_start, get_rgba(200, 200, 30));
+
+        if (x_start == x_end && y_start == y_end)
+        {
+            break;
+        }
+		e2 = 2 * err;
+        if (e2 > -dy)
+        {
+            err -= dy;
+            x_start += sx;
+        }
+
+        if (e2 < dx)
+        {
+            err += dx;
+            y_start += sy;
+        }
+    }
 }
 
 void	draw_player(t_display *display)
@@ -139,9 +205,9 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 char *map[] = {
     "11111111",
     "10100001",
-    "10100001",
-    "10100001",
-    "10000001",
+    "10111101",
+    "10100101",
+    "10100101",
     "10111101",
     "10000001",
     "11111111"
