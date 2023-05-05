@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 10:09:52 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/05 10:48:42 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@
 
 #define WIDTH 1024		// window width
 #define HEIGHT 1024		// window height
-#define mapX  8			//  width, to be removed after parsing
-#define mapY  8			// map height
 #define mapS 64      //map cube size
 #define COLOR 0
-#define PI 3.14159265359
 
 // position of the player
 
@@ -48,8 +45,8 @@ typedef struct s_maps
 	int y;
 	int xo;		// coordinate in pixel value
 	int yo;		// coordinate in pixel value
-	int map_x;	// number of columns in map (x max);
-	int map_y;  // number of rows in map (y max);
+	int max_x;	// number of columns in map (x max);
+	int max_y;  // number of rows in map (y max);
 	// int map_s;
 	int	x_coeff; // adjust map to pixel: WIDTH / map_x
 	int	y_coeff; // adjust map to pixel: HEIGHT / may_y
@@ -79,5 +76,6 @@ void		my_put_pixel(t_display *display);
 void		drawMap2D(t_display *display);
 void		draw_line(t_display *display);
 void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end);
+void		draw_cube(t_display *display, bool wall);
 
 #endif

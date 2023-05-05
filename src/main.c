@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 09:57:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/05 10:51:07 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void	my_hook(void *param)
 	draw_player(display);
 }
 
+/* specify line details */
+
 void	draw_line(t_display *display)
 {
 	float	x_end;
@@ -135,6 +137,8 @@ void	draw_line(t_display *display)
 	draw_line_bresenham(display, display->pos->x, display->pos->y, x_end, y_end);
 }
 
+
+/* to be updated with Luca's Bresenham function */
 void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end)
 {
 	// Calculate the differences between the start and end points
@@ -213,15 +217,10 @@ char *map[] = {
     "11111111"
 };
 
-void init_map_values(t_maps *maps)
-{
-	maps->x = 0;
-	maps->y = 0;
-	maps->xo = 0;
-	maps->yo = 0;
-}
+/*	function is called for each map coordinate and draws pixel in corresponding
+	cube */
 
-void	draw_map(t_display *display, bool wall)
+void	draw_cube(t_display *display, bool wall)
 {
 	int i;
 	int j;
@@ -252,28 +251,28 @@ void	draw_map(t_display *display, bool wall)
 	}
 }
 
+/*	iterates through coordinate system */
 void drawMap2D(t_display *display)
 {
 	t_maps	*maps;
-	int i;
-	int j;
 
 	maps = display->maps;
-	i = 0;
-	j = 0;
-	init_map_values(maps);
-	while (maps->y < mapY)
+	maps->x = 0;
+	maps->y = 0;
+	maps->xo = 0;
+	maps->yo = 0;
+	while (maps->y < maps->max_y)
 	{
 		maps->x = 0;
 		maps->xo = 0;
-		while (maps->x < mapX)
+		while (maps->x < maps->max_x)
 		{
 			maps->yo = (maps->y * display->maps->y_coeff);
 			maps->xo = (maps->x * display->maps->x_coeff);
 			if (map[maps->y][maps->x] == '1')
-				draw_map(display, true);
+				draw_cube(display, true);
 			else
-				draw_map(display, false);
+				draw_cube(display, false);
 			maps->x++;
 		}
 		maps->y++;

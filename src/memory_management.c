@@ -6,16 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/03 16:12:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:48:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-/* ALLOCATE_MEMORY
-* ------------------
-* allocate memory for all structs within t_image struct
-*/
+/* allocate memory for all structs within t_image struct */
 
 void allocate_memory(t_display *display)
 {
@@ -27,10 +24,8 @@ void allocate_memory(t_display *display)
 		clean_up(display);
 }
 
-/*	INIT_SET
-*	---------
-*	initialize mlx, color and parameters.
-*/
+/*	initialize mlx, map and player */
+
 void	init_display(int argc, char **argv, t_display *display)
 {
 	(void)		argc;
@@ -42,23 +37,20 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->pos->y = 300.0;
 	display->pos->dx = cos(display->pos->a) * 5;
 	display->pos->dy = sin(display->pos->a) * 5; 
-	display->pos->a = PI;
+	display->pos->a = M_PI;
 
 	display->maps->x = 0;
 	display->maps->y = 0;
 	display->maps->xo = 0;
 	display->maps->yo = 0;
-	display->maps->map_x = 8; //number of columns in map;
-	display->maps->map_y = 8; //number of lines in map;
-	display->maps->x_coeff = WIDTH / display->maps->map_x;
-	display->maps->y_coeff = HEIGHT / display->maps->map_y;
+	display->maps->max_x = 8;
+	display->maps->max_y = 8;
+	display->maps->x_coeff = WIDTH / display->maps->max_x;
+	display->maps->y_coeff = HEIGHT / display->maps->max_y;
 }
 
 
-/* CLEAN_UP
-* ------------------
-* free all allocated memory
-*/
+/*	free all allocated memory */
 
 int	clean_up(t_display *display)
 {
@@ -68,7 +60,7 @@ int	clean_up(t_display *display)
 		free (display->maps);
 	// if (display->color)
 	// 	free (display->color);
-	// if (display->mlx)
+	if (display->mlx)
 	{
 		mlx_delete_image(display->mlx, display->g_img);
 		mlx_terminate(display->mlx);
