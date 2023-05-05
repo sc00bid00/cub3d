@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/03 16:43:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 09:57:29 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	cub3d(char **argv, t_display *display)
 *	executed, if a particular key is being pressed. Void parameter has to be
 *	assigned.
 *	Press esc: clean up function is called: window closes + pointers freed.
-*	Press m: switch to mandelbrot 
+*	Press m: switch to mandelbrot
 *	Press j: switch to julia
 *	Press c: change color
 */
@@ -57,7 +57,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	mlx = display->mlx;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(mlx);
-		
+
 	// if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
 	// {
 	// 	change_color(image);
@@ -78,7 +78,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 void	my_hook(void *param)
 {
 	t_display	*display;
-	
+
 	display = param;
 	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
 	{
@@ -150,7 +150,7 @@ void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end
     int e2;
 
     // Loop through each point along the line and plot the pixels
-    while (1 && x_start < WIDTH && y_start < HEIGHT )
+    while (1 && x_start < WIDTH && y_start < HEIGHT && x_start > 0 && y_start > 0)
     {
         mlx_put_pixel(display->g_img, x_start, y_start, get_rgba(200, 200, 30));
 
@@ -186,7 +186,7 @@ void	my_put_pixel(t_display *display)
 		display->pos->y = 0;
 	if (display->pos->x > WIDTH)
 		display->pos->x = WIDTH-1;
-	if (display->pos->x < 0)	
+	if (display->pos->x < 0)
 		display->pos->x = 0;
 	mlx_put_pixel(display->g_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
 }
@@ -226,7 +226,7 @@ void	draw_map(t_display *display, bool wall)
 	int i;
 	int j;
 	t_maps	*maps;
-	
+
 	i = 0;
 	j = 0;
 	maps = display->maps;
@@ -235,7 +235,7 @@ void	draw_map(t_display *display, bool wall)
     	if (wall)
 			mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(0,80,100));
 		else
-			 mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(100,100,100));
+			mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(100,100,100));
         j = 1;
 		maps->yo = (maps->y * display->maps->y_coeff);
 		while(j < display->maps->y_coeff - 1 && maps->xo < WIDTH && maps->yo < HEIGHT)
@@ -285,7 +285,7 @@ int	main(int argc, char **argv)
 	t_display	*display;
 	(void)		argc;
 	(void)		argv;
-	
+
 	display = ft_calloc(sizeof(t_display), 1);
 	if (!display)
 		return (0);

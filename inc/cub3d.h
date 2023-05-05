@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/03 16:04:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 10:09:52 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define WIDTH 1024		// window width
 #define HEIGHT 1024		// window height
-#define mapX  8			//  width
+#define mapX  8			//  width, to be removed after parsing
 #define mapY  8			// map height
 #define mapS 64      //map cube size
 #define COLOR 0
@@ -36,7 +36,10 @@ typedef	struct s_pos
 	float	dx; //	delta x
 	float	dy; //	delta y
 	float	a;	//	angle
-	
+	float	x0; //	x coordinate of start position
+	float	y0; // y coordinate of start position
+	float	a0; // starting angle (derived from N, S, W, E)
+
 }	t_pos;
 
 typedef struct s_maps
@@ -50,6 +53,8 @@ typedef struct s_maps
 	// int map_s;
 	int	x_coeff; // adjust map to pixel: WIDTH / map_x
 	int	y_coeff; // adjust map to pixel: HEIGHT / may_y
+	char	*arr[]; // parsed from cub file
+	// und alle weiteren overhead parameter aus dem cub file
 }	t_maps;
 
 // overall struct to hold pointers to all structs
