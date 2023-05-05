@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/03 09:35:43 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/05 11:00:49 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ DEFCL = $(WHITE)
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
+#CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
@@ -39,23 +39,17 @@ URL_MLX42 = https://github.com/codam-coding-college/MLX42
 LIBFT = $(LIB_DIR)libft
 LIBFT_LNK = -l ft -L $(LIBFT)
 
-LIBGLFW_SCHOOL = "/Users/$(USER)/.brew/opt/glfw/lib"
-LIBGLFW_OTHER = "/usr/local/opt/glfw"
-ifeq ($(shell(test -d "/usr/local/opt/glfw")), true)
-	LIBGLFW = $(LIBGLFW_OTHER)
-else
-	LIBGLFW = $(LIBGLFW_SCHOOL)
-endif
-LIBGLFW_LNK = -l glfw -L$(LIBGLFW)
+LIBGLFW_LNK = -l glfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 
 LIBMLX	= $(LIB_DIR)MLX42
 LIBMLX_LNK = -l mlx42 -L $(LIBMLX)/build
 
-INC_DIR =	-I ./include \
+INC_DIR =	-I ./inc \
 			-I ./lib/libft \
 			-I ./lib/MLX42/include/MLX42
 
-SRC =	main.c
+SRC =	main.c \
+		memory_management.c
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
