@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 21:28:00 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/02 21:29:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:20:54 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void drawLine(int x0, int y0, int x1, int y1) {
     printf("(%d,%d)\n", x0, y0);
 }
 
-int main() {
-    int x0 = 0, y0 = 0, x1 = 100, y1 = 100;
-    drawLine(x0, y0, x1, y1);
-    return 0;
-}
+// int main() {
+//     int x0 = 0, y0 = 0, x1 = 100, y1 = 100;
+//     drawLine(x0, y0, x1, y1);
+//     return 0;
+// }
