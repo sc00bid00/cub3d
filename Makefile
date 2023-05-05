@@ -6,22 +6,21 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/05 11:20:14 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/05 20:23:26 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 LIB_DIR = ./lib/
 
 # ====== SRC FILES ======
-SRC =	bresenham_chatgpt.c \
-		main.c \
-		memory_management.c
+SRC =	utils_debug.c \
+		utils_parse.c
 # =======================
 
 BRED	=	\033[1;31m

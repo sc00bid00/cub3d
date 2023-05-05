@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 10:48:42 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:44:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <libft.h>
+# include <errors.h>
+# include <debug.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <MLX42.h>
 # include <math.h>
+# include <fcntl.h>
 
 #define WIDTH 1024		// window width
 #define HEIGHT 1024		// window height
@@ -25,6 +28,25 @@
 #define COLOR 0
 
 // position of the player
+
+enum	tex_ix
+{
+	NO,
+	SO,
+	EA,
+	WE
+};
+
+typedef struct s_pdata
+{
+	char	**argv;
+	t_list	*fdata;
+	char	**tab;
+	char	**tex;
+	long	*fc[2];
+	int		play_tab[2];
+	float	play_dir;
+}	t_pdata;
 
 typedef	struct s_pos
 {
@@ -36,22 +58,21 @@ typedef	struct s_pos
 	float	x0; //	x coordinate of start position
 	float	y0; // y coordinate of start position
 	float	a0; // starting angle (derived from N, S, W, E)
-
 }	t_pos;
 
 typedef struct s_maps
 {
-	int x;
-	int y;
-	int xo;		// coordinate in pixel value
-	int yo;		// coordinate in pixel value
-	int max_x;	// number of columns in map (x max);
-	int max_y;  // number of rows in map (y max);
+
+	int		x;
+	int		y;
+	int		xo;		// coordinate in pixel value
+	int		yo;		// coordinate in pixel value
+	int		max_x;	// number of columns in map (x max) (from cub file?)
+	int		max_y;  // number of rows in map (y max) (from cub file?)
 	// int map_s;
-	int	x_coeff; // adjust map to pixel: WIDTH / map_x
-	int	y_coeff; // adjust map to pixel: HEIGHT / may_y
-	char	*arr[]; // parsed from cub file
-	// und alle weiteren overhead parameter aus dem cub file
+	int		x_coeff; // adjust map to pixel: WIDTH / map_x
+	int		y_coeff; // adjust map to pixel: HEIGHT / may_y
+	char	**par;// all other overhead parameter from cub file, exact format tbd
 }	t_maps;
 
 // overall struct to hold pointers to all structs
@@ -61,6 +82,7 @@ typedef struct s_display
 	mlx_image_t		*g_img;
 	t_pos			*pos;
 	t_maps			*maps;
+	t_pdata			*pdata;
 }	t_display;
 
 
