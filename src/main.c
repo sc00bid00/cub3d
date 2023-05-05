@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 10:54:44 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:03:55 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	my_hook(void *param)
 			* display->g_img->height * sizeof(int32_t));
 		display->pos->a -=0.1;
 		if(display->pos->a < 0)
-			display->pos->a += 2*PI;
+			display->pos->a += 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
 		// display->pos->x -= display->pos->dx;
@@ -111,8 +111,8 @@ void	my_hook(void *param)
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
 		display->pos->a +=0.1;
-		if(display->pos->a > 2*PI)
-			display->pos->a -= 2*PI;
+		if(display->pos->a > 2 * M_PI)
+			display->pos->a -= 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
 		// display->pos->x += display->pos->dx;
