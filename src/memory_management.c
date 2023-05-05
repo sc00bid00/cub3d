@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 10:48:22 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:35:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void allocate_memory(t_display *display)
 		clean_up(display);
 	display->maps = ft_calloc(1, sizeof(t_maps));
 	if (!display->maps)
+		clean_up(display);
+	display->rays = ft_calloc(1, sizeof(t_rays));
+	if (!display->rays)
 		clean_up(display);
 }
 
@@ -37,16 +40,31 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->pos->y = 300.0;
 	display->pos->dx = cos(display->pos->a) * 5;
 	display->pos->dy = sin(display->pos->a) * 5; 
-	display->pos->a = M_PI;
+	display->pos->a = M_PI - 1;
+	display->pos->x0 = 0;
+	display->pos->y0 = 0;
+	display->pos->a0 = 0;
 
 	display->maps->x = 0;
 	display->maps->y = 0;
-	display->maps->xo = 0;
-	display->maps->yo = 0;
+	display->maps->x0 = 0;
+	display->maps->y0 = 0;
 	display->maps->max_x = 8;
 	display->maps->max_y = 8;
-	display->maps->x_coeff = WIDTH / display->maps->max_x;
-	display->maps->y_coeff = HEIGHT / display->maps->max_y;
+	display->maps->x_coeff = mapS;
+	display->maps->y_coeff = mapS;
+	// display->maps->x_coeff = WIDTH / display->maps->max_x;
+	// display->maps->y_coeff = HEIGHT / display->maps->max_y;
+
+	display->rays->mx = 0;
+	display->rays->my = 0;
+	display->rays->x = 0;
+	display->rays->y = 0;
+	display->rays->a = 0;
+	display->rays->x0 =	0;
+	display->rays->y0 = 0;
+	display->rays->x_off = 0;
+	display->rays->y_off = 0;
 }
 
 
@@ -58,8 +76,8 @@ int	clean_up(t_display *display)
 		free (display->pos);
 	if (display->maps)
 		free (display->maps);
-	// if (display->color)
-	// 	free (display->color);
+	if (display->rays)
+		free (display->rays);
 	if (display->mlx)
 	{
 		mlx_delete_image(display->mlx, display->g_img);
@@ -67,6 +85,6 @@ int	clean_up(t_display *display)
 	}
 	if (display)
 		free (display);
-	system ("leaks cub3D");
+	// system ("leaks cub3D");
 	return (0);
 }

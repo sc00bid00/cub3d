@@ -6,11 +6,23 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 11:03:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:56:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+
+char *map[] = {
+    "11111111",
+    "10100001",
+    "10111101",
+    "10100101",
+    "10100101",
+    "10111101",
+    "10000001",
+    "11111111"
+};
 
 /*	CUB3D
 *	--------
@@ -31,7 +43,8 @@ void	cub3d(char **argv, t_display *display)
 	// draw_fractal(display);
 	drawMap2D(display);
 	draw_player(display);
-	draw_line(display);
+	draw_line(display, display->pos->x, display->pos->y);
+	draw_rays(display);
 	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;
@@ -75,6 +88,7 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	// }
 }
 
+/*	keys W and S to move forward / backward, keys A and D to rotate */
 void	my_hook(void *param)
 {
 	t_display	*display;
@@ -119,22 +133,98 @@ void	my_hook(void *param)
 		// display->pos->x += 5.0;
 	}
 	drawMap2D(display);
-	draw_line(display);
+	draw_line(display, display->pos->x, display->pos->y);
 	draw_player(display);
+	draw_rays(display);
 }
 
-/* specify line details */
+/*	mapS defined as 64 (pixel cube size) */
+void	draw_rays(t_display *display)
+{
+	// find horizontal intersections
+	
+	int count;
+	int r;
+	float atan;
 
-void	draw_line(t_display *display)
+	display->rays->a = display->pos->a;
+	for (r = 0; r < 1; r++)
+	{
+		count = 0;
+		atan = -1 / tan (display->rays->a);
+		// ray facing upwards
+		if (display->rays->a > M_PI)
+		{
+			// substracts 1 to make the point part of the cube above the line
+			// and not on the line;
+			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) - 0.0001;
+			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) / tan(display->rays->a));
+			// printf("ray x value is %f\n", display->rays->x0);
+			// printf("display->rays->y0 %f\n", display->rays->y0);
+			// printf("display->pos->y is %f\n", display->pos->y);
+			// printf("tan value is %f\n", tan(display->rays->a));
+			display->rays->y_off = mapS * -1;
+			display->rays->x_off = mapS * atan;
+			printf("facing up\n");
+		}	
+		// ray facing downwards
+		else if (display->rays->a < M_PI && display->rays->a > 0)
+		{
+			// substracts 1 to make the point part of the cube above the line
+			// and not on the line; ay
+			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) + mapS;
+			display->rays->x0 = display->pos->x + (display->pos->y - display->rays->y0) * atan;
+			display->rays->y_off = mapS;
+			display->rays->x_off = mapS * atan;
+			printf("facing down\n");
+		}
+		else if (display->rays->a == M_PI || display->rays->a == 0)
+		{
+			display->rays->x0 = display->pos->x;
+			display->rays->y0 = display->pos->y;
+			count = display->maps->max_y;
+			printf("facing sidways\n");
+		}
+		while (count < display->maps->max_y)
+		{
+			display->rays->mx = (int) display->rays->x0 / mapS;
+			display->rays->my = (int) display->rays->y0 / mapS;
+			// printf("x value is %d\n", display->rays->mx);
+			// printf("y value is %d\n", display->rays->my);
+			if (display->rays->mx < display->maps->max_x && display->rays->my < display->maps->max_y)
+			{
+				if (map[display->rays->mx][display->rays->my] == '1')
+				{
+					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
+					// exit(0);
+					count = display->maps->max_y;
+				}
+				else
+				{
+					printf("no wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
+					display->rays->y0 += display->rays->y_off;
+					display->rays->x0 += display->rays->x_off;
+					count++;
+				}
+			}	
+		}
+		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
+		draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
+	}
+}
+
+
+/* specify line details */
+void	draw_line(t_display *display, float posx, float posy)
 {
 	float	x_end;
 	float	y_end;
 	int		length;
 
 	length = 20;
-	x_end = display->pos->x + length * cos(display->pos->a);
-	y_end = display->pos->y + length * sin(display->pos->a);
-	draw_line_bresenham(display, display->pos->x, display->pos->y, x_end, y_end);
+	x_end = posx + length * cos(display->pos->a);
+	y_end = posy + length * sin(display->pos->a);
+	draw_line_bresenham(display, posx, posy, x_end, y_end);
 }
 
 
@@ -206,16 +296,6 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 	return ((uint32_t)(red << 24 | green << 16 | blue << 8 | 255));
 }
 
-char *map[] = {
-    "11111111",
-    "10100001",
-    "10111101",
-    "10100101",
-    "10100101",
-    "10111101",
-    "10000001",
-    "11111111"
-};
 
 /*	function is called for each map coordinate and draws pixel in corresponding
 	cube */
@@ -229,24 +309,24 @@ void	draw_cube(t_display *display, bool wall)
 	i = 0;
 	j = 0;
 	maps = display->maps;
-    while (i < display->maps->x_coeff - 1 && maps->xo < WIDTH && maps->yo < HEIGHT)
+    while (i < display->maps->x_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
     {
     	if (wall)
-			mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(0,80,100));
+			mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(0,80,100));
 		else
-			mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(100,100,100));
+			mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(100,100,100));
         j = 1;
-		maps->yo = (maps->y * display->maps->y_coeff);
-		while(j < display->maps->y_coeff - 1 && maps->xo < WIDTH && maps->yo < HEIGHT)
+		maps->y0 = (maps->y * display->maps->y_coeff);
+		while(j < display->maps->y_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
 		{
 			if (wall)
-				mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(0,80,100));
+				mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(0,80,100));
 			else
-				mlx_put_pixel(display->g_img, maps->xo, maps->yo, get_rgba(100,100,100));
-			maps->yo++;
+				mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(100,100,100));
+			maps->y0++;
 			j++;
 		}
-		maps->xo++;
+		maps->x0++;
 		i++;
 	}
 }
@@ -259,16 +339,16 @@ void drawMap2D(t_display *display)
 	maps = display->maps;
 	maps->x = 0;
 	maps->y = 0;
-	maps->xo = 0;
-	maps->yo = 0;
+	maps->x0 = 0;
+	maps->y0 = 0;
 	while (maps->y < maps->max_y)
 	{
 		maps->x = 0;
-		maps->xo = 0;
+		maps->x0 = 0;
 		while (maps->x < maps->max_x)
 		{
-			maps->yo = (maps->y * display->maps->y_coeff);
-			maps->xo = (maps->x * display->maps->x_coeff);
+			maps->y0 = (maps->y * display->maps->y_coeff);
+			maps->x0 = (maps->x * display->maps->x_coeff);
 			if (map[maps->y][maps->x] == '1')
 				draw_cube(display, true);
 			else
