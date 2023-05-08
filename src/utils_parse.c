@@ -6,10 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 20:40:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:05:33 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// #include <debug.h>
 #include <cub3d.h>
 
 bool	m_error(int num)
@@ -150,18 +151,19 @@ bool	argcheck(int argc, char **argv)
 /* error management and testing purpose */
 int	main(int argc, char **argv)
 {
-	t_display	d;
+	t_display	*d;
 
+	d = ft_calloc(1, sizeof(t_display));
 	if (argcheck(argc, argv))
 	{
-		d.pdata = malloc(sizeof(t_pdata));
-		d.pdata->argv = argv;
-		d.pdata->fdata = NULL;
-		if (ft_getdata(d.pdata))
+		d->pdata = ft_calloc(1, sizeof(t_pdata));
+		d->pdata->argv = argv;
+		d->pdata->fdata = NULL;
+		if (ft_getdata(d->pdata))
 		{
 			/* rest of main code*/
 		}
 	}
-	tmp_freedisplay(&d);
+	tmp_freedisplay(d);
 	return (0);
 }

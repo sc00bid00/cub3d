@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:52:20 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 20:40:42 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:11:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define DEBUG_H
 
 # include <cub3d.h>
+
+typedef struct s_display t_display;
 
 // ====== utils_debug ======
 void	tmp_prtlst(t_list *lst);

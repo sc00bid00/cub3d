@@ -6,13 +6,13 @@
 #    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/05 20:23:26 by lsordo           ###   ########.fr        #
+#    Updated: 2023/05/08 11:00:49 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g -MMD
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
@@ -63,12 +63,14 @@ LSAN_LNK  =  -L $(LSAN) -llsan -lc++
 LSAN_INC = -Wno-gnu-include-next -I lib/LeakSanitizer/include
 
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
+DEP = $(SRC:%.c=$(OBJ_DIR)%.d)
 INC_DIR =	-I ./inc -I $(LIBFT) -I $(MLX_INC) -I $(GLFW_INC)
 LNK_DIR =	$(LIBFT_LNK) $(LIBMLX_LNK) $(LIBGLFW_LNK) $(FFLAGS)
 DEPS = $(OBJ_DIR) $(LIBFT)/libft.a $(LIBMLX)/build/libmlx42.a $(LSAN)/liblsan.a $(OBJ)
 
 all:	$(NAME)
 
+lsan:	clean
 lsan:	$(NAME) $(LSAN)
 lsan:	INC_DIR += $(LSAN_INC)
 lsan:	LNK_DIR += $(LSAN_LNK)
@@ -77,8 +79,10 @@ $(NAME): $(DEPS)
 	@echo "$(COLOR_MAKE)Make cub3d ...$(DEFCL)"
 	@$(CC) $(OBJ) -o $(NAME) $(LNK_DIR)
 
+-include $(DEP)
+
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@$(CC) -c $(CFLAGS) $(INC_DIR) $^ -o $@
+	@$(CC) -c $(CFLAGS) $(INC_DIR) $< -o $@
 
 $(OBJ_DIR):
 	@mkdir -p ./obj

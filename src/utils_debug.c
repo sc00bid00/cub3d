@@ -6,10 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 20:43:06 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:12:08 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// #include <debug.h>
 #include <cub3d.h>
 
 void	tmp_prtlst(t_list *lst)

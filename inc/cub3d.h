@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 19:44:47 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 11:02:44 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define CUB3D_H
 
 # include <libft.h>
-# include <errors.h>
-# include <debug.h>
 # include <stdio.h>
+# include <debug.h>
 # include <unistd.h>
 # include <MLX42.h>
 # include <math.h>
 # include <fcntl.h>
+# include <errors.h>
 
 #define WIDTH 1024		// window width
 #define HEIGHT 1024		// window height
