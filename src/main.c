@@ -55,9 +55,6 @@ void	cub3d(char **argv, t_display *display)
 *	executed, if a particular key is being pressed. Void parameter has to be
 *	assigned.
 *	Press esc: clean up function is called: window closes + pointers freed.
-*	Press m: switch to mandelbrot
-*	Press j: switch to julia
-*	Press c: change color
 */
 
 void	my_keyhook(mlx_key_data_t keydata, void *param)
@@ -70,22 +67,6 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	mlx = display->mlx;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(mlx);
-
-	// if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
-	// {
-	// 	change_color(image);
-	// 	draw_fractal(image);
-	// }
-	// if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
-	// {
-	// 	image->set->settype = 1;
-	// 	draw_fractal(image);
-	// }
-	// if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-	// {
-	// 	image->set->settype = 2;
-	// 	draw_fractal(image);
-	// }
 }
 
 /*	keys W and S to move forward / backward, keys A and D to rotate */
@@ -145,7 +126,7 @@ void	draw_rays(t_display *display)
 	
 	int count;
 	int r;
-	float atan;
+	float atan; // inverse tangens
 
 	display->rays->a = display->pos->a;
 	for (r = 0; r < 1; r++)
@@ -154,6 +135,7 @@ void	draw_rays(t_display *display)
 		atan = -1 / tan (display->rays->a);
 		// ray facing upwards
 		if (display->rays->a > M_PI)
+		// if (display->rays->a > M_PI && display->rays->a < M_PI * 2)
 		{
 			// substracts 1 to make the point part of the cube above the line
 			// and not on the line;
@@ -168,10 +150,9 @@ void	draw_rays(t_display *display)
 			printf("facing up\n");
 		}	
 		// ray facing downwards
-		else if (display->rays->a < M_PI && display->rays->a > 0)
+		else if (display->rays->a < M_PI)
+		// else if (display->rays->a < M_PI && display->rays->a > 0)
 		{
-			// substracts 1 to make the point part of the cube above the line
-			// and not on the line; ay
 			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) + mapS;
 			display->rays->x0 = display->pos->x + (display->pos->y - display->rays->y0) * atan;
 			display->rays->y_off = mapS;
@@ -193,7 +174,7 @@ void	draw_rays(t_display *display)
 			// printf("y value is %d\n", display->rays->my);
 			if (display->rays->mx < display->maps->max_x && display->rays->my < display->maps->max_y)
 			{
-				if (map[display->rays->mx][display->rays->my] == '1')
+				if (map[display->rays->mx][display->rays->my] == '1' || display->rays->mx == 0 || display->rays->my == 0 || display->rays->mx == display->maps->max_x - 1 || display->rays->my == display->maps->max_y - 1)
 				{
 					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
 					// exit(0);
@@ -204,12 +185,15 @@ void	draw_rays(t_display *display)
 					printf("no wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
 					display->rays->y0 += display->rays->y_off;
 					display->rays->x0 += display->rays->x_off;
+					// count = display->maps->max_y;
 					count++;
 				}
 			}	
 		}
+		printf("ray angle is %f\n", display->rays->a);
+		printf("player angle is %f\n", display->pos->a);
 		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
-		draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
+			draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
 	}
 }
 
@@ -275,11 +259,11 @@ void	draw_player(t_display *display)
 void	my_put_pixel(t_display *display)
 {
 	if (display->pos->y > HEIGHT)
-		display->pos->y = HEIGHT-1;
+		display->pos->y = HEIGHT - 1;
 	if (display->pos->y < 0)
 		display->pos->y = 0;
 	if (display->pos->x > WIDTH)
-		display->pos->x = WIDTH-1;
+		display->pos->x = WIDTH - 1;
 	if (display->pos->x < 0)
 		display->pos->x = 0;
 	mlx_put_pixel(display->g_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
