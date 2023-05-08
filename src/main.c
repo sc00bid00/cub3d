@@ -15,11 +15,11 @@
 
 char *map[] = {
     "11111111",
-    "10100001",
-    "10111101",
-    "10100101",
-    "10100101",
-    "10111101",
+    "10000001",
+    "10000001",
+    "10000001",
+    "10000001",
+    "10000001",
     "10000001",
     "11111111"
 };
@@ -127,7 +127,6 @@ float 	dist(float ax, float ay, float bx, float by, float ang)
 /*	mapS defined as 64 (pixel cube size) */
 void	draw_rays(t_display *display)
 {
-	float dis_h = 100000;
 	int count;
 	int r; //number of rays
 	float atan; // inverse tangens
@@ -137,6 +136,7 @@ void	draw_rays(t_display *display)
 	for (r = 0; r < 1; r++)
 	{
 		// find horizontal intersections
+		float dis_h = 100000; float hx = display->pos->x; float hy = display->pos->y;
 		count = 0;
 		atan = -1 / tan (display->rays->a);
 		// ray facing up
@@ -173,6 +173,9 @@ void	draw_rays(t_display *display)
 				if (map[display->rays->mx][display->rays->my] == '1' || display->rays->mx == 0 || display->rays->my == 0 || display->rays->mx == display->maps->max_x - 1 || display->rays->my == display->maps->max_y - 1)
 				{
 					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
+					hx = display->rays->x0;
+					hy = display->rays->y0;
+					dis_h = dist(display->pos->x, display->pos->y, hx, hy, display->rays->a);
 					count = display->maps->max_y;
 				}
 				else
@@ -186,12 +189,13 @@ void	draw_rays(t_display *display)
 		}
 		printf("ray angle is %f\n", display->rays->a);
 		printf("player angle is %f\n", display->pos->a);
-		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
-			draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
+		// if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
+		// 	draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
 		
 			// find vertical intersections
 		count = 0;
 		ntan = -tan(display->rays->a);
+		float dis_v = 100000; float vx = display->pos->x; float vy = display->pos->y;
 		// ray facing left
 		// if (display->rays->a > M_PI)
 		if (display->rays->a > M_PI_2 && display->rays->a < (3 * M_PI_2))
@@ -226,6 +230,9 @@ void	draw_rays(t_display *display)
 				if (map[display->rays->mx][display->rays->my] == '1' || display->rays->mx == 0 || display->rays->my == 0 || display->rays->mx == display->maps->max_x - 1 || display->rays->my == display->maps->max_y - 1)
 				{
 					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
+					vx = display->rays->x0;
+					vy = display->rays->y0;
+					dis_v = dist(display->pos->x, display->pos->y, vx, vy, display->rays->a);
 					count = display->maps->max_y;
 				}
 				else
@@ -240,6 +247,18 @@ void	draw_rays(t_display *display)
 		}
 		printf("ray angle is %f\n", display->rays->a);
 		printf("player angle is %f\n", display->pos->a);
+		if (dis_v < dis_h)
+		{
+			display->rays->x0 = vx;
+			display->rays->y0 = vy;
+
+		}
+		if (dis_v > dis_h)
+		{
+			display->rays->x0 = hx;
+			display->rays->y0 = hy;
+
+		}
 		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
 			draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
 	}
