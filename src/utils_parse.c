@@ -6,24 +6,11 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 15:31:28 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 18:23:55 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-void	ft_freesplit(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 bool	m_error(int num)
 {
@@ -37,8 +24,12 @@ bool	m_error(int num)
 		ft_putstr_fd("cub3D: error: missing texture data\n", 2);
 	if (num == ERR_PTEX)
 		ft_putstr_fd("cub3D: error: wrong texture path\n", 2);
+	if (num == ERR_MTEX)
+		ft_putstr_fd("cub3D: error: equivocal texture data\n", 2);
+	if (num == ERR_COLS)
+		ft_putstr_fd("cub3D: error: floor-ceiling colors overflow\n", 2);
 	if (num == ERR_FLCL)
-		ft_putstr_fd("cub3D: error: wrong floor/ ceiling data\n", 2);
+		ft_putstr_fd("cub3D: error: wrong number of floor-ceiling parameters\n", 2);
 	return (false);
 }
 
@@ -96,44 +87,59 @@ bool	ft_gettextures(t_pdata *p)
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " ");
-		if (!ft_strncmp(dum, "NO", 2))
+		if (!ft_strncmp(dum, "NO", 2) && !p->tex[NO])
 			p->tex[NO] = ft_strtrim(dum, "NO ");
-		else if (!ft_strncmp(dum, "SO", 2))
+		else if (!ft_strncmp(dum, "SO", 2) && !p->tex[SO])
 			p->tex[SO] = ft_strtrim(dum, "SO ");
-		else if (!ft_strncmp(dum, "EA", 2))
+		else if (!ft_strncmp(dum, "EA", 2) && !p->tex[EA])
 			p->tex[EA] = ft_strtrim(dum, "EA ");
-		else if (!ft_strncmp(dum, "WE", 2))
+		else if (!ft_strncmp(dum, "WE", 2) && !p->tex[WE])
 			p->tex[WE] = ft_strtrim(dum, "WE ");
+		else if ((!ft_strncmp(dum, "NO", 2) && p->tex[NO]) \
+		|| (!ft_strncmp(dum, "SO", 2) && p->tex[SO])\
+		|| (!ft_strncmp(dum, "EA", 2) && p->tex[EA]) \
+		|| (!ft_strncmp(dum, "WE", 2) && p->tex[WE]))
+			return (free(dum), m_error(ERR_MTEX));
 		free(dum);
 		tmp = tmp->next;
 	}
-	if (!checktextures(p))
+	return (checktextures(p) && true);
+}
+bool	ft_chkrec(t_pdata *p)
+{
+	int	i;
+
+	i = 0;
+	while (p && p->info && p->info[i])
+		i++;
+	if (i != 2)
 		return (false);
 	return (true);
 }
-bool	ft_checkfc(t_pdata *p, char **info)
+
+bool	ft_checkfc(t_pdata *p)
 {
 	int		i[2];
 	char	**arr;
 	int		n;
 
+	if (!ft_chkrec(p))
+		return (m_error(ERR_FLCL));
 	i[0] = 0;
-	while (info && info[i[0]])
+	while (p->info && p->info[i[0]])
 	{
-		arr = ft_split(info[i[0]], ',');
+		arr = ft_split(p->info[i[0]], ',');
 		i[1] = 0;
 		while (arr && arr[i[1]])
 		{
 			n = ft_atoi(arr[i[1]]);
-			if (n < 0 || n > 255 || i[0] > 2 || i[1] > 3)
-			{
-				ft_freesplit(arr);
-				return (m_error(ERR_FLCL));
-			}
+			if (n < 0 || n > 255)
+				return (ft_freesplit(arr), m_error(ERR_COLS));
 			else
-				p->fc[i[0]] |= n << (unsigned)(24 - i[1] * 8);
-			i[1]++;
+				p->fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
 		}
+		if (i[1] != 3)
+			return (ft_freesplit(arr), m_error(ERR_FLCL));
 		ft_freesplit(arr);
 		i[0]++;
 	}
@@ -144,23 +150,27 @@ bool	ft_getflcl(t_pdata *p)
 {
 	t_list	*tmp;
 	char	*dum;
-	char	**info;
 
 	tmp = p->fdata;
-	info = ft_calloc(3, sizeof(char *));
+	p->info = ft_calloc(3, sizeof(char *));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " ");
-		if (!ft_strncmp(dum, "F", 1))
-			info[F] = ft_strtrim(dum, "F ");
-		else if (!ft_strncmp(dum, "C", 1))
-			info[C] = ft_strtrim(dum, "C ");
+		if (!ft_strncmp(dum, "F", 1) && !p->info[F])
+			p->info[F] = ft_strtrim(dum, "F ");
+		else if (!ft_strncmp(dum, "C", 1) && !p->info[C])
+			p->info[C] = ft_strtrim(dum, "C ");
+		else if ((dum[0] == 'F' && p->info[F]) \
+			|| ((dum[0] == 'C' && p->info[C])))
+			return(free(dum), m_error(ERR_FLCL));
 		free(dum);
 		tmp = tmp->next;
 	}
+	tmp_prtlst(p->fdata);
+	tmp_prtarr(p->info);
 	p->fc[0] = 0;
 	p->fc[1] = 0;
-	if (!ft_checkfc(p, info))
+	if (!ft_checkfc(p))
 		return (false);
 	return (true);
 }
@@ -184,8 +194,8 @@ bool	ft_getdata(t_pdata	*p)
 		free(buf);
 	}
 	close (fd);
-	// if(!ft_gettextures(p))
-	// 	return (false);
+	if(!ft_gettextures(p))
+		return (false);
 	if (!ft_getflcl(p))
 		return (false);
 	// if (!ft_gettable(p))
