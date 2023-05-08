@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 12:56:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 15:33:29 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,11 @@ void	tmp_freearr(char **arr)
 
 void	tmp_freedisplay(t_display *d)
 {
-
-	if (d->pdata->fdata)
+	if (d && d->pdata && d->pdata->fdata)
 		tmp_freelst(d->pdata->fdata);
-	if (d->pdata->tex)
+	if (d && d->pdata && d->pdata->tex)
 		tmp_freearr(d->pdata->tex);
-	if (d->pdata)
+	if (d && d->pdata)
 		free(d->pdata);
 	if (d)
 		free(d);

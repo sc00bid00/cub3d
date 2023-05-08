@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/08 11:02:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 15:08:32 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,21 @@ enum	tex_ix
 	WE
 };
 
+enum	fc_ix
+{
+	F,
+	C
+};
+
 typedef struct s_pdata
 {
-	char	**argv;
-	t_list	*fdata;
-	char	**tab;
-	char	**tex;
-	long	*fc[2];
-	int		play_tab[2];
-	float	play_dir;
+	char		**argv;
+	t_list		*fdata;
+	char		**tab;
+	char		**tex;
+	uint32_t	fc[2];
+	int			play_tab[2];
+	float		play_dir;
 }	t_pdata;
 
 typedef	struct s_pos

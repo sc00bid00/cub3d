@@ -6,14 +6,24 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 13:34:35 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 15:31:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <debug.h>
 #include <cub3d.h>
 
+void	ft_freesplit(char **arr)
+{
+	int	i;
 
+	i = 0;
+	while (arr && arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
 bool	m_error(int num)
 {
@@ -27,6 +37,8 @@ bool	m_error(int num)
 		ft_putstr_fd("cub3D: error: missing texture data\n", 2);
 	if (num == ERR_PTEX)
 		ft_putstr_fd("cub3D: error: wrong texture path\n", 2);
+	if (num == ERR_FLCL)
+		ft_putstr_fd("cub3D: error: wrong floor/ ceiling data\n", 2);
 	return (false);
 }
 
@@ -40,7 +52,7 @@ bool	emptyline(char *str)
 	return (true);
 }
 
-bool	file_permission(char	*path)
+bool	file_permission(char *path)
 {
 	int	fd;
 
@@ -73,6 +85,7 @@ bool	checktextures(t_pdata *p)
 	return (true);
 }
 
+
 bool	ft_gettextures(t_pdata *p)
 {
 	t_list	*tmp;
@@ -98,14 +111,57 @@ bool	ft_gettextures(t_pdata *p)
 		return (false);
 	return (true);
 }
+bool	ft_checkfc(t_pdata *p, char **info)
+{
+	int		i[2];
+	char	**arr;
+	int		n;
 
-bool	ft_getflceil(t_pdata *p)
+	i[0] = 0;
+	while (info && info[i[0]])
+	{
+		arr = ft_split(info[i[0]], ',');
+		i[1] = 0;
+		while (arr && arr[i[1]])
+		{
+			n = ft_atoi(arr[i[1]]);
+			if (n < 0 || n > 255 || i[0] > 2 || i[1] > 3)
+			{
+				ft_freesplit(arr);
+				return (m_error(ERR_FLCL));
+			}
+			else
+				p->fc[i[0]] |= n << (unsigned)(24 - i[1] * 8);
+			i[1]++;
+		}
+		ft_freesplit(arr);
+		i[0]++;
+	}
+	return (true);
+}
+
+bool	ft_getflcl(t_pdata *p)
 {
 	t_list	*tmp;
 	char	*dum;
+	char	**info;
 
 	tmp = p->fdata;
-
+	info = ft_calloc(3, sizeof(char *));
+	while (tmp)
+	{
+		dum = ft_strtrim(tmp->content, " ");
+		if (!ft_strncmp(dum, "F", 1))
+			info[F] = ft_strtrim(dum, "F ");
+		else if (!ft_strncmp(dum, "C", 1))
+			info[C] = ft_strtrim(dum, "C ");
+		free(dum);
+		tmp = tmp->next;
+	}
+	p->fc[0] = 0;
+	p->fc[1] = 0;
+	if (!ft_checkfc(p, info))
+		return (false);
 	return (true);
 }
 
@@ -114,6 +170,7 @@ bool	ft_getdata(t_pdata	*p)
 	int		fd;
 	char	*buf;
 
+	p->fdata = NULL;
 	fd = open(p->argv[1], O_RDONLY);
 	if (fd < 0)
 		return (m_error(ERR_OPEN));
@@ -127,9 +184,9 @@ bool	ft_getdata(t_pdata	*p)
 		free(buf);
 	}
 	close (fd);
-	if(!ft_gettextures(p))
-		return (false);
-	if (!ft_getflceil(p))
+	// if(!ft_gettextures(p))
+	// 	return (false);
+	if (!ft_getflcl(p))
 		return (false);
 	// if (!ft_gettable(p))
 	// 	return (false);
