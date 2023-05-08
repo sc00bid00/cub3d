@@ -125,41 +125,42 @@ void	draw_rays(t_display *display)
 	// find horizontal intersections
 	
 	int count;
-	int r;
+	int r; //number of rays
 	float atan; // inverse tangens
 
 	display->rays->a = display->pos->a;
-	for (r = 0; r < 1; r++)
-	{
+	// for (r = 0; r < 1; r++)
+	// {
 		count = 0;
 		atan = -1 / tan (display->rays->a);
 		// ray facing upwards
-		if (display->rays->a > M_PI)
-		// if (display->rays->a > M_PI && display->rays->a < M_PI * 2)
+		// if (display->rays->a > M_PI)
+		if (display->rays->a > M_PI && display->rays->a < M_PI * 2)
 		{
 			// substracts 1 to make the point part of the cube above the line
 			// and not on the line;
 			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) - 0.0001;
-			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) / tan(display->rays->a));
-			// printf("ray x value is %f\n", display->rays->x0);
-			// printf("display->rays->y0 %f\n", display->rays->y0);
+			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) * atan);
+			printf("ray x value is %f\n", display->rays->x0);
+			printf("display->rays->y0 %f\n", display->rays->y0);
 			// printf("display->pos->y is %f\n", display->pos->y);
 			// printf("tan value is %f\n", tan(display->rays->a));
 			display->rays->y_off = mapS * -1;
-			display->rays->x_off = mapS * atan;
+			display->rays->x_off = -(display->rays->y_off) * atan;
 			printf("facing up\n");
 		}	
 		// ray facing downwards
-		else if (display->rays->a < M_PI)
-		// else if (display->rays->a < M_PI && display->rays->a > 0)
+		// else if (display->rays->a < M_PI)
+		else if (display->rays->a < M_PI && display->rays->a > 0)
 		{
 			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) + mapS;
-			display->rays->x0 = display->pos->x + (display->pos->y - display->rays->y0) * atan;
+			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) * atan);
 			display->rays->y_off = mapS;
-			display->rays->x_off = mapS * atan;
+			display->rays->x_off = -(display->rays->y_off) * atan;
 			printf("facing down\n");
 		}
-		else if (display->rays->a == M_PI || display->rays->a == 0)
+		// else if (display->rays->a == M_PI || display->rays->a == 0)
+		else if (display->rays->a == 0)
 		{
 			display->rays->x0 = display->pos->x;
 			display->rays->y0 = display->pos->y;
@@ -193,10 +194,10 @@ void	draw_rays(t_display *display)
 		printf("ray angle is %f\n", display->rays->a);
 		printf("player angle is %f\n", display->pos->a);
 		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
-			draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
-	}
+			;
+			// draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
+	// }
 }
-
 
 /* specify line details */
 void	draw_line(t_display *display, float posx, float posy)
@@ -209,46 +210,6 @@ void	draw_line(t_display *display, float posx, float posy)
 	x_end = posx + length * cos(display->pos->a);
 	y_end = posy + length * sin(display->pos->a);
 	draw_line_bresenham(display, posx, posy, x_end, y_end);
-}
-
-
-/* to be updated with Luca's Bresenham function */
-void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end)
-{
-	// Calculate the differences between the start and end points
-    int dx = abs(x_end - x_start);
-    int dy = abs(y_end - y_start);
-
-    // Determine the direction of the line in both the x and y directions
-    int sx = x_start < x_end ? 1 : -1;
-    int sy = y_start < y_end ? 1 : -1;
-
-    // Initialize the error term and the step values
-    int err = dx - dy;
-    int e2;
-
-    // Loop through each point along the line and plot the pixels
-    while (1 && x_start < WIDTH && y_start < HEIGHT && x_start > 0 && y_start > 0)
-    {
-        mlx_put_pixel(display->g_img, x_start, y_start, get_rgba(200, 200, 30));
-
-        if (x_start == x_end && y_start == y_end)
-        {
-            break;
-        }
-		e2 = 2 * err;
-        if (e2 > -dy)
-        {
-            err -= dy;
-            x_start += sx;
-        }
-
-        if (e2 < dx)
-        {
-            err += dx;
-            y_start += sy;
-        }
-    }
 }
 
 void	draw_player(t_display *display)

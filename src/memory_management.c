@@ -38,7 +38,7 @@ void	init_display(int argc, char **argv, t_display *display)
 			exit(EXIT_FAILURE);
 	display->pos->x = 300.0;
 	display->pos->y = 300.0;
-	display->pos->a = 1;
+	display->pos->a = 5.5;
 	display->pos->dx = cos(display->pos->a) * 5;
 	display->pos->dy = sin(display->pos->a) * 5; 
 	display->pos->x0 = 0;
