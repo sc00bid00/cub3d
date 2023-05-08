@@ -6,12 +6,14 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 11:05:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 13:34:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <debug.h>
 #include <cub3d.h>
+
+
 
 bool	m_error(int num)
 {
@@ -97,6 +99,16 @@ bool	ft_gettextures(t_pdata *p)
 	return (true);
 }
 
+bool	ft_getflceil(t_pdata *p)
+{
+	t_list	*tmp;
+	char	*dum;
+
+	tmp = p->fdata;
+
+	return (true);
+}
+
 bool	ft_getdata(t_pdata	*p)
 {
 	int		fd;
@@ -117,8 +129,8 @@ bool	ft_getdata(t_pdata	*p)
 	close (fd);
 	if(!ft_gettextures(p))
 		return (false);
-	// if (!ft_getflceil(p))
-	// 	return (false);
+	if (!ft_getflceil(p))
+		return (false);
 	// if (!ft_gettable(p))
 	// 	return (false);
 	return (true);
@@ -160,9 +172,8 @@ int	main(int argc, char **argv)
 		d->pdata->argv = argv;
 		d->pdata->fdata = NULL;
 		if (ft_getdata(d->pdata))
-		{
-			/* rest of main code*/
-		}
+			;
+			/* if we are here all input data should be ok */
 	}
 	tmp_freedisplay(d);
 	return (0);
