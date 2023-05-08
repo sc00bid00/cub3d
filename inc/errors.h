@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:14:32 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 18:20:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 19:27:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef enum e_error
 	ERR_MTEX,
 	ERR_PTEX,
 	ERR_COLS,
-	ERR_FLCL
+	ERR_FLCL,
+	ERR_NTBL,
+	ERR_NALL
 }	error_t;
 #endif

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 18:23:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 19:32:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ bool	m_error(int num)
 		ft_putstr_fd("cub3D: error: floor-ceiling colors overflow\n", 2);
 	if (num == ERR_FLCL)
 		ft_putstr_fd("cub3D: error: wrong number of floor-ceiling parameters\n", 2);
+	if (num == ERR_NTBL)
+		ft_putstr_fd("cub3D: error: no table found\n", 2);
+	if (num == ERR_NALL)
+		ft_putstr_fd("cub3D: error: data not allowed\n", 2);
+
 	return (false);
 }
 
@@ -75,7 +80,6 @@ bool	checktextures(t_pdata *p)
 	}
 	return (true);
 }
-
 
 bool	ft_gettextures(t_pdata *p)
 {
@@ -174,6 +178,54 @@ bool	ft_getflcl(t_pdata *p)
 		return (false);
 	return (true);
 }
+bool	tbl_line(char *str)
+{
+	while (str)
+	{
+		if (!ft_strchr(" 012NSEW", *str, 9))
+	}
+}
+
+char	**ft_gettable(t_pdata *p)
+{
+	t_list *tmp;
+
+	p->max_len = 0;
+	p->num_lines = 0;
+	/* continue from here */
+	if (!ft_goodtbl(p->fdata))
+		return (m_error(ERR_NTBL), NULL);
+}
+bool	allowdata(t_pdata *p)
+{
+	t_list	*tmp;
+	char	*dum;
+
+	tmp = p->fdata;
+	while (tmp)
+	{
+		if (tmp->content)
+			dum = ft_strtrim(tmp->content, ' ');
+		if (dum && !ft_strchr("NSWEFC1", dum[0]))
+			return (free(dum), m_error(ERR_NALL));
+		if (dum)
+			free(dum);
+		tmp = tmp->next;
+	}
+	return (true);
+}
+
+bool	get_everything(t_pdata *p)
+{
+	if (!allowdata(p))
+		return (false);
+	if	(!ft_gettextures(p))
+		return (false);
+	if (!ft_getflcl(p))
+		return (false);
+	if (!ft_gettable(p))
+		return (false);
+}
 
 bool	ft_getdata(t_pdata	*p)
 {
@@ -194,13 +246,7 @@ bool	ft_getdata(t_pdata	*p)
 		free(buf);
 	}
 	close (fd);
-	if(!ft_gettextures(p))
-		return (false);
-	if (!ft_getflcl(p))
-		return (false);
-	// if (!ft_gettable(p))
-	// 	return (false);
-	return (true);
+	return (get_everything(p) && true);
 }
 
 bool	ft_checkname(char *s)
@@ -239,8 +285,8 @@ int	main(int argc, char **argv)
 		d->pdata->argv = argv;
 		d->pdata->fdata = NULL;
 		if (ft_getdata(d->pdata))
-			;
 			/* if we are here all input data should be ok */
+			;
 	}
 	tmp_freedisplay(d);
 	return (0);

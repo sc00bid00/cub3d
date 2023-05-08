@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/08 15:46:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/08 19:09:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,25 @@ enum	fc_ix
 	C
 };
 
+/* t_pdata = structure to collect all parsed data
+fdata		support structlist with all lines from gnl
+			(support = needed for parsing purposes only)
+tab			table array
+max_len		longest line in the table (num of columns = width)
+num_lines	number of lines (height)
+tex			textures array indexed by tex_ix
+info		support array for floor and ceiling colors indexed by fc_ix
+fd			[0] floor [1] ceiling colors, both unsigned
+play_tab	starting player position in tabe coodinates (x,y)
+play_dir	starting player orientation in radiants
+*/
 typedef struct s_pdata
 {
 	char		**argv;
 	t_list		*fdata;
 	char		**tab;
+	int			max_len;
+	int			num_lines;
 	char		**tex;
 	char		**info;
 	uint32_t	fc[2];
