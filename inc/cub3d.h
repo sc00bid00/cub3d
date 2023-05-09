@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 15:36:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:59:10 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <MLX42.h>
 # include <math.h>
 
-#define WIDTH 1024		// window width
-#define HEIGHT 1024		// window height
 #define mapS 64      //map cube size
+#define WIDTH mapS * 8		// window width
+#define HEIGHT mapS * 8	// window height
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
 

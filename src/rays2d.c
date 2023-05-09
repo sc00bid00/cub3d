@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 15:52:05 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:13:46 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char *map[] = {
     "10111101",
     "10000001",
     "10000001",
-    "10111101",
+    "10000001",
     "10000001",
     "11111111"
 };
@@ -30,22 +30,20 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 	float ntan;
 	int r;
 
-	ray->a = pos->a;
-	// ray->a = pos->a - DR * 30;
-	// if (ray->a < 0)
-	// 	ray->a += 2 * M_PI;
-	// if (ray->a > 0)
-	// 	ray->a -= 2 * M_PI;
+	// ray->a = pos->a;
+	ray->a = pos->a - DR * 30;
+	if (ray->a < 0)
+		ray->a += 2 * M_PI;
+	if (ray->a > 2 * M_PI)
+		ray->a -= 2 * M_PI;
 
-
-
-	// for (r = 0; r < 60; r++)
-	// {
+	for (r = 0; r < 60; r++)
+	{
 		count = 0;
 		//find horizontal intersections
-		// if ((ray->a) == 0 || (ray->a == M_PI * 2))
-		// 	atan = 1;
-		// else
+		if ((ray->a) == 0 || (ray->a == M_PI * 2))
+			atan = 1;
+		else
 			atan = -1 / tan (ray->a);
 		ntan = -tan(ray->a);
 		ray->dis_h = 100000;
@@ -130,12 +128,12 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 		if (pos->x > 0 && pos->x < WIDTH && ray->x0 > 0 && ray->x0 < WIDTH - 1 && pos->y > 0 && pos->y < HEIGHT && ray->y0 > 0 && ray->y0 < HEIGHT)		
 				draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
 		
-	// 	ray->a += DR;
-	// 	if (ray->a < 0)
-	// 		ray->a += 2 * M_PI;
-	// 	if (ray->a > 0)
-	// 		ray->a -= 2 * M_PI;
-	// }
+		ray->a += DR;
+		if (ray->a < 0)
+			ray->a += 2 * M_PI;
+		if (ray->a > 2 * M_PI)
+			ray->a -= 2 * M_PI;
+	}
 }
 
 /*	iterates through coordinate system */
