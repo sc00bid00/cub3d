@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 16:13:46 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:06:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *map[] = {
     "11111111"
 };
 
-void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
+void	draw_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 {
 	int	count;
 	float atan;
@@ -127,7 +127,15 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 		}
 		if (pos->x > 0 && pos->x < WIDTH && ray->x0 > 0 && ray->x0 < WIDTH - 1 && pos->y > 0 && pos->y < HEIGHT && ray->y0 > 0 && ray->y0 < HEIGHT)		
 				draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
+				
+		// draw 3D walls
+		float ca = pos->a - ray->a;
+		if (ca < 0)
+			ca += 2 * M_PI;
+		if (ca > 2 * M_PI)
+			ca -= 2 * M_PI;
 		
+		// end 3D walls
 		ray->a += DR;
 		if (ray->a < 0)
 			ray->a += 2 * M_PI;
@@ -152,8 +160,8 @@ void drawMap2D(t_display *display)
 		maps->x0 = 0;
 		while (maps->x < maps->max_x)
 		{
-			maps->y0 = (maps->y * display->maps->y_coeff);
-			maps->x0 = (maps->x * display->maps->x_coeff);
+			maps->y0 = (maps->y * maps->y_coeff);
+			maps->x0 = (maps->x * maps->x_coeff);
 			if (map[maps->y][maps->x] == '1')
 				draw_cube(display, true);
 			else
