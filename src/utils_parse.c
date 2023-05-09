@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 10:56:33 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 10:58:24 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,20 +174,8 @@ bool	get_colors(t_pdata *p)
 	return (true);
 }
 
-// char	**ft_gettable(t_pdata *p)
-// {
-// 	t_list *tmp;
 
-// 	p->max_len = 0;
-// 	p->num_lines = 0;
-// 	/* continue from here */
-// 	// if (!ft_goodtbl(p->fdata))
-// 	// 	return (put_msg(ERR_NTBL), NULL);
-// }
-/* check if all and only the needed information is the .cub file and it is in the right quantity
-(i.e. nothing missing, nothing double)*/
-
-bool	iter_data(t_list *tmp, int *chk)
+bool	chk_valid(t_list *tmp, int *chk)
 {
 	char	*dum;
 	int		flag;
@@ -223,7 +211,7 @@ bool	chk_data(t_pdata *p)
 
 	tmp = p->fdata;
 	chk = 0b000000;
-	if (!iter_data(tmp, &chk) || chk != 0b111111)
+	if (!chk_valid(tmp, &chk) || chk != 0b111111)
 		return (put_msg(ERR_NALL));
 	return (true);
 }
@@ -241,7 +229,7 @@ bool	get_everything(t_pdata *p)
 	return (true);
 }
 
-bool	get_data(t_pdata	*p)
+bool	get_data(t_pdata *p)
 {
 	int		fd;
 	char	*buf;
