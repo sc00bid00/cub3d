@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 15:40:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:39:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,23 @@
 #define HEIGHT 1024		// window height
 #define mapS 64      //map cube size
 #define COLOR 0
+#define DR 0.0174533 // 1 degree in radians
 
 // rays
-typedef struct s_rays
+typedef struct s_ray
 {
+	int		r; // number of rays
 	int		mx;
 	int		my;
-	float	x;	
-	float	y;
+	int		x;	
+	int		y;
 	float	a;	// ray angle
 	float	x0;	// coordinate in pixel
 	float	y0; // coordinate in pixel
 	float	x_off; // x offset in pixel
 	float	y_off; // y offset in pixel
 	
-}	t_rays;
+}	t_ray;
 	
 // player
 typedef	struct s_pos
@@ -54,6 +56,8 @@ typedef	struct s_pos
 }	t_pos;
 
 // map
+
+
 typedef struct s_maps
 {
 	int x;
@@ -76,7 +80,7 @@ typedef struct s_display
 	mlx_image_t		*g_img;
 	t_pos			*pos;
 	t_maps			*maps;
-	t_rays			*rays;
+	t_ray			*ray;
 }	t_display;
 
 
@@ -91,8 +95,8 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
 void		my_put_pixel(t_display *display);
 void		drawMap2D(t_display *display);
 void		draw_line(t_display *display, float posx, float posy);
-void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end);
+void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		draw_cube(t_display *display, bool wall);
-void		draw_rays(t_display *display);
+void		draw_rays(t_display *display, t_pos *pos, t_ray *ray);
 
 #endif

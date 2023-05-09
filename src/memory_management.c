@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/05 15:35:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:23:40 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void allocate_memory(t_display *display)
 	display->maps = ft_calloc(1, sizeof(t_maps));
 	if (!display->maps)
 		clean_up(display);
-	display->rays = ft_calloc(1, sizeof(t_rays));
-	if (!display->rays)
+	display->ray = ft_calloc(1, sizeof(t_ray));
+	if (!display->ray)
 		clean_up(display);
 }
 
@@ -36,9 +36,9 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
 		if (!display->mlx)
 			exit(EXIT_FAILURE);
-	display->pos->x = 300.0;
-	display->pos->y = 300.0;
-	display->pos->a = 5.5;
+	display->pos->x = 96.0;
+	display->pos->y = 224.0;
+	display->pos->a = 1.0472; // angle expressed in radians
 	display->pos->dx = cos(display->pos->a) * 5;
 	display->pos->dy = sin(display->pos->a) * 5; 
 	display->pos->x0 = 0;
@@ -56,15 +56,15 @@ void	init_display(int argc, char **argv, t_display *display)
 	// display->maps->x_coeff = WIDTH / display->maps->max_x;
 	// display->maps->y_coeff = HEIGHT / display->maps->max_y;
 
-	display->rays->mx = 0;
-	display->rays->my = 0;
-	display->rays->x = 0;
-	display->rays->y = 0;
-	display->rays->a = 0;
-	display->rays->x0 =	0;
-	display->rays->y0 = 0;
-	display->rays->x_off = 0;
-	display->rays->y_off = 0;
+	display->ray->mx = 0;
+	display->ray->my = 0;
+	display->ray->x = 0;
+	display->ray->y = 0;
+	display->ray->a = 0;
+	display->ray->x0 =	0;
+	display->ray->y0 = 0;
+	display->ray->x_off = 0;
+	display->ray->y_off = 0;
 }
 
 
@@ -76,8 +76,8 @@ int	clean_up(t_display *display)
 		free (display->pos);
 	if (display->maps)
 		free (display->maps);
-	if (display->rays)
-		free (display->rays);
+	if (display->ray)
+		free (display->ray);
 	if (display->mlx)
 	{
 		mlx_delete_image(display->mlx, display->g_img);

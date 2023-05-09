@@ -6,23 +6,12 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 15:56:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:37:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-
-char *map[] = {
-    "11111111",
-    "10000001",
-    "10000001",
-    "10000001",
-    "10000001",
-    "10000001",
-    "10000001",
-    "11111111"
-};
 
 /*	CUB3D
 *	--------
@@ -43,8 +32,8 @@ void	cub3d(char **argv, t_display *display)
 	// draw_fractal(display);
 	drawMap2D(display);
 	draw_player(display);
-	draw_line(display, display->pos->x, display->pos->y);
-	draw_rays(display);
+	// draw_line(display, display->pos->x, display->pos->y);
+	draw_rays(display, display->pos, display->ray);
 	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;
@@ -93,7 +82,7 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->a -=0.1;
+		display->pos->a -=0.05;
 		if(display->pos->a < 0)
 			display->pos->a += 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
@@ -105,7 +94,7 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
-		display->pos->a +=0.1;
+		display->pos->a +=0.05;
 		if(display->pos->a > 2 * M_PI)
 			display->pos->a -= 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
@@ -114,155 +103,18 @@ void	my_hook(void *param)
 		// display->pos->x += 5.0;
 	}
 	drawMap2D(display);
-	draw_line(display, display->pos->x, display->pos->y);
+	// draw_line(display, display->pos->x, display->pos->y);
 	draw_player(display);
-	draw_rays(display);
+	draw_rays(display, display->pos, display->ray);
 }
 
+/* uses pythagoran theorem to return distance from player */
+/* must be adjusted to avoid fishbowl effect */
 float 	dist(float ax, float ay, float bx, float by, float ang)
 {
 	return (sqrt((bx - ax) * (bx - ax)) + (by - ay) * (by - ay));
 }
 
-/*	mapS defined as 64 (pixel cube size) */
-void	draw_rays(t_display *display)
-{
-	int count;
-	int r; //number of rays
-	float atan; // inverse tangens
-	float ntan;
-
-	display->rays->a = display->pos->a;
-	for (r = 0; r < 1; r++)
-	{
-		// find horizontal intersections
-		float dis_h = 100000; float hx = display->pos->x; float hy = display->pos->y;
-		count = 0;
-		atan = -1 / tan (display->rays->a);
-		// ray facing up
-		if (display->rays->a > M_PI)
-		// if (display->rays->a > M_PI && display->rays->a < M_PI * 2)
-		{
-			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) - 0.0001;
-			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) * atan);
-			display->rays->y_off = mapS * -1;
-			display->rays->x_off = -(display->rays->y_off) * atan;
-		}	
-		// ray facing down
-		else if (display->rays->a < M_PI)
-		// else if (display->rays->a < M_PI && display->rays->a > 0)
-		{
-			display->rays->y0 = ((int) (display->pos->y / mapS) * mapS) + mapS;
-			display->rays->x0 = display->pos->x + ((display->pos->y - display->rays->y0) * atan);
-			display->rays->y_off = mapS;
-			display->rays->x_off = -(display->rays->y_off) * atan;
-		}
-		// else if (display->rays->a == M_PI || display->rays->a == 0)
-		else if (display->rays->a == 0)
-		{
-			display->rays->x0 = display->pos->x;
-			display->rays->y0 = display->pos->y;
-			count = display->maps->max_y;
-		}
-		while (count < display->maps->max_y)
-		{
-			display->rays->mx = (int) display->rays->x0 / mapS;
-			display->rays->my = (int) display->rays->y0 / mapS;
-			if (display->rays->mx < display->maps->max_x && display->rays->my < display->maps->max_y && display->rays->mx >= 0 && display->rays->my >= 0)
-			{
-				if (map[display->rays->mx][display->rays->my] == '1' || display->rays->mx == 0 || display->rays->my == 0 || display->rays->mx == display->maps->max_x - 1 || display->rays->my == display->maps->max_y - 1)
-				{
-					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
-					hx = display->rays->x0;
-					hy = display->rays->y0;
-					dis_h = dist(display->pos->x, display->pos->y, hx, hy, display->rays->a);
-					count = display->maps->max_y;
-				}
-				else
-				{
-					printf("no wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
-					display->rays->y0 += display->rays->y_off;
-					display->rays->x0 += display->rays->x_off;
-				}
-				count++;
-			}	
-		}
-		printf("ray angle is %f\n", display->rays->a);
-		printf("player angle is %f\n", display->pos->a);
-		// if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
-		// 	draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
-		
-			// find vertical intersections
-		count = 0;
-		ntan = -tan(display->rays->a);
-		float dis_v = 100000; float vx = display->pos->x; float vy = display->pos->y;
-		// ray facing left
-		// if (display->rays->a > M_PI)
-		if (display->rays->a > M_PI_2 && display->rays->a < (3 * M_PI_2))
-		{
-			display->rays->x0 = ((int) (display->pos->x / mapS) * mapS) - 0.0001;
-			display->rays->y0 = display->pos->y + ((display->pos->x - display->rays->x0) * ntan);
-			display->rays->x_off = mapS * -1;
-			display->rays->y_off = -(display->rays->x_off) * ntan;
-		}	
-		// ray facing right
-		// else if (display->rays->a < M_PI)
-		else if (display->rays->a < M_PI_2 || display->rays->a > (3 * M_PI_2))
-		{
-			display->rays->x0 = ((int) (display->pos->x / mapS) * mapS) + mapS;
-			display->rays->y0 = display->pos->y + ((display->pos->x - display->rays->x0) * ntan);
-			display->rays->x_off = mapS;
-			display->rays->y_off = -(display->rays->x_off) * ntan;
-		}
-		// else if (display->rays->a == M_PI || display->rays->a == 0)
-		else if (display->rays->a == 0)
-		{
-			display->rays->x0 = display->pos->x;
-			display->rays->y0 = display->pos->y;
-			count = display->maps->max_y;
-		}
-		while (count < display->maps->max_y)
-		{
-			display->rays->mx = (int) display->rays->x0 / mapS;
-			display->rays->my = (int) display->rays->y0 / mapS;
-			if (display->rays->mx < display->maps->max_x && display->rays->my < display->maps->max_y && display->rays->mx >= 0 && display->rays->my >= 0)
-			{
-				if (map[display->rays->mx][display->rays->my] == '1' || display->rays->mx == 0 || display->rays->my == 0 || display->rays->mx == display->maps->max_x - 1 || display->rays->my == display->maps->max_y - 1)
-				{
-					printf("hit wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
-					vx = display->rays->x0;
-					vy = display->rays->y0;
-					dis_v = dist(display->pos->x, display->pos->y, vx, vy, display->rays->a);
-					count = display->maps->max_y;
-				}
-				else
-				{
-					printf("no wall at coordinate[%d][%d]\n", display->rays->mx, display->rays->my);
-					display->rays->y0 += display->rays->y_off;
-					display->rays->x0 += display->rays->x_off;
-					// count++;
-				}
-			}
-			count++;
-		}
-		printf("ray angle is %f\n", display->rays->a);
-		printf("player angle is %f\n", display->pos->a);
-		if (dis_v < dis_h)
-		{
-			display->rays->x0 = vx;
-			display->rays->y0 = vy;
-
-		}
-		if (dis_v > dis_h)
-		{
-			display->rays->x0 = hx;
-			display->rays->y0 = hy;
-
-		}
-		if (display->pos->x > 0 && display->pos->x < WIDTH && display->rays->x0 > 0 && display->rays->x0 < WIDTH && display->pos->y > 0 && display->pos->y < HEIGHT && display->rays->y0 > 0 && display->rays->y0 < HEIGHT)
-			draw_line_bresenham(display, display->pos->x, display->pos->y, display->rays->x0, display->rays->y0);
-	}
-}
 
 /* specify line details */
 void	draw_line(t_display *display, float posx, float posy)
@@ -274,7 +126,7 @@ void	draw_line(t_display *display, float posx, float posy)
 	length = 20;
 	x_end = posx + length * cos(display->pos->a);
 	y_end = posy + length * sin(display->pos->a);
-	draw_line_bresenham(display, posx, posy, x_end, y_end);
+	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
 }
 
 void	draw_player(t_display *display)
@@ -341,33 +193,6 @@ void	draw_cube(t_display *display, bool wall)
 	}
 }
 
-/*	iterates through coordinate system */
-void drawMap2D(t_display *display)
-{
-	t_maps	*maps;
-
-	maps = display->maps;
-	maps->x = 0;
-	maps->y = 0;
-	maps->x0 = 0;
-	maps->y0 = 0;
-	while (maps->y < maps->max_y)
-	{
-		maps->x = 0;
-		maps->x0 = 0;
-		while (maps->x < maps->max_x)
-		{
-			maps->y0 = (maps->y * display->maps->y_coeff);
-			maps->x0 = (maps->x * display->maps->x_coeff);
-			if (map[maps->y][maps->x] == '1')
-				draw_cube(display, true);
-			else
-				draw_cube(display, false);
-			maps->x++;
-		}
-		maps->y++;
-	}
-}
 
 int	main(int argc, char **argv)
 {

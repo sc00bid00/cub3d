@@ -1,9 +1,11 @@
 #include <cub3d.h>
 
 /* to be updated with Luca's Bresenham function */
-void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end)
+void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color)
 {
-	// Calculate the differences between the start and end points
+	if (color == 270)
+        color = get_rgba(200, 200, 30);
+    // Calculate the differences between the start and end points
     int dx = abs(x_end - x_start);
     int dy = abs(y_end - y_start);
 
@@ -18,7 +20,7 @@ void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end
     // Loop through each point along the line and plot the pixels
     while (1 && x_start < WIDTH && y_start < HEIGHT && x_start > 0 && y_start > 0)
     {
-        mlx_put_pixel(display->g_img, x_start, y_start, get_rgba(200, 200, 30));
+        mlx_put_pixel(display->g_img, x_start, y_start, color);
 
         if (x_start == x_end && y_start == y_end)
         {
