@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 12:40:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 12:55:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ bool	put_err(int num)
 		ft_putstr_fd("cub3D: error: no table found\n", 2);
 	if (num == ERR_NALL)
 		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
+	if (num == ERR_OPEN)
+		ft_putstr_fd("cub3D: error: .cub file open failure\n", 2);
 	return (false);
 }
 
@@ -255,11 +257,9 @@ bool	chk_name(char *s)
 	if (s && ft_strlen(s) > 4)
 	{
 		str = s + ft_strlen(s) - 4;
-		if (ft_strncmp(str, ".cub", 4))
+		if (!ft_strncmp(str, ".cub", 4))
 			return (true);
 	}
-	else
-		return (true);
 	return (false);
 }
 
@@ -267,7 +267,7 @@ bool	chk_args(int argc, char **argv)
 {
 	if (argc != 2)
 		return (put_err(ERR_NARG));
-	if (chk_name(argv[1]))
+	if (!chk_name(argv[1]))
 		return (put_err(ERR_NAME));
 	return (true);
 }
