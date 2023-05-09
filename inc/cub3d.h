@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 13:39:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:36:07 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,31 @@
 // rays
 typedef struct s_ray
 {
-	int		r; // number of rays
-	int		mx;
-	int		my;
-	int		x;	
-	int		y;
+	int		r;	// number of rays
+	int		x;	// coordinate on grid
+	int		y;	// coordinate on grid
 	float	a;	// ray angle
 	float	x0;	// coordinate in pixel
 	float	y0; // coordinate in pixel
 	float	x_off; // x offset in pixel
 	float	y_off; // y offset in pixel
+	float	hx;
+	float 	hy;
+	float	vx;
+	float	vy;
+	float	dis_h;
+	float	dis_v;
 	
 }	t_ray;
 	
 // player
 typedef	struct s_pos
 {
-	float	x;
-	float	y;
-	float	dx; //	delta x
-	float	dy; //	delta y
-	float	a;	//	player view angle
+	float	x;	// coordinate on grid
+	float	y;	// coordinate on grid
+	float	dx; // delta x
+	float	dy; // delta y
+	float	a;	// player view angle
 	float	x0; //	x coordinate of start position
 	float	y0; // y coordinate of start position
 	float	a0; // starting angle (derived from N, S, W, E)
@@ -98,5 +102,6 @@ void		draw_line(t_display *display, float posx, float posy);
 void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		draw_cube(t_display *display, bool wall);
 void		draw_rays(t_display *display, t_pos *pos, t_ray *ray);
+float		dist(t_pos *pos, float bx, float by, float ang);
 
 #endif

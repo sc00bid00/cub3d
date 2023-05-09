@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 13:37:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:36:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	my_hook(void *param)
 
 /* uses pythagoran theorem to return distance from player */
 /* must be adjusted to avoid fishbowl effect */
-float 	dist(float ax, float ay, float bx, float by, float ang)
+float 	dist(t_pos *pos, float bx, float by, float ang)
 {
-	return (sqrt((bx - ax) * (bx - ax)) + (by - ay) * (by - ay));
+	return (sqrt((bx - pos->x) * (bx - pos->x)) + (by - pos->y) * (by - pos->y));
 }
 
 

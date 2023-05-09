@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 10:23:40 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:31:34 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	init_display(int argc, char **argv, t_display *display)
 	// display->maps->x_coeff = WIDTH / display->maps->max_x;
 	// display->maps->y_coeff = HEIGHT / display->maps->max_y;
 
-	display->ray->mx = 0;
-	display->ray->my = 0;
 	display->ray->x = 0;
 	display->ray->y = 0;
 	display->ray->a = 0;
@@ -65,6 +63,12 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->ray->y0 = 0;
 	display->ray->x_off = 0;
 	display->ray->y_off = 0;
+	display->ray->hx = 0;
+	display->ray->hy = 0;
+	display->ray->vx = 0;
+	display->ray->vy = 0;
+	display->ray->dis_h = 10000;
+	display->ray->dis_v = 10000;
 }
 
 
