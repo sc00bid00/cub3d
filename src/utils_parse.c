@@ -6,13 +6,13 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 10:58:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 12:40:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-bool	put_msg(int num)
+bool	put_err(int num)
 {
 	if (num == ERR)
 		ft_putstr_fd("cub3D: error\n", 2);
@@ -33,8 +33,7 @@ bool	put_msg(int num)
 	if (num == ERR_NTBL)
 		ft_putstr_fd("cub3D: error: no table found\n", 2);
 	if (num == ERR_NALL)
-		ft_putstr_fd("cub3D: error: data not allowed\n", 2);
-
+		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
 	return (false);
 }
 
@@ -68,12 +67,12 @@ bool	chk_textures(t_pdata *p)
 	while (p->tex[i])
 		i++;
 	if (i != 4)
-		return(put_msg(ERR_NTEX));
+		return(put_err(ERR_NTEX));
 	i = 0;
 	while (p->tex[i])
 	{
 		if (!chk_permit(p->tex[i]))
-			return (put_msg(ERR_PTEX));
+			return (put_err(ERR_PTEX));
 		if (!mlx_load_png(p->tex[i]) && !mlx_load_xpm42(p->tex[i]))
 			return (false);
 		i++;
@@ -90,21 +89,21 @@ bool	get_textures(t_pdata *p)
 	p->tex = ft_calloc(5, sizeof(char *));
 	while (tmp)
 	{
-		dum = ft_strtrim(tmp->content, " ");
+		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "NO", 2))
-			p->tex[NO] = ft_strtrim(dum, "NO ");
+			p->tex[NO] = ft_strtrim(dum, "NO \t");
 		else if (!ft_strncmp(dum, "SO", 2))
-			p->tex[SO] = ft_strtrim(dum, "SO ");
+			p->tex[SO] = ft_strtrim(dum, "SO \t");
 		else if (!ft_strncmp(dum, "EA", 2))
-			p->tex[EA] = ft_strtrim(dum, "EA ");
+			p->tex[EA] = ft_strtrim(dum, "EA \t");
 		else if (!ft_strncmp(dum, "WE", 2))
-			p->tex[WE] = ft_strtrim(dum, "WE ");
+			p->tex[WE] = ft_strtrim(dum, "WE \t");
 		free(dum);
 		tmp = tmp->next;
 	}
 	return (chk_textures(p) && true);
 }
-bool	chk_rec(t_pdata *p)
+bool	chk_records(t_pdata *p)
 {
 	int	i;
 
@@ -122,8 +121,8 @@ bool	chk_colors(t_pdata *p)
 	char	**arr;
 	int		n;
 
-	if (!chk_rec(p))
-		return (put_msg(ERR_FLCL));
+	if (!chk_records(p))
+		return (put_err(ERR_FLCL));
 	i[0] = 0;
 	while (p->info && p->info[i[0]])
 	{
@@ -133,12 +132,12 @@ bool	chk_colors(t_pdata *p)
 		{
 			n = ft_atoi(arr[i[1]]);
 			if (n < 0 || n > 255)
-				return (ft_freesplit(arr), put_msg(ERR_COLS));
+				return (ft_freesplit(arr), put_err(ERR_COLS));
 			else
 				p->fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
 		}
 		if (i[1] != 3)
-			return (ft_freesplit(arr), put_msg(ERR_FLCL));
+			return (ft_freesplit(arr), put_err(ERR_FLCL));
 		ft_freesplit(arr);
 		i[0]++;
 	}
@@ -154,19 +153,17 @@ bool	get_colors(t_pdata *p)
 	p->info = ft_calloc(3, sizeof(char *));
 	while (tmp)
 	{
-		dum = ft_strtrim(tmp->content, " ");
+		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "F", 1))
-			p->info[F] = ft_strtrim(dum, "F ");
+			p->info[F] = ft_strtrim(dum, "F \t");
 		else if (!ft_strncmp(dum, "C", 1))
-			p->info[C] = ft_strtrim(dum, "C ");
+			p->info[C] = ft_strtrim(dum, "C \t");
 		else if ((dum[0] == 'F') \
 			|| ((dum[0] == 'C')))
-			return(free(dum), put_msg(ERR_FLCL));
+			return(free(dum), put_err(ERR_FLCL));
 		free(dum);
 		tmp = tmp->next;
 	}
-	tmp_prtlst(p->fdata);
-	tmp_prtarr(p->info);
 	p->fc[0] = 0;
 	p->fc[1] = 0;
 	if (!chk_colors(p))
@@ -186,7 +183,7 @@ bool	chk_valid(t_list *tmp, int *chk)
 	{
 		flag = 0b000000;
 		if (tmp->content)
-			dum = ft_strtrim(tmp->content, " ");
+			dum = ft_strtrim(tmp->content, " \t");
 		if (dum && !ft_strchr(test, dum[0]) && dum[0] != '1')
 			return (free(dum), false);
 		else if (dum[0] != '1')
@@ -212,7 +209,7 @@ bool	chk_data(t_pdata *p)
 	tmp = p->fdata;
 	chk = 0b000000;
 	if (!chk_valid(tmp, &chk) || chk != 0b111111)
-		return (put_msg(ERR_NALL));
+		return (put_err(ERR_NALL));
 	return (true);
 }
 
@@ -237,7 +234,7 @@ bool	get_data(t_pdata *p)
 	p->fdata = NULL;
 	fd = open(p->argv[1], O_RDONLY);
 	if (fd < 0)
-		return (put_msg(ERR_OPEN));
+		return (put_err(ERR_OPEN));
 	while (1)
 	{
 		buf = get_next_line(fd);
@@ -251,7 +248,7 @@ bool	get_data(t_pdata *p)
 	return (get_everything(p) && true);
 }
 
-bool	ft_checkname(char *s)
+bool	chk_name(char *s)
 {
 	char	*str;
 
@@ -269,9 +266,9 @@ bool	ft_checkname(char *s)
 bool	chk_args(int argc, char **argv)
 {
 	if (argc != 2)
-		return (put_msg(ERR_NARG));
-	if (ft_checkname(argv[1]))
-		return (put_msg(ERR_NAME));
+		return (put_err(ERR_NARG));
+	if (chk_name(argv[1]))
+		return (put_err(ERR_NAME));
 	return (true);
 }
 
