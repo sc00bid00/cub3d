@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/08 19:09:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 15:43:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ enum	fc_ix
 };
 
 /* t_pdata = structure to collect all parsed data
-fdata		support structlist with all lines from gnl
+fdata		support list with all lines from gnl
 			(support = needed for parsing purposes only)
+first		support pointer to the first table line
 tab			table array
 max_len		longest line in the table (num of columns = width)
 num_lines	number of lines (height)
@@ -59,6 +60,7 @@ typedef struct s_pdata
 {
 	char		**argv;
 	t_list		*fdata;
+	t_list		*first;
 	char		**tab;
 	int			max_len;
 	int			num_lines;

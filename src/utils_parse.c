@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 12:55:21 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:47:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	put_err(int num)
 {
-	if (num == ERR)
-		ft_putstr_fd("cub3D: error\n", 2);
+	if (num == ERR_AMEM)
+		ft_putstr_fd("cub3D: memory error\n", 2);
 	if (num == ERR_NARG)
 		ft_putstr_fd("cub3D: error: wrong arguments number\n", 2);
 	if (num == ERR_NAME)
@@ -29,13 +29,15 @@ bool	put_err(int num)
 	if (num == ERR_COLS)
 		ft_putstr_fd("cub3D: error: floor-ceiling colors overflow\n", 2);
 	if (num == ERR_FLCL)
-		ft_putstr_fd("cub3D: error: wrong number of floor-ceiling parameters\n", 2);
+		ft_putstr_fd("cub3D: error: floor-ceiling params number\n", 2);
 	if (num == ERR_NTBL)
 		ft_putstr_fd("cub3D: error: no table found\n", 2);
 	if (num == ERR_NALL)
 		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
 	if (num == ERR_OPEN)
 		ft_putstr_fd("cub3D: error: .cub file open failure\n", 2);
+	if (num == ERR_WTBL)
+		ft_putstr_fd("cub3D: error: wrong table format\n", 2);
 	return (false);
 }
 
@@ -89,6 +91,8 @@ bool	get_textures(t_pdata *p)
 
 	tmp = p->fdata;
 	p->tex = ft_calloc(5, sizeof(char *));
+	if (!p->tex)
+		return (put_err(ERR_AMEM));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
@@ -153,6 +157,8 @@ bool	get_colors(t_pdata *p)
 
 	tmp = p->fdata;
 	p->info = ft_calloc(3, sizeof(char *));
+	if (!p->info)
+		return (put_err(ERR_AMEM));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
@@ -215,6 +221,76 @@ bool	chk_data(t_pdata *p)
 	return (true);
 }
 
+bool	chk_lines(t_pdata *p)
+{
+	int	i;
+	int	gate;
+
+	while (p->tab[0])
+		if (p->tab[0] && !ft_strchr(" 1", *(p->tab[0]++)))
+			return (put_err(ERR_WTBL));
+	while (p->tab[p->num_lines])
+		if (p->tab[p->num_lines] \
+			&& !ft_strchr(" 1", *(p->tab[p->num_lines]++)))
+			return (put_err(ERR_WTBL));
+	i = 1;
+	gate = 0;
+	while (i < p->num_lines - 1)
+	{
+		if (*(p->tab[i]) == 1 && !gate)
+			gate ^= 1;
+	}
+}
+
+bool	chk_table(t_pdata *p)
+{
+	t_list	*tmp;
+	int		i;
+
+	tmp = p->first;
+	p->tab = ft_calloc(p->num_lines + 1, sizeof(char *));
+	if (!p->fdata)
+		return (ERR_AMEM);
+	i = 0;
+	while (tmp)
+	{
+		p->tab[i] = ft_calloc(p->max_len + 1, 1);
+		ft_memcpy(p->tab[i], tmp->content, (size_t)p->max_len);
+		i++;
+	}
+	if (!chk_lines(p))
+		return (false);
+	return (true);
+}
+
+bool	get_table(t_pdata *p)
+{
+	t_list	*tmp;
+	char	*dum;
+
+	while (p->first)
+	{
+		dum = ft_strtrim(p->first->content, " \t");
+		if (dum[0] == '1')
+			break ;
+		free(dum);
+		p->first = p->first->next;
+	}
+	if (!p->first->next)
+		return(put_err(ERR_NTBL));
+	tmp = p->first;
+	while (tmp)
+	{
+		if (tmp->content && p->max_len < ft_strlen(tmp->content))
+			p->max_len = ft_strlen(tmp->content);
+		p->num_lines++;
+		tmp = tmp->next;
+	}
+	if (!chk_table(p))
+		return (put_err(ERR_WTBL));
+	return (true);
+}
+
 bool	get_everything(t_pdata *p)
 {
 	if (!chk_data(p))
@@ -223,8 +299,8 @@ bool	get_everything(t_pdata *p)
 		return (false);
 	if (!get_colors(p))
 		return (false);
-	// if (!ft_gettable(p))
-	// 	return (false);
+	if (!get_table(p))
+		return (false);
 	return (true);
 }
 
@@ -278,9 +354,13 @@ int	main(int argc, char **argv)
 	t_display	*d;
 
 	d = ft_calloc(1, sizeof(t_display));
+	if (!d)
+		return (put_err(ERR_AMEM));
 	if (chk_args(argc, argv))
 	{
 		d->pdata = ft_calloc(1, sizeof(t_pdata));
+			if (!d->pdata)
+				return (put_err(ERR_AMEM));
 		d->pdata->argv = argv;
 		d->pdata->fdata = NULL;
 		if (get_data(d->pdata))

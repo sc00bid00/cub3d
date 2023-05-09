@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/08 18:22:54 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:11:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void	tmp_freedisplay(t_display *d)
 		ft_freesplit_2(d->pdata->tex, 5);
 	if (d && d->pdata && d->pdata->info)
 		ft_freesplit_2(d->pdata->info, 3);
+	if (d && d->pdata && d->pdata->tab)
+		ft_freesplit(d->pdata->tab);
 	if (d && d->pdata)
 		free(d->pdata);
 	if (d)
