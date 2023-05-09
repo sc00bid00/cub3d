@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 17:47:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/09 18:11:19 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ bool	chk_lines(t_pdata *p)
 	{
 		if (*(p->tab[i]) == 1 && !gate)
 			gate ^= 1;
+	/* continue from here */
 	}
 }
 
@@ -291,10 +292,8 @@ bool	get_table(t_pdata *p)
 	return (true);
 }
 
-bool	get_everything(t_pdata *p)
+bool	get_datarest(t_pdata *p)
 {
-	if (!chk_data(p))
-		return (false);
 	if	(!get_textures(p))
 		return (false);
 	if (!get_colors(p))
@@ -323,7 +322,9 @@ bool	get_data(t_pdata *p)
 		free(buf);
 	}
 	close (fd);
-	return (get_everything(p) && true);
+	if (!chk_data(p))
+		return (false);
+	return (get_datarest(p));
 }
 
 bool	chk_name(char *s)
@@ -359,8 +360,8 @@ int	main(int argc, char **argv)
 	if (chk_args(argc, argv))
 	{
 		d->pdata = ft_calloc(1, sizeof(t_pdata));
-			if (!d->pdata)
-				return (put_err(ERR_AMEM));
+		if (!d->pdata)
+			return (put_err(ERR_AMEM));
 		d->pdata->argv = argv;
 		d->pdata->fdata = NULL;
 		if (get_data(d->pdata))
