@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 17:11:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 20:46:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	tmp_prtlst(t_list *lst)
 	printf("=== debug tmp_prtlst ===\n");
 	while (tmp)
 	{
-		printf("%s", tmp->content);
+		printf("%s\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 }

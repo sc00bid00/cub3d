@@ -6,42 +6,29 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 16:29:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 20:47:43 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-bool	put_err(int num)
+bool	put_err(error_t ERR_NUM)
 {
-	const char	*m[] = {NULL, "cub3D: memory error\n", "cub3D: error: wrong arguments number\n"}
+	const char	*m[] = {NULL, \
+		"cub3D: error: memory error\n", \
+		"cub3D: error: wrong arguments number\n", \
+		"cub3D: error: wrong filename\n", \
+		"cub3D: error: .cub data not valid\n", \
+		"cub3D: error: .cub file open failure\n", \
+		"cub3D: error: missing texture data\n", \
+		"cub3D: error: equivocal texture data\n", \
+		"cub3D: error: wrong texture path\n", \
+		"cub3D: error: floor-ceiling colors overflow\n", \
+		"cub3D: error: floor-ceiling params number\n", \
+		"cub3D: error: no table found\n", \
+		"cub3D: error: wrong table format\n"};
 
-	/* finish the array */
-	if (num == ERR_AMEM)
-		ft_putstr_fd("cub3D: memory error\n", 2);
-	if (num == ERR_NARG)
-		ft_putstr_fd("cub3D: error: wrong arguments number\n", 2);
-	if (num == ERR_NAME)
-		ft_putstr_fd("cub3D: error: wrong filename\n", 2);
-	if (num == ERR_NALL)
-		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
-	if (num == ERR_OPEN)
-		ft_putstr_fd("cub3D: error: .cub file open failure\n", 2);
-	if (num == ERR_NTEX)
-		ft_putstr_fd("cub3D: error: missing texture data\n", 2);
-	if (num == ERR_MTEX)
-		ft_putstr_fd("cub3D: error: equivocal texture data\n", 2);
-	if (num == ERR_PTEX)
-		ft_putstr_fd("cub3D: error: wrong texture path\n", 2);
-	if (num == ERR_COLS)
-		ft_putstr_fd("cub3D: error: floor-ceiling colors overflow\n", 2);
-	if (num == ERR_FLCL)
-		ft_putstr_fd("cub3D: error: floor-ceiling params number\n", 2);
-	if (num == ERR_NTBL)
-		ft_putstr_fd("cub3D: error: no table found\n", 2);
-	if (num == ERR_WTBL)
-		ft_putstr_fd("cub3D: error: wrong table format\n", 2);
-	return (false);
+	return (ft_putstr_fd((char *)m[ERR_NUM], 2), false);
 }
 
 bool	chk_empty(char *str)
