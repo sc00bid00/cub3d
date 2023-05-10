@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/05 11:03:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:07:58 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	cub3d(char **argv, t_display *display)
 {
 	(void)	argv;
 
-	display->g_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
+	// display->threed_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
+	display->g_img = mlx_new_image(display->mlx, WIDTH/5, HEIGHT/5);
 	ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
 	mlx_key_hook(display->mlx, &my_keyhook, display);
@@ -32,7 +33,8 @@ void	cub3d(char **argv, t_display *display)
 	drawMap2D(display);
 	draw_player(display);
 	draw_line(display);
-	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
+	// mlx_image_to_window(display->mlx, display->threed_img, 0, 0);
+	mlx_image_to_window(display->mlx, display->g_img, 25, 25);
 	mlx_loop(display->mlx);
 	return ;
 }
