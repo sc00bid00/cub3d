@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 11:37:15 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:49:20 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,60 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 		}		
 }
 
+void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < 320 / 64)
+	{
+		j = 0;
+		maps->y0 = 0;
+		while (j < HEIGHT_W -1 && maps->x0 >=0 && maps->x0 <= HEIGHT_W - 1 && maps->y0 >= 0 && maps->y0 <= HEIGHT -1)
+		{
+			if (maps->y0 < HEIGHT_W - wall->line_off && maps->y0 > wall->line_off)
+				mlx_put_pixel(display->f_c_img, maps->x0, maps->y0, get_rgba(0,80,100));
+			else
+				mlx_put_pixel(display->f_c_img, maps->x0, maps->y0, get_rgba(80,0,100));
+			maps->y0++;
+			j++;
+		}
+		maps->x0++;
+		i++;
+	}
+}
+
+void	draw_scene3D(t_display *display)
+{
+	t_wall	*wall;
+	
+	wall = display->wall;
+	while (wall->count < 8)
+	{
+		draw_column(display, display->ray, wall,display->maps);
+		// draw_line_bresenham(display, wall->count, SCREEN_H - wall->line_off, wall->count, SCREEN_H + wall->line_off, get_rgba(10, 100, 10));
+		wall->count++;
+	}
+}
+
+/*	remove fisheye effet with cosinus, calculate line height using distance, */
+/*	calculate offset from middle horizontal line */
+void	calculate_3D_param(t_wall *wall, t_pos *pos, t_ray *ray)
+{
+	wall->ca = pos->a - ray->a;
+	if (wall->ca < 0)
+		wall->ca += 2 * M_PI;
+	if (wall->ca > 2 * M_PI)
+		wall->ca -= 2 * M_PI;
+	wall->dis_t = wall->dis_t * cos(wall->ca);
+	wall->line_h = (mapS * SCREEN_W) / wall->dis_t;
+	if (wall->line_h > SCREEN_W)
+		wall->line_h = SCREEN_W;
+	wall->line_off = SCREEN_H - wall->line_h / 2;
+}
+
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */
 /*	compare distances and select closer distance to determine ray length. */
@@ -176,44 +230,17 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		find_horizontal_intersec(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
 		compare_dist(ray, wall);
-		draw_rays(display, pos, ray);
+		// draw_rays(display, pos, ray);
+		calculate_3D_param(wall, pos, ray);
+		draw_column(display, ray, wall, display->maps);
 		
-		
-				
-		// draw 3D walls
-		wall->ca = pos->a - ray->a;
-		if (wall->ca < 0)
-			wall->ca += 2 * M_PI;
-		if (wall->ca > 2 * M_PI)
-			wall->ca -= 2 * M_PI;
-		wall->dis_t = wall->dis_t * cos(wall->ca); // remove fisheye
-		wall->line_h = (mapS * SCREEN_W) / wall->dis_t;
-		if (wall->line_h > SCREEN_W)
-			wall->line_h = SCREEN_W;
-		wall->line_off = SCREEN_H - wall->line_h / 2;
-		
-		draw_scene3D(display);
-		
-		// end 3D walls
 		ray->a += DR;
-		if (ray->a < 0)
-			ray->a += 2 * M_PI;
-		if (ray->a > 2 * M_PI)
-			ray->a -= 2 * M_PI;
+		reset_angles(display);
 	}
 }
 
-void	draw_scene3D(t_display *display)
-{
-	t_wall	*wall;
-	
-	wall = display->wall;
-	while (wall->count < 8)
-	{
-		draw_line_bresenham(display, wall->count, SCREEN_H - wall->line_off, wall->count, SCREEN_H + wall->line_off, get_rgba(10, 100, 10));
-		wall->count++;
-	}
-}
+
+
 
 /*	iterates through coordinate system */
 void drawMap2D(t_display *display)

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 11:16:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:17:50 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	cub3d(char **argv, t_display *display)
 {
 	(void)	argv;
 
+	display->f_c_img = mlx_new_image(display->mlx, WIDTH_W, HEIGHT_W);
+	ft_memset(display->f_c_img->pixels, 255, display->f_c_img->width \
+			* display->f_c_img->height * sizeof(int32_t));
 	display->g_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
 	ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
 			* display->g_img->height * sizeof(int32_t));
@@ -34,6 +37,7 @@ void	cub3d(char **argv, t_display *display)
 	draw_player(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
+	mlx_image_to_window(display->mlx, display->f_c_img, 10, 10);
 	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;

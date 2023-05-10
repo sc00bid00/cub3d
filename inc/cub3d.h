@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 11:17:13 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:47:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <math.h>
 
 #define mapS 64      //map cube size
-#define WIDTH mapS * 8		// window width
-#define HEIGHT mapS * 8	// window height
+#define WIDTH mapS * 16		// minimap width
+#define HEIGHT mapS * 16	// minimap height
+#define	WIDTH_W mapS * 16 // window width
+#define	HEIGHT_W mapS * 16 // window height
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
-#define SCREEN_W 320 // screen width
-#define SCREEN_H 160 // screen width
+#define SCREEN_W mapS * 16 // screen width
+#define SCREEN_H mapS * 16 // screen height
 
 
 typedef struct s_wall
@@ -97,6 +99,7 @@ typedef struct s_display
 {
 	mlx_t			*mlx;
 	mlx_image_t		*g_img;
+	mlx_image_t		*f_c_img;
 	t_pos			*pos;
 	t_maps			*maps;
 	t_ray			*ray;
