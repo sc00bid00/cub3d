@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 18:11:19 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 10:24:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@ bool	put_err(int num)
 		ft_putstr_fd("cub3D: error: wrong arguments number\n", 2);
 	if (num == ERR_NAME)
 		ft_putstr_fd("cub3D: error: wrong filename\n", 2);
+	if (num == ERR_NALL)
+		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
+	if (num == ERR_OPEN)
+		ft_putstr_fd("cub3D: error: .cub file open failure\n", 2);
 	if (num == ERR_NTEX)
 		ft_putstr_fd("cub3D: error: missing texture data\n", 2);
-	if (num == ERR_PTEX)
-		ft_putstr_fd("cub3D: error: wrong texture path\n", 2);
 	if (num == ERR_MTEX)
 		ft_putstr_fd("cub3D: error: equivocal texture data\n", 2);
+	if (num == ERR_PTEX)
+		ft_putstr_fd("cub3D: error: wrong texture path\n", 2);
 	if (num == ERR_COLS)
 		ft_putstr_fd("cub3D: error: floor-ceiling colors overflow\n", 2);
 	if (num == ERR_FLCL)
 		ft_putstr_fd("cub3D: error: floor-ceiling params number\n", 2);
 	if (num == ERR_NTBL)
 		ft_putstr_fd("cub3D: error: no table found\n", 2);
-	if (num == ERR_NALL)
-		ft_putstr_fd("cub3D: error: .cub data not valid\n", 2);
-	if (num == ERR_OPEN)
-		ft_putstr_fd("cub3D: error: .cub file open failure\n", 2);
 	if (num == ERR_WTBL)
 		ft_putstr_fd("cub3D: error: wrong table format\n", 2);
 	return (false);
@@ -109,6 +109,7 @@ bool	get_textures(t_pdata *p)
 	}
 	return (chk_textures(p) && true);
 }
+
 bool	chk_records(t_pdata *p)
 {
 	int	i;
@@ -172,13 +173,12 @@ bool	get_colors(t_pdata *p)
 		free(dum);
 		tmp = tmp->next;
 	}
-	p->fc[0] = 0;
-	p->fc[1] = 0;
+	p->fc[0] = 0; // should not be required if initial ft_bzero is ok
+	p->fc[1] = 0; // should not be required if initial ft_bzero is ok
 	if (!chk_colors(p))
 		return (false);
 	return (true);
 }
-
 
 bool	chk_valid(t_list *tmp, int *chk)
 {
@@ -221,29 +221,7 @@ bool	chk_data(t_pdata *p)
 	return (true);
 }
 
-bool	chk_lines(t_pdata *p)
-{
-	int	i;
-	int	gate;
-
-	while (p->tab[0])
-		if (p->tab[0] && !ft_strchr(" 1", *(p->tab[0]++)))
-			return (put_err(ERR_WTBL));
-	while (p->tab[p->num_lines])
-		if (p->tab[p->num_lines] \
-			&& !ft_strchr(" 1", *(p->tab[p->num_lines]++)))
-			return (put_err(ERR_WTBL));
-	i = 1;
-	gate = 0;
-	while (i < p->num_lines - 1)
-	{
-		if (*(p->tab[i]) == 1 && !gate)
-			gate ^= 1;
-	/* continue from here */
-	}
-}
-
-bool	chk_table(t_pdata *p)
+bool	get_rows(t_pdata *p)
 {
 	t_list	*tmp;
 	int		i;
@@ -259,8 +237,7 @@ bool	chk_table(t_pdata *p)
 		ft_memcpy(p->tab[i], tmp->content, (size_t)p->max_len);
 		i++;
 	}
-	if (!chk_lines(p))
-		return (false);
+
 	return (true);
 }
 
@@ -287,7 +264,7 @@ bool	get_table(t_pdata *p)
 		p->num_lines++;
 		tmp = tmp->next;
 	}
-	if (!chk_table(p))
+	if (!get_rows(p))
 		return (put_err(ERR_WTBL));
 	return (true);
 }
@@ -349,6 +326,21 @@ bool	chk_args(int argc, char **argv)
 	return (true);
 }
 
+bool	init_pdata(t_display *d, char **argv)
+{
+	d->pdata = ft_calloc(1, sizeof(t_pdata));
+	if (!d->pdata)
+		return (put_err(ERR_AMEM));
+	ft_bzero(d->pdata, sizeof(t_pdata));
+	d->pdata->argv = argv;
+	d->pdata->fdata = NULL;
+	d->pdata->first = NULL;
+	d->pdata->info = NULL;
+	d->pdata->tab = NULL;
+	d->pdata->tex = NULL;
+	return (true);
+}
+
 /* error management and testing purpose */
 int	main(int argc, char **argv)
 {
@@ -359,12 +351,7 @@ int	main(int argc, char **argv)
 		return (put_err(ERR_AMEM));
 	if (chk_args(argc, argv))
 	{
-		d->pdata = ft_calloc(1, sizeof(t_pdata));
-		if (!d->pdata)
-			return (put_err(ERR_AMEM));
-		d->pdata->argv = argv;
-		d->pdata->fdata = NULL;
-		if (get_data(d->pdata))
+		if (init_pdata && get_data(d->pdata))
 			/* if we are here all input data should be ok */
 			;
 	}
