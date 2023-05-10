@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 10:24:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 11:11:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,20 @@ bool	chk_data(t_pdata *p)
 		return (put_err(ERR_NALL));
 	return (true);
 }
+bool	chk_rows(t_pdata *p)
+{
+	int	i;
 
+	i = 0;
+	while (p->tab[i])
+	{
+		while (*(p->tab[i]))
+			if (!ft_strchr(" 01NSEW", *(p->tab[i]++)))
+				return (false);
+		i++;
+	}
+	return (true);
+}
 bool	get_rows(t_pdata *p)
 {
 	t_list	*tmp;
@@ -237,7 +250,77 @@ bool	get_rows(t_pdata *p)
 		ft_memcpy(p->tab[i], tmp->content, (size_t)p->max_len);
 		i++;
 	}
+	i = 0;
+	while (p->tab && p->tab[i])
+	{
+		while (*(p->tab[i]))
+			if (*(p->tab[i]) == ' ')
+				*(p->tab[i])++ = '0';
+		i++;
+	}
+	return (true);
+}
+void	get_direction(float *player_direction, char c)
+{
+	if (c == 'E')
+		*player_direction = 0;
+	else if (c == 'N')
+		*player_direction = M_PI_2;
+	else if (c == 'W')
+		*player_direction = M_PI;
+	else if (c == 'S')
+		*player_direction = 1.5 * M_PI;
+}
 
+bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
+{
+	if(!player_chk && ft_strchr("NSEW", p->tab[i][j]))
+	{
+		player_chk = 1;
+		p->player_xyposition[0] = j;
+		p->player_xyposition[1] = i;
+		get_direction(&p->player_direction, p->tab[i][j]);
+	}
+	else if (ft_strchr("NSEW", p->tab[i][j]) && player_chk)
+		return (false);
+	return (true);
+}
+
+bool	get_player(t_pdata *p)
+{
+	int	i;
+	int	j;
+	int	player_chk;
+
+	player_chk = 0;
+	i = 0;
+	while (p->tab[i])
+	{
+		j = 0;
+		while (p->tab[i][j])
+		{
+			if (!get_xypostion(&player_chk, p, i, j))
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	if (!player_chk)
+		return (false);
+	return (true);
+}
+
+bool	get_table_elements(t_pdata *p)
+{
+	if (!get_rows(p))
+		return (false);
+	if (!chk_rows(p))
+		return (false);
+	if (!get_player(p))
+		return (false);
+	// TO DO:
+	// if (!flood_fill(p))
+	// 	return (false);
 	return (true);
 }
 
@@ -264,7 +347,7 @@ bool	get_table(t_pdata *p)
 		p->num_lines++;
 		tmp = tmp->next;
 	}
-	if (!get_rows(p))
+	if (!get_table_elements(p))
 		return (put_err(ERR_WTBL));
 	return (true);
 }

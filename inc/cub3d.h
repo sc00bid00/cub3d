@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 15:43:21 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 10:51:50 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 // position of the player
 
-enum	tex_ix
+enum	texture_index
 {
 	NO,
 	SO,
@@ -37,7 +37,7 @@ enum	tex_ix
 	WE
 };
 
-enum	fc_ix
+enum	colors_index
 {
 	F,
 	C
@@ -67,8 +67,8 @@ typedef struct s_pdata
 	char		**tex;
 	char		**info;
 	uint32_t	fc[2];
-	int			play_tab[2];
-	float		play_dir;
+	int			player_xyposition[2];
+	float		player_direction;
 }	t_pdata;
 
 typedef	struct s_pos
