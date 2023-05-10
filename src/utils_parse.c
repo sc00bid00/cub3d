@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 11:11:07 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/10 12:57:21 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,19 @@ bool	get_player(t_pdata *p)
 	return (true);
 }
 
+bool flood_fill(int col, int row, t_pdata *p)
+{
+	if (col <= 0 || col >= p->max_len || row <= 0 || row >= p->num_lines)
+		return (false);
+	if (p->tab[col][row] != '0')
+		return (true);
+	flood_fill(col, row - 1, p);
+	flood_fill(col, row + 1, p);
+	flood_fill(col - 1, row, p);
+	flood_fill(col + 1, row, p);
+	return (true);
+}
+
 bool	get_table_elements(t_pdata *p)
 {
 	if (!get_rows(p))
@@ -318,9 +331,8 @@ bool	get_table_elements(t_pdata *p)
 		return (false);
 	if (!get_player(p))
 		return (false);
-	// TO DO:
-	// if (!flood_fill(p))
-	// 	return (false);
+	if (!flood_fill(p->player_xyposition[0], p->player_xyposition[1], p))
+		return (false);
 	return (true);
 }
 
