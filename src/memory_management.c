@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 15:31:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 10:52:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void allocate_memory(t_display *display)
 		clean_up(display);
 	display->ray = ft_calloc(1, sizeof(t_ray));
 	if (!display->ray)
+		clean_up(display);
+	display->wall = ft_calloc(1, sizeof(t_wall));
+	if (!display->wall)
 		clean_up(display);
 }
 
@@ -53,8 +56,6 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->maps->max_y = 8;
 	display->maps->x_coeff = mapS;
 	display->maps->y_coeff = mapS;
-	// display->maps->x_coeff = WIDTH / display->maps->max_x;
-	// display->maps->y_coeff = HEIGHT / display->maps->max_y;
 
 	display->ray->x = 0;
 	display->ray->y = 0;
@@ -69,6 +70,14 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->ray->vy = 0;
 	display->ray->dis_h = 10000;
 	display->ray->dis_v = 10000;
+	display->ray->atan	= 0;
+	display->ray->ntan	= 0;
+
+	display->wall->dis_t = 0;
+	display->wall->ca = 0;
+	display->wall->line_h = 0;
+	display->wall->line_off = 0;
+	display->wall->count = 0;
 }
 
 
@@ -82,6 +91,8 @@ int	clean_up(t_display *display)
 		free (display->maps);
 	if (display->ray)
 		free (display->ray);
+	if (display->wall)
+		free (display->wall);
 	if (display->mlx)
 	{
 		mlx_delete_image(display->mlx, display->g_img);

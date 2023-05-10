@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/09 15:36:22 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:16:55 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	cub3d(char **argv, t_display *display)
 	drawMap2D(display);
 	draw_player(display);
 	// draw_line(display, display->pos->x, display->pos->y);
-	draw_rays(display, display->pos, display->ray);
+	calc_rays(display, display->pos, display->ray, display->wall);
 	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;
@@ -105,7 +105,7 @@ void	my_hook(void *param)
 	drawMap2D(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	draw_player(display);
-	draw_rays(display, display->pos, display->ray);
+	calc_rays(display, display->pos, display->ray, display->wall);
 }
 
 /* uses pythagoran theorem to return distance from player */

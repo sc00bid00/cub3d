@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 17:06:48 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:37:15 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,65 +23,102 @@ char *map[] = {
     "11111111"
 };
 
-void	draw_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
+void	reset_angles(t_display *display)
 {
-	int	count;
-	float atan;
-	float ntan;
-	int r;
+	if (display->ray->a < 0)
+		display->ray->a += 2 * M_PI;
+	if (display->ray->a > 2 * M_PI)
+		display->ray->a -= 2 * M_PI;
+}
 
-	// ray->a = pos->a;
-	ray->a = pos->a - DR * 30;
-	if (ray->a < 0)
-		ray->a += 2 * M_PI;
-	if (ray->a > 2 * M_PI)
-		ray->a -= 2 * M_PI;
+/*	if ray hits wall, calculate distance, else, add offset and check again */
+void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
+{
+	int count;
 
-	for (r = 0; r < 60; r++)
+	count = 0;
+	while (count < display->maps->max_y)
 	{
-		count = 0;
-		//find horizontal intersections
-		if ((ray->a) == 0 || (ray->a == M_PI * 2))
-			atan = 1;
-		else
-			atan = -1 / tan (ray->a);
-		ntan = -tan(ray->a);
-		ray->dis_h = 100000;
-		ray->hx = pos->x;
-		ray->vx = pos->y; 
-		if (ray->a > M_PI && ray->a <= M_PI * 2)
+		ray->y = (int) (ray->y0 / mapS);
+		ray->x = (int) (ray->x0 / mapS);
+		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y 
+			&& ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
 		{
-			ray->y0 = ((int)(pos->y/mapS)) * mapS - 1;
-			ray->y_off = -mapS;
+			ray->hx = ray->x0;
+			ray->hy = ray->y0;
+			ray->dis_h = dist(pos, ray->hx, ray->hy, ray->a);
+			count = display->maps->max_y;
 		}
-		if (ray->a <= M_PI && ray->a >= 0)
+		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
+			&& ray->x < display->maps->max_x)
 		{
-			ray->y0 = ((int)(pos->y/mapS)) * mapS + mapS;
-			ray->y_off = mapS;
+			ray->x0 = ray->x0 + ray->x_off;
+			ray->y0 = ray->y0 + ray->y_off;
 		}
-		ray->x0 = pos->x + ((pos->y - ray->y0) * atan);
-		ray->x_off = -(ray->y_off) * atan;
-		while (count < display->maps->max_y)
-		{
-			ray->y = (int) (ray->y0 / mapS);
-			ray->x = (int) (ray->x0 / mapS);
-			if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y && ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
-			{
-				ray->hx = ray->x0;
-				ray->hy = ray->y0;
-				ray->dis_h = dist(pos, ray->hx, ray->hy, ray->a);
-				count = display->maps->max_y;
-			}
-			else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y && ray->x < display->maps->max_x)
-			{
-				ray->x0 = ray->x0 + ray->x_off;
-				ray->y0 = ray->y0 + ray->y_off;
-			}
-			count++;
-		}
+		count++;
+	}
+}
 
-		//find vertical intersections
-		count = 0;
+/* calculate x - offset looking up or down */
+void	find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray)
+{
+	if ((ray->a) == 0 || (ray->a == M_PI * 2))
+			ray->atan = 1;
+	else
+		ray->atan = -1 / tan (ray->a);
+	ray->dis_h = 100000;
+	ray->hx = pos->x;
+	ray->hy = pos->y; 
+	if (ray->a > M_PI && ray->a <= M_PI * 2)
+	{
+		ray->y0 = ((int)(pos->y/mapS)) * mapS - 1;
+		ray->y_off = -mapS;
+	}
+	if (ray->a <= M_PI && ray->a >= 0)
+	{
+		ray->y0 = ((int)(pos->y/mapS)) * mapS + mapS;
+		ray->y_off = mapS;
+	}
+	ray->x0 = pos->x + ((pos->y - ray->y0) * ray->atan);
+	ray->x_off = -(ray->y_off) * ray->atan;
+	calc_next_h_intersection(display, pos, ray);
+}
+
+/*	if ray hits wall, calculate distance, else, add offset and check again */
+void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
+{
+	int count;
+
+	count = 0;
+	while (count < display->maps->max_y)
+	{
+		ray->y = (int) (ray->y0 / mapS);
+		ray->x = (int) (ray->x0 / mapS);
+		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
+			&& ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
+		{
+			ray->vx = ray->x0;
+			ray->vy = ray->y0;
+			ray->dis_v = dist(pos, ray->vx, ray->vy, ray->a);
+			count = display->maps->max_y;
+		}
+		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
+			&& ray->x < display->maps->max_x)
+		{
+			ray->x0 = ray->x0 + ray->x_off;
+			ray->y0 = ray->y0 + ray->y_off;
+		}
+		count++;
+	}
+}
+
+/* calculate y offset, looking left or right*/
+void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
+{
+	int count;
+	
+	count = 0;
+		ray->ntan = -tan(ray->a);
 		ray->dis_v = 100000;
 		ray->vx = pos->x;
 		ray->vy = pos->y;
@@ -95,45 +132,67 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 			ray->x0 = ((int)(pos->x/mapS)) * mapS + mapS;
 			ray->x_off = mapS;
 		}
-		ray->y0 = pos->y + ((pos->x - ray->x0) * ntan);
-		ray->y_off = -(ray->x_off) * ntan;
-		while (count < display->maps->max_y)
+		ray->y0 = pos->y + ((pos->x - ray->x0) * ray->ntan);
+		ray->y_off = -(ray->x_off) * ray->ntan;
+		calc_next_v_intersection(display, pos, ray);
+}
+
+/* check if horizontal or vertical intersection is closer to player and */
+/*	set variables for drawing + 3D calculation accordingly*/
+void	compare_dist(t_ray *ray, t_wall *wall)
+{
+	if (ray->dis_h > ray->dis_v)
+	{
+		ray->x0 = ray->vx;
+		ray->y0 = ray->vy;
+		wall->dis_t = ray->dis_v;
+	}
+	else if (ray->dis_h < ray->dis_v)
+	{
+		ray->x0 = ray->hx;
+		ray->y0 = ray->hy;
+		wall->dis_t = ray->dis_h;
+	}
+}
+
+void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
+{
+	if (pos->x > 0 && pos->x < WIDTH && ray->x0 > 0 && ray->x0 < WIDTH - 1
+		&& pos->y > 0 && pos->y < HEIGHT && ray->y0 > 0 && ray->y0 < HEIGHT)
 		{
-			ray->y = (int) (ray->y0 / mapS);
-			ray->x = (int) (ray->x0 / mapS);
-			if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y && ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
-			{
-				ray->vx = ray->x0;
-				ray->vy = ray->y0;
-				ray->dis_v = dist(pos, ray->vx, ray->vy, ray->a);
-				count = display->maps->max_y;
-			}
-			else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y && ray->x < display->maps->max_x)
-			{
-				ray->x0 = ray->x0 + ray->x_off;
-				ray->y0 = ray->y0 + ray->y_off;
-			}
-			count++;
-		}
-		if (ray->dis_h > ray->dis_v)
-		{
-			ray->x0 = ray->vx;
-			ray->y0 = ray->vy;
-		}
-		else if (ray->dis_h < ray->dis_v)
-		{
-			ray->x0 = ray->hx;
-			ray->y0 = ray->hy;
-		}
-		if (pos->x > 0 && pos->x < WIDTH && ray->x0 > 0 && ray->x0 < WIDTH - 1 && pos->y > 0 && pos->y < HEIGHT && ray->y0 > 0 && ray->y0 < HEIGHT)		
-				draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
+			draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
+		}		
+}
+
+/*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
+/*	intersections with grid. Find closest vertical and horizontal wall. */
+/*	compare distances and select closer distance to determine ray length. */
+void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
+{
+	ray->a = pos->a - DR * 30;
+	reset_angles(display);
+	for (ray->r = 0; ray->r < 60; ray->r++)
+	{
+		find_horizontal_intersec(display, pos, ray);
+		find_vertical_intersec(display, pos, ray);
+		compare_dist(ray, wall);
+		draw_rays(display, pos, ray);
+		
+		
 				
 		// draw 3D walls
-		float ca = pos->a - ray->a;
-		if (ca < 0)
-			ca += 2 * M_PI;
-		if (ca > 2 * M_PI)
-			ca -= 2 * M_PI;
+		wall->ca = pos->a - ray->a;
+		if (wall->ca < 0)
+			wall->ca += 2 * M_PI;
+		if (wall->ca > 2 * M_PI)
+			wall->ca -= 2 * M_PI;
+		wall->dis_t = wall->dis_t * cos(wall->ca); // remove fisheye
+		wall->line_h = (mapS * SCREEN_W) / wall->dis_t;
+		if (wall->line_h > SCREEN_W)
+			wall->line_h = SCREEN_W;
+		wall->line_off = SCREEN_H - wall->line_h / 2;
+		
+		draw_scene3D(display);
 		
 		// end 3D walls
 		ray->a += DR;
@@ -141,6 +200,18 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 			ray->a += 2 * M_PI;
 		if (ray->a > 2 * M_PI)
 			ray->a -= 2 * M_PI;
+	}
+}
+
+void	draw_scene3D(t_display *display)
+{
+	t_wall	*wall;
+	
+	wall = display->wall;
+	while (wall->count < 8)
+	{
+		draw_line_bresenham(display, wall->count, SCREEN_H - wall->line_off, wall->count, SCREEN_H + wall->line_off, get_rgba(10, 100, 10));
+		wall->count++;
 	}
 }
 

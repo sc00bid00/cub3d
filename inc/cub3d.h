@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/09 17:07:19 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:17:13 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,17 @@
 #define HEIGHT mapS * 8	// window height
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
+#define SCREEN_W 320 // screen width
+#define SCREEN_H 160 // screen width
 
 
 typedef struct s_wall
 {
-	float	dis_t;
+	int		count;
+	float	dis_t; // distance to wall from player
+	float	ca;
+	float	line_h; // line height
+	float	line_off; // full window height - line height / 2; line offset
 	
 }	t_wall;
 
@@ -49,6 +55,8 @@ typedef struct s_ray
 	float	vy;
 	float	dis_h;
 	float	dis_v;
+	float	atan;
+	float	ntan;
 	
 }	t_ray;
 	
@@ -109,7 +117,8 @@ void		drawMap2D(t_display *display);
 void		draw_line(t_display *display, float posx, float posy);
 void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		draw_cube(t_display *display, bool wall);
-void		draw_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
+void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 float		dist(t_pos *pos, float bx, float by, float ang);
+void		draw_scene3D(t_display *display);
 
 #endif
