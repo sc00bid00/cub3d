@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 15:49:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:03:00 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void	draw_scene3D(t_display *display)
 	while (wall->count < 8)
 	{
 		draw_column(display, display->ray, wall,display->maps);
-		// draw_line_bresenham(display, wall->count, SCREEN_H - wall->line_off, wall->count, SCREEN_H + wall->line_off, get_rgba(10, 100, 10));
 		wall->count++;
 	}
 }
@@ -230,17 +229,13 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		find_horizontal_intersec(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
 		compare_dist(ray, wall);
-		// draw_rays(display, pos, ray);
+		draw_rays(display, pos, ray);
 		calculate_3D_param(wall, pos, ray);
 		draw_column(display, ray, wall, display->maps);
-		
 		ray->a += DR;
 		reset_angles(display);
 	}
 }
-
-
-
 
 /*	iterates through coordinate system */
 void drawMap2D(t_display *display)

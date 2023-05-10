@@ -20,7 +20,7 @@ void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end
     // Loop through each point along the line and plot the pixels
     while (1 && x_start < WIDTH && y_start < HEIGHT && x_start > 0 && y_start > 0)
     {
-        mlx_put_pixel(display->g_img, x_start, y_start, color);
+        mlx_put_pixel(display->mm_img, x_start, y_start, color);
 
         if (x_start == x_end && y_start == y_end)
         {

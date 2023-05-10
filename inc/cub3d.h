@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 15:47:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:00:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ typedef struct s_maps
 typedef struct s_display
 {
 	mlx_t			*mlx;
-	mlx_image_t		*g_img;
-	mlx_image_t		*f_c_img;
+	mlx_image_t		*mm_img; // image layer for minimap
+	mlx_image_t		*f_c_img; // image layer for floor and ceiling
 	t_pos			*pos;
 	t_maps			*maps;
 	t_ray			*ray;

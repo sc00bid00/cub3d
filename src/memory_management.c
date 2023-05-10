@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 15:04:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:59:52 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	clean_up(t_display *display)
 		free (display->wall);
 	if (display->mlx)
 	{
-		mlx_delete_image(display->mlx, display->g_img);
+		mlx_delete_image(display->mlx, display->mm_img);
 		mlx_terminate(display->mlx);
 	}
 	if (display)

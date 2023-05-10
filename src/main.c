@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 15:17:50 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:59:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	cub3d(char **argv, t_display *display)
 	display->f_c_img = mlx_new_image(display->mlx, WIDTH_W, HEIGHT_W);
 	ft_memset(display->f_c_img->pixels, 255, display->f_c_img->width \
 			* display->f_c_img->height * sizeof(int32_t));
-	display->g_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
-	ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
-			* display->g_img->height * sizeof(int32_t));
+	display->mm_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
+	ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
+			* display->mm_img->height * sizeof(int32_t));
 	mlx_key_hook(display->mlx, &my_keyhook, display);
 	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
 	mlx_loop_hook(display->mlx, &my_hook, display);
@@ -38,7 +38,7 @@ void	cub3d(char **argv, t_display *display)
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
 	mlx_image_to_window(display->mlx, display->f_c_img, 10, 10);
-	mlx_image_to_window(display->mlx, display->g_img, 0, 0);
+	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);
 	mlx_loop(display->mlx);
 	return ;
 }
@@ -70,22 +70,22 @@ void	my_hook(void *param)
 	display = param;
 	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
 	{
-		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
-			* display->g_img->height * sizeof(int32_t));
+		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
+			* display->mm_img->height * sizeof(int32_t));
 		display->pos->x += display->pos->dx;
 		display->pos->y += display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
 	{
-		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
-			* display->g_img->height * sizeof(int32_t));
+		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
+			* display->mm_img->height * sizeof(int32_t));
 		display->pos->x -= display->pos->dx;
 		display->pos->y -= display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
 	{
-		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
-			* display->g_img->height * sizeof(int32_t));
+		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
+			* display->mm_img->height * sizeof(int32_t));
 		display->pos->a -=0.05;
 		if(display->pos->a < 0)
 			display->pos->a += 2 * M_PI;
@@ -96,8 +96,8 @@ void	my_hook(void *param)
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
-		ft_memset(display->g_img->pixels, COLOR, display->g_img->width \
-			* display->g_img->height * sizeof(int32_t));
+		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
+			* display->mm_img->height * sizeof(int32_t));
 		display->pos->a +=0.05;
 		if(display->pos->a > 2 * M_PI)
 			display->pos->a -= 2 * M_PI;
@@ -148,7 +148,7 @@ void	my_put_pixel(t_display *display)
 		display->pos->x = WIDTH - 1;
 	if (display->pos->x < 0)
 		display->pos->x = 0;
-	mlx_put_pixel(display->g_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
+	mlx_put_pixel(display->mm_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
 }
 
 
@@ -178,17 +178,17 @@ void	draw_cube(t_display *display, bool wall)
     while (i < display->maps->x_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
     {
     	if (wall)
-			mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(0,80,100));
+			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
 		else
-			mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(100,100,100));
+			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
         j = 1;
 		maps->y0 = (maps->y * display->maps->y_coeff);
 		while(j < display->maps->y_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
 		{
 			if (wall)
-				mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(0,80,100));
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
 			else
-				mlx_put_pixel(display->g_img, maps->x0, maps->y0, get_rgba(100,100,100));
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
 			maps->y0++;
 			j++;
 		}
