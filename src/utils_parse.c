@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 18:36:20 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 18:51:13 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,11 +459,6 @@ bool	init_pdata(t_display *d, char **argv)
 		return (put_err(ERR_MEMORY));
 	ft_bzero(d->pdata, sizeof(t_pdata));
 	d->pdata->argv = argv;
-	d->pdata->file_data = NULL;
-	d->pdata->first_maprow = NULL;
-	d->pdata->color_string = NULL;
-	d->pdata->map = NULL;
-	d->pdata->textures_path = NULL;
 	return (true);
 }
 
