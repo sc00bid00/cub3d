@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 17:53:24 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 18:40:39 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,10 @@ void	tmp_freelst(t_list *lst)
 	printf("=== debug tmp_freelst ===\n");
 	while (lst)
 	{
-		printf("debug: content\n");
 		if (lst->content)
 			free(lst->content);
-		printf("debug: list\n");
 		if (lst)
 			free(lst);
-		printf("debug: control\n");
 		tmp = lst->next;
 		if (!tmp)
 			break ;
@@ -104,9 +101,8 @@ void	tmp_freearr(char **arr)
 void	tmp_freedisplay(t_display *d)
 {
 	printf("=== debug freedisplay ===\n");
-	// tmp_prtlst(d->pdata->file_data);
-	// if (d && d->pdata && d->pdata->file_data)
-	// 	tmp_freelst(d->pdata->file_data);
+	if (d && d->pdata && d->pdata->file_data)
+		tmp_freelst(d->pdata->file_data);
 	if (d && d->pdata && d->pdata->textures_path)
 		ft_freesplit_2(d->pdata->textures_path, 5);
 	if (d && d->pdata && d->pdata->color_string)
