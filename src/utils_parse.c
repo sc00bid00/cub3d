@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 20:47:43 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 16:13:28 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ bool	chk_textures(t_pdata *p)
 	int	i;
 
 	i = 0;
-	while (p->tex[i])
+	while (p->textures_path[i])
 		i++;
 	if (i != 4)
 		return(put_err(ERR_NTEX));
 	i = 0;
-	while (p->tex[4])
+	while (p->textures_path[4])
 	{
-		if (!ft_strncmp(p->tex[i], ".png", ft_strlen(p->tex[i]) - 4) \
-			&& mlx_load_png(p->tex[i]) && mlx_errno)
+		if (!ft_strncmp(p->textures_path[i], ".png", ft_strlen(p->textures_path[i]) - 4) \
+			&& mlx_load_png(p->textures_path[i]) && mlx_errno)
 				return (false);
-		else if (mlx_load_xpm42(p->tex[i]) && mlx_errno)
+		else if (mlx_load_xpm42(p->textures_path[i]) && mlx_errno)
 			return (false);
 		i++;
 	}
@@ -68,21 +68,21 @@ bool	get_textures(t_pdata *p)
 	t_list	*tmp;
 	char	*dum;
 
-	tmp = p->fdata;
-	p->tex = ft_calloc(5, sizeof(char *));
-	if (!p->tex)
+	tmp = p->file_data;
+	p->textures_path = ft_calloc(5, sizeof(char *));
+	if (!p->textures_path)
 		return (put_err(ERR_AMEM));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "NO", 2))
-			p->tex[NO] = ft_strtrim(dum, "NO \t");
+			p->textures_path[NO] = ft_strtrim(dum, "NO \t");
 		else if (!ft_strncmp(dum, "SO", 2))
-			p->tex[SO] = ft_strtrim(dum, "SO \t");
+			p->textures_path[SO] = ft_strtrim(dum, "SO \t");
 		else if (!ft_strncmp(dum, "EA", 2))
-			p->tex[EA] = ft_strtrim(dum, "EA \t");
+			p->textures_path[EA] = ft_strtrim(dum, "EA \t");
 		else if (!ft_strncmp(dum, "WE", 2))
-			p->tex[WE] = ft_strtrim(dum, "WE \t");
+			p->textures_path[WE] = ft_strtrim(dum, "WE \t");
 		free(dum);
 		tmp = tmp->next;
 	}
@@ -94,7 +94,7 @@ bool	chk_records(t_pdata *p)
 	int	i;
 
 	i = 0;
-	while (p && p->info && p->info[i])
+	while (p && p->colors_path && p->colors_path[i])
 		i++;
 	if (i != 2)
 		return (false);
@@ -110,9 +110,9 @@ bool	chk_colors(t_pdata *p)
 	if (!chk_records(p))
 		return (put_err(ERR_FLCL));
 	i[0] = 0;
-	while (p->info && p->info[i[0]])
+	while (p->colors_path && p->colors_path[i[0]])
 	{
-		arr = ft_split(p->info[i[0]], ',');
+		arr = ft_split(p->colors_path[i[0]], ',');
 		i[1] = 0;
 		while (arr && arr[i[1]])
 		{
@@ -120,7 +120,7 @@ bool	chk_colors(t_pdata *p)
 			if (n < 0 || n > 255)
 				return (ft_freesplit(arr), put_err(ERR_COLS));
 			else
-				p->fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
+				p->colors_fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
 		}
 		if (i[1] != 3)
 			return (ft_freesplit(arr), put_err(ERR_FLCL));
@@ -135,25 +135,25 @@ bool	get_colors(t_pdata *p)
 	t_list	*tmp;
 	char	*dum;
 
-	tmp = p->fdata;
-	p->info = ft_calloc(3, sizeof(char *));
-	if (!p->info)
+	tmp = p->file_data;
+	p->colors_path = ft_calloc(3, sizeof(char *));
+	if (!p->colors_path)
 		return (put_err(ERR_AMEM));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "F", 1))
-			p->info[F] = ft_strtrim(dum, "F \t");
+			p->colors_path[F] = ft_strtrim(dum, "F \t");
 		else if (!ft_strncmp(dum, "C", 1))
-			p->info[C] = ft_strtrim(dum, "C \t");
+			p->colors_path[C] = ft_strtrim(dum, "C \t");
 		else if ((dum[0] == 'F') \
 			|| ((dum[0] == 'C')))
 			return(free(dum), put_err(ERR_FLCL));
 		free(dum);
 		tmp = tmp->next;
 	}
-	p->fc[0] = 0; // should not be required if initial ft_bzero is ok
-	p->fc[1] = 0; // should not be required if initial ft_bzero is ok
+	p->colors_fc[0] = 0; // should not be required if initial ft_bzero is ok
+	p->colors_fc[1] = 0; // should not be required if initial ft_bzero is ok
 	if (!chk_colors(p))
 		return (false);
 	return ( true);
@@ -171,9 +171,9 @@ bool	chk_valid(t_list *tmp, int *chk)
 		flag = 0b000000;
 		if (tmp->content)
 			dum = ft_strtrim(tmp->content, " \t");
-		if (dum && !ft_strchr(test, dum[0]) && dum[0] != '1')
+		if (dum && !ft_strchr(test, dum[0]) && !ft_strchr("01", dum[0]))
 			return (free(dum), false);
-		else if (dum[0] != '1')
+		else if (!ft_strchr("01", dum[0]))
 		{
 			flag |= 1 << (ft_strchr(test, dum[0]) - test);
 			if (flag & *chk)
@@ -193,26 +193,25 @@ bool	chk_data(t_pdata *p)
 	t_list	*tmp;
 	int		chk;
 
-	tmp = p->fdata;
+	tmp = p->file_data;
 	chk = 0b000000;
 	if (!chk_valid(tmp, &chk) || chk != 0b111111)
 		return (put_err(ERR_NALL));
 	return (true);
 }
-/* contiue from here*/
 bool	chk_rows(t_pdata *p)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (p->tab[i])
+	while (p->map[i])
 	{
 		j = 0;
-		while (p->tab[i][j])
+		while (p->map[i][j])
 		{
-			if (!ft_strchr(" 01NSEW\n", p->tab[i][j]))
-				return (printf("debug\n|%c|\n", p->tab[i][j]), false);
+			if (!ft_strchr(" 01NSEW\n", p->map[i][j]))
+				return (false);
 			j++;
 		}
 		i++;
@@ -220,19 +219,22 @@ bool	chk_rows(t_pdata *p)
 	return (true);
 }
 
-void	change_spacetozero(t_pdata *p)
+void	change_chartozero(t_pdata *p)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (p->tab && p->tab[i])
+	while (i < p->num_rows)
 	{
 		j = 0;
-		while (p->tab[i][j])
+		while (j < p->num_cols - 1)
 		{
-			if (p->tab[i][j] == ' ')
-				p->tab[i][j] = '0';
+			if (ft_strchr(" \n", p->map[i][j]))
+			{
+				p->map[i][j] = '0';
+				p->map_testfill[i][j] = '0';
+			}
 			j++;
 		}
 		i++;
@@ -244,43 +246,51 @@ bool	get_rows(t_pdata *p)
 	t_list	*tmp;
 	int		i;
 
-	tmp = p->first;
-	p->tab = ft_calloc(p->num_lines + 1, sizeof(char *));
-	if (!p->tab)
+	tmp = p->first_maprow;
+	p->map = ft_calloc(p->num_rows + 1, sizeof(char *));
+	p->map_testfill = ft_calloc(p->num_rows + 1, sizeof(char *));
+	if (!p->map || !p->map_testfill)
 		return (ERR_AMEM);
 	i = 0;
 	while (tmp)
 	{
-		p->tab[i] = ft_calloc(p->max_len + 1, 1);
-		ft_memcpy(p->tab[i], tmp->content, (size_t)p->max_len);
+		p->map[i] = ft_calloc(p->num_cols + 1, 1);
+		p->map_testfill[i] = ft_calloc(p->num_cols + 1, 1);
+		ft_memcpy(p->map[i], tmp->content, (size_t)p->num_cols);
+		ft_memcpy(p->map_testfill[i], tmp->content, (size_t)p->num_cols);
 		i++;
 		tmp = tmp->next;
 	}
-	change_spacetozero(p);
+	change_chartozero(p);
 	return (true);
 }
-void	get_direction(float *player_direction, char c)
+void	get_direction(float *player_directionrad, char c)
 {
 	if (c == 'E')
-		*player_direction = 0;
+		*player_directionrad = 0;
 	else if (c == 'N')
-		*player_direction = M_PI_2;
+		*player_directionrad = M_PI_2;
 	else if (c == 'W')
-		*player_direction = M_PI;
+		*player_directionrad = M_PI;
 	else if (c == 'S')
-		*player_direction = 1.5 * M_PI;
+		*player_directionrad = 1.5 * M_PI;
 }
 
 bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
 {
-	if(!*player_chk && ft_strchr("NSEW", p->tab[i][j]))
+	if(!*player_chk && ft_strchr("NSEW", p->map[i][j]))
 	{
 		*player_chk = 1;
-		p->player_xyposition[0] = j;
-		p->player_xyposition[1] = i;
-		get_direction(&p->player_direction, p->tab[i][j]);
+		p->player_positionxy[0] = j;
+		p->player_positionxy[1] = i;
+		if (p->player_positionxy[0] == 0 \
+			|| p->player_positionxy[0] == p->num_cols \
+			|| p->player_positionxy[1] == 0 \
+			|| p->player_positionxy[1] == p->num_rows)
+				return(false);
+		get_direction(&p->player_directionrad, p->map[i][j]);
 	}
-	else if (ft_strchr("NSEW", p->tab[i][j]) && player_chk)
+	else if (ft_strchr("NSEW", p->map[i][j]) && player_chk)
 		return (false);
 	return (true);
 }
@@ -293,10 +303,10 @@ bool	get_player(t_pdata *p)
 
 	player_chk = 0;
 	i = 0;
-	while (p->tab[i])
+	while (p->map[i])
 	{
 		j = 0;
-		while (p->tab[i][j])
+		while (p->map[i][j])
 		{
 			if (!get_xypostion(&player_chk, p, i, j))
 				return (false);
@@ -309,28 +319,51 @@ bool	get_player(t_pdata *p)
 	return (true);
 }
 
-bool flood_fill(int col, int row, t_pdata *p)
+void	flood_fill(int col, int row, t_pdata *p)
 {
-	if (col <= 0 || col >= p->max_len || row <= 0 || row >= p->num_lines)
-		return (false);
-	if (p->tab[col][row] != '0')
-		return (true);
+	if (col < 0 || col > p->num_cols - 1 || row < 0 || row > p->num_rows - 1)
+		return ;
+	printf("debug x %d y %d value %c\n", col, row, p->map_testfill[row][col]);
+	// if (p->map_testfill[row][col] != '0')
+	if (!ft_strchr("0NSEW", p->map_testfill[row][col]))
+		return ;
+	p->map_testfill[row][col] = 'x';
 	flood_fill(col, row - 1, p);
 	flood_fill(col, row + 1, p);
 	flood_fill(col - 1, row, p);
 	flood_fill(col + 1, row, p);
+	return ;
+}
+bool	chk_flood_fill(t_pdata *p)
+{
+	int	i;
+
+	if (ft_strchr(p->map_testfill[0], 'x')
+		|| ft_strchr(p->map_testfill[0], p->num_rows - 1))
+			return (false);
+	i = 0;
+	while (i < p->num_rows)
+	{
+		if (p->map_testfill[i][0] == 'x' \
+			|| p->map_testfill[i][p->num_cols - 1] == 'x')
+				return(false);
+		i++;
+	}
 	return (true);
 }
+
 
 bool	get_table_elements(t_pdata *p)
 {
 	if (!get_rows(p))
 		return (false);
 	if (!chk_rows(p))
-		return ( false);
+		return (false);
 	if (!get_player(p))
 		return (false);
-	if (!flood_fill(p->player_xyposition[0], p->player_xyposition[1], p))
+	flood_fill(p->player_positionxy[0], p->player_positionxy[1], p);
+	tmp_prtarr(p->map_testfill);
+	if (!chk_flood_fill(p))
 		return (false);
 	return (true);
 }
@@ -340,23 +373,26 @@ bool	get_table(t_pdata *p)
 	t_list	*tmp;
 	char	*dum;
 
-	p->first = p->fdata;
-	while (p->first)
+	p->first_maprow = p->file_data;
+	while (p->first_maprow)
 	{
-		dum = ft_strtrim(p->first->content, " \t");
-		if (dum[0] == '1')
+		dum = ft_strtrim(p->first_maprow->content, " \t");
+		if (ft_strchr("01", dum[0]))
+		{
+			free(dum);
 			break ;
+		}
 		free(dum);
-		p->first = p->first->next;
+		p->first_maprow = p->first_maprow->next;
 	}
-	if (!p->first)
+	if (!p->first_maprow)
 		return(put_err(ERR_NTBL));
-	tmp = p->first;
+	tmp = p->first_maprow;
 	while (tmp)
 	{
-		if (tmp->content && p->max_len < (int)ft_strlen(tmp->content))
-			p->max_len = ft_strlen(tmp->content);
-		p->num_lines++;
+		if (tmp->content && p->num_cols < (int)ft_strlen(tmp->content))
+			p->num_cols = ft_strlen(tmp->content);
+		p->num_rows++;
 		tmp = tmp->next;
 	}
 	if (!get_table_elements(p))
@@ -364,7 +400,7 @@ bool	get_table(t_pdata *p)
 	return (true);
 }
 
-bool	get_datarest(t_pdata *p)
+bool	get_restofdata(t_pdata *p)
 {
 	if	(!get_textures(p))
 		return (false);
@@ -380,7 +416,7 @@ bool	get_data(t_pdata *p)
 	int		fd;
 	char	*buf;
 
-	p->fdata = NULL;
+	p->file_data = NULL;
 	fd = open(p->argv[1], O_RDONLY);
 	if (fd < 0)
 		return (put_err(ERR_OPEN));
@@ -390,13 +426,13 @@ bool	get_data(t_pdata *p)
 		if (!buf)
 			break ;
 		if (!chk_empty(buf))
-			ft_lstadd_back(&(p->fdata), ft_lstnew(ft_strdup(buf)));
+			ft_lstadd_back(&(p->file_data), ft_lstnew(ft_strdup(buf)));
 		free(buf);
 	}
 	close (fd);
 	if (!chk_data(p))
 		return (false);
-	return (get_datarest(p));
+	return (get_restofdata(p));
 }
 
 bool	chk_name(char *s)
@@ -428,11 +464,11 @@ bool	init_pdata(t_display *d, char **argv)
 		return (put_err(ERR_AMEM));
 	ft_bzero(d->pdata, sizeof(t_pdata));
 	d->pdata->argv = argv;
-	d->pdata->fdata = NULL;
-	d->pdata->first = NULL;
-	d->pdata->info = NULL;
-	d->pdata->tab = NULL;
-	d->pdata->tex = NULL;
+	d->pdata->file_data = NULL;
+	d->pdata->first_maprow = NULL;
+	d->pdata->colors_path = NULL;
+	d->pdata->map = NULL;
+	d->pdata->textures_path = NULL;
 	return (true);
 }
 

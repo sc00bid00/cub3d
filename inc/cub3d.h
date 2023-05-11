@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 10:51:50 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 10:47:56 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,17 @@ play_dir	starting player orientation in radiants
 typedef struct s_pdata
 {
 	char		**argv;
-	t_list		*fdata;
-	t_list		*first;
-	char		**tab;
-	int			max_len;
-	int			num_lines;
-	char		**tex;
-	char		**info;
-	uint32_t	fc[2];
-	int			player_xyposition[2];
-	float		player_direction;
+	t_list		*file_data;
+	t_list		*first_maprow;
+	char		**map;
+	char		**map_testfill;
+	int			num_cols;
+	int			num_rows;
+	char		**textures_path;
+	char		**colors_path;
+	uint32_t	colors_fc[2];
+	int			player_positionxy[2];
+	float		player_directionrad;
 }	t_pdata;
 
 typedef	struct s_pos
