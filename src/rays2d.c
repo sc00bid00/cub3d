@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 15:24:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:36:39 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 			ray->hx = ray->x0;
 			ray->hy = ray->y0;
 			ray->dis_h = dist(pos, ray->hx, ray->hy, ray->a);
-			// printf("ray dist h = %f\n", ray->dis_h);
 			count = display->maps->max_y;
 		}
 		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
@@ -101,7 +100,6 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 			ray->vx = ray->x0;
 			ray->vy = ray->y0;
 			ray->dis_v = dist(pos, ray->vx, ray->vy, ray->a);
-			// wall->dis_v = wall_dist(pos, ray->vx, ray->vy, ray->a);
 			count = display->maps->max_y;
 		}
 		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
@@ -148,14 +146,14 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->x0 = ray->vx;
 		ray->y0 = ray->vy;
 		wall->dis_t = ray->dis_v;
-		wall->shading = get_rgba(20,60,100);
+		wall->shading = get_rgba(0,133,120);
 	}
 	else if (ray->dis_h < ray->dis_v)
 	{
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
 		wall->dis_t = ray->dis_h;
-		wall->shading = get_rgba(0,80,100);
+		wall->shading = get_rgba(0,89,79);
 	}
 }
 
@@ -168,70 +166,6 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 		}		
 }
 
-void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	// printf("line - offset is %f\n", wall->line_off);
-	// printf("Wall x0 is %f\n", wall->x0);
-	// wall->line_off = 100;
-	// printf("distance to ceiling is: %f\n", HEIGHT - wall->line_off);
-
-	while (i < WIDTH_MM / 60)
-	{
-		j = 0;
-		wall->y0 = 0;
-		while (j < HEIGHT_MM -1 && wall->x0 >=0 && wall->x0 <= WIDTH_MM - 1 && wall->y0 >= 0 && wall->y0 <= HEIGHT_MM -1)
-		{
-			// if (wall->y0 < (HEIGHT_MM - wall->line_off))
-			if (wall->y0 > wall->line_off && wall->y0 < (HEIGHT_MM - wall->line_off))
-				mlx_put_pixel(display->s_img, wall->x0, wall->y0, wall->shading );
-			else
-				mlx_put_pixel(display->s_img, wall->x0, wall->y0, get_rgba(20, 20, 200));
-			wall->y0++;
-			j++;
-		}
-		wall->x0++;
-		i++;
-	}
-}
-
-void	draw_scene3D(t_display *display)
-{
-	t_wall	*wall;
-	
-	wall = display->wall;
-	while (wall->count < 8)
-	{
-		draw_column(display, display->ray, wall,display->maps);
-		wall->count++;
-	}
-}
-
-/*	remove fisheye effet with cosinus, calculate line height using distance, */
-/*	calculate offset from middle horizontal line */
-void	calculate_3D_param(t_wall *wall, t_pos *pos, t_ray *ray)
-{
-	wall->ca = pos->a - ray->a;
-	// printf("angle difference is %f\n", wall->ca);
-	if (wall->ca < 0)
-		wall->ca += 2 * M_PI;
-	if (wall->ca > 2 * M_PI)
-		wall->ca -= 2 * M_PI;
-	wall->dis_t = wall->dis_t * cos(wall->ca);
-	printf("wall distance is %f\n", wall->dis_t);
-	wall->line_h = (HEIGHT_MM * mapS) / (wall->dis_t);
-	printf("line height is %f\n", wall->line_h);
-	if (wall->line_h > HEIGHT_MM)
-		wall->line_h = HEIGHT_MM;
-	wall->line_off = (HEIGHT_MM - wall->line_h) / 2;
-	
-	printf("wall->line_off is %f\n", wall->line_off);
-	
-}
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */

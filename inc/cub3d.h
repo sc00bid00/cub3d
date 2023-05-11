@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 14:43:44 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:34:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ void		draw_cube(t_display *display, bool wall);
 void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 float		dist(t_pos *pos, float bx, float by, float ang);
 void		draw_scene3D(t_display *display);
-
+void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
+void		calculate_3D_param(t_wall *wall, t_pos *pos, t_ray *ray);
 #endif

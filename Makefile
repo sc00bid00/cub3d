@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/09 09:59:32 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/11 15:33:43 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LIB_DIR = ./lib/
 SRC =	main.c \
 		memory_management.c \
 		draw_line_bresenham.c \
-		rays2d.c
+		rays2d.c \
+		scene.c
 # =======================
 
 BRED	=	\033[1;31m
