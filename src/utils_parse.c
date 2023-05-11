@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 18:17:45 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 18:36:20 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,7 @@ bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
 		p->player_positionxy[0] = j;
 		p->player_positionxy[1] = i;
 		if (p->player_positionxy[0] == 0 \
-			|| p->player_positionxy[0] == p->num_cols - 1 \
+			|| p->player_positionxy[0] == p->num_cols - 2 \
 			|| p->player_positionxy[1] == 0 \
 			|| p->player_positionxy[1] == p->num_rows - 1)
 				return(put_err(ERR_PLAYERPOSITION), false);
@@ -341,11 +341,10 @@ bool	chk_flood_fill(t_pdata *p)
 	while (i < p->num_rows)
 	{
 		if (p->map_testfill[i][0] == 'x' \
-			|| p->map_testfill[i][p->num_cols - 1] == 'x')
+			|| p->map_testfill[i][p->num_cols - 2] == 'x')
 				return(false);
 		i++;
 	}
-
 	return (true);
 }
 
@@ -359,9 +358,8 @@ bool	get_table_elements(t_pdata *p)
 	if (!get_player(p))
 		return (false);
 	flood_fill(p->player_positionxy[0], p->player_positionxy[1], p);
-	tmp_prtarr(p->map_testfill);
 	if (!chk_flood_fill(p))
-		return (false);
+		return (put_err(ERR_MAPDESIGN), false);
 	return (true);
 }
 
