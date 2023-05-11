@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 10:47:56 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:51:06 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_pdata
 	int			num_cols;
 	int			num_rows;
 	char		**textures_path;
-	char		**colors_path;
+	char		**color_string;
 	uint32_t	colors_fc[2];
 	int			player_positionxy[2];
 	float		player_directionrad;

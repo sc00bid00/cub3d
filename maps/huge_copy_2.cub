@@ -3,11 +3,11 @@ SO ./textures/purplestone.png
 WE ./textures/colorstone.png
 EA ./textures/wood.png
 
-C 255,255,255
+C 255,255,125
 F 255, 255, 1
 
 11111
 10001
-1N001
+1N000
 10001
 11111

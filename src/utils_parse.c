@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 17:38:58 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 18:17:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	put_err(error_t ERR_NUM)
 		"cub3D: error: wrong arguments number\n", \
 		"cub3D: error: wrong filename\n", \
 		"cub3D: error: file open failure\n", \
+		"cub3D: error: input parameters not ok\n", \
 		"cub3D: error: texture data\n", \
 		"cub3d: error: wrong color ranges\n", \
 		"cub3d: error: missinng color data\n", \
@@ -95,10 +96,11 @@ bool	chk_records(t_pdata *p)
 	int	i;
 
 	i = 0;
-	while (p && p->colors_path && p->colors_path[i])
+	while (p && p->color_string && p->color_string[i])
 		i++;
 	if (i != 2)
 		return (false);
+
 	return (true);
 }
 
@@ -109,22 +111,22 @@ bool	chk_colors(t_pdata *p)
 	int		n;
 
 	if (!chk_records(p))
-		return (put_err(ERR_COLORSMISSING));
+		return (put_err(ERR_MISSINGCOLORS));
 	i[0] = 0;
-	while (p->colors_path && p->colors_path[i[0]])
+	while (p->color_string && p->color_string[i[0]])
 	{
-		arr = ft_split(p->colors_path[i[0]], ',');
+		arr = ft_split(p->color_string[i[0]], ',');
 		i[1] = 0;
 		while (arr && arr[i[1]])
 		{
 			n = ft_atoi(arr[i[1]]);
 			if (n < 0 || n > 255)
-				return (ft_freesplit(arr), put_err(ERR_COLORRANGE));
+				return (ft_freesplit(arr), put_err(ERR_COLORBYTE));
 			else
 				p->colors_fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
 		}
 		if (i[1] != 3)
-			return (ft_freesplit(arr), put_err(ERR_COLORSMISSING));
+			return (ft_freesplit(arr), put_err(ERR_MISSINGCOLORS));
 		ft_freesplit(arr);
 		i[0]++;
 	}
@@ -137,24 +139,19 @@ bool	get_colors(t_pdata *p)
 	char	*dum;
 
 	tmp = p->file_data;
-	p->colors_path = ft_calloc(3, sizeof(char *));
-	if (!p->colors_path)
+	p->color_string = ft_calloc(3, sizeof(char *));
+	if (!p->color_string)
 		return (put_err(ERR_MEMORY));
 	while (tmp)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "F", 1))
-			p->colors_path[F] = ft_strtrim(dum, "F \t");
+			p->color_string[F] = ft_strtrim(dum, "F \t");
 		else if (!ft_strncmp(dum, "C", 1))
-			p->colors_path[C] = ft_strtrim(dum, "C \t");
-		else if ((dum[0] == 'F') \
-			|| ((dum[0] == 'C')))
-			return(free(dum), put_err(ERR_COLORSMISSING));
+			p->color_string[C] = ft_strtrim(dum, "C \t");
 		free(dum);
 		tmp = tmp->next;
 	}
-	p->colors_fc[0] = 0; // should not be required if initial ft_bzero is ok
-	p->colors_fc[1] = 0; // should not be required if initial ft_bzero is ok
 	if (!chk_colors(p))
 		return (false);
 	return ( true);
@@ -197,7 +194,7 @@ bool	chk_data(t_pdata *p)
 	tmp = p->file_data;
 	chk = 0b000000;
 	if (!chk_valid(tmp, &chk) || chk != 0b111111)
-		return (put_err(ERR_MAPDATA));
+		return (put_err(ERR_INPUT));
 	return (true);
 }
 bool	chk_rows(t_pdata *p)
@@ -466,7 +463,7 @@ bool	init_pdata(t_display *d, char **argv)
 	d->pdata->argv = argv;
 	d->pdata->file_data = NULL;
 	d->pdata->first_maprow = NULL;
-	d->pdata->colors_path = NULL;
+	d->pdata->color_string = NULL;
 	d->pdata->map = NULL;
 	d->pdata->textures_path = NULL;
 	return (true);

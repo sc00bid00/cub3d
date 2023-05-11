@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 13:48:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/11 17:53:24 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	tmp_freedisplay(t_display *d)
 	// 	tmp_freelst(d->pdata->file_data);
 	if (d && d->pdata && d->pdata->textures_path)
 		ft_freesplit_2(d->pdata->textures_path, 5);
-	if (d && d->pdata && d->pdata->colors_path)
-		ft_freesplit_2(d->pdata->colors_path, 3);
+	if (d && d->pdata && d->pdata->color_string)
+		ft_freesplit_2(d->pdata->color_string, 3);
 	if (d && d->pdata && d->pdata->map)
 		ft_freesplit(d->pdata->map);
 	if (d && d->pdata && d->pdata->map_testfill)
