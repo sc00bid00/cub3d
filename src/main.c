@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/10 15:59:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:02:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,26 @@ void	cub3d(char **argv, t_display *display)
 {
 	(void)	argv;
 
-	display->f_c_img = mlx_new_image(display->mlx, WIDTH_W, HEIGHT_W);
-	ft_memset(display->f_c_img->pixels, 255, display->f_c_img->width \
-			* display->f_c_img->height * sizeof(int32_t));
-	display->mm_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
+	// display->f_c_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
+	// ft_memset(display->f_c_img->pixels, 100, display->f_c_img->width \
+	// 		* display->f_c_img->height * sizeof(int32_t));
+	display->s_img = mlx_new_image(display->mlx, WIDTH_MM, HEIGHT_MM);
+	ft_memset(display->s_img->pixels, COLOR, display->s_img->width \
+			* display->s_img->height * sizeof(int32_t));
+	display->mm_img = mlx_new_image(display->mlx, WIDTH_MM, HEIGHT_MM);
 	ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
 	mlx_key_hook(display->mlx, &my_keyhook, display);
 	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
 	mlx_loop_hook(display->mlx, &my_hook, display);
-	// draw_fractal(display);
 	drawMap2D(display);
 	draw_player(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
-	mlx_image_to_window(display->mlx, display->f_c_img, 10, 10);
+	// exit(0);
+	// mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);
+	mlx_image_to_window(display->mlx, display->s_img, 512, 0);
 	mlx_loop(display->mlx);
 	return ;
 }
@@ -72,6 +76,8 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
+		ft_memset(display->s_img->pixels, 255, display->s_img->width \
+			* display->s_img->height * sizeof(int32_t));
 		display->pos->x += display->pos->dx;
 		display->pos->y += display->pos->dy;
 	}
@@ -79,6 +85,8 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
+		ft_memset(display->s_img->pixels, 255, display->s_img->width \
+			* display->s_img->height * sizeof(int32_t));
 		display->pos->x -= display->pos->dx;
 		display->pos->y -= display->pos->dy;
 	}
@@ -86,25 +94,25 @@ void	my_hook(void *param)
 	{
 		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
+		ft_memset(display->s_img->pixels, 255, display->s_img->width \
+			* display->s_img->height * sizeof(int32_t));
 		display->pos->a -=0.05;
 		if(display->pos->a < 0)
 			display->pos->a += 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
-		// display->pos->x -= display->pos->dx;
-		// display->pos->x -= 5.0;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
 		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
+		ft_memset(display->s_img->pixels, 255, display->s_img->width \
+			* display->s_img->height * sizeof(int32_t));
 		display->pos->a +=0.05;
 		if(display->pos->a > 2 * M_PI)
 			display->pos->a -= 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
-		// display->pos->x += display->pos->dx;
-		// display->pos->x += 5.0;
 	}
 	drawMap2D(display);
 	// draw_line(display, display->pos->x, display->pos->y);
@@ -116,8 +124,19 @@ void	my_hook(void *param)
 /* must be adjusted to avoid fishbowl effect */
 float 	dist(t_pos *pos, float bx, float by, float ang)
 {
-	return (sqrt((bx - pos->x) * (bx - pos->x)) + (by - pos->y) * (by - pos->y));
+	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
 }
+
+// float 	wall_dist(t_pos *pos, float bx, float by, float ang)
+// {
+// 	float x;
+// 	float y;
+
+// 	x = pos->x
+// 	printf("player pos x = %f\n", pos->x);
+// 	printf("player pos y = %f\n", pos->y);
+// 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
+// }
 
 
 /* specify line details */
@@ -140,12 +159,12 @@ void	draw_player(t_display *display)
 
 void	my_put_pixel(t_display *display)
 {
-	if (display->pos->y > HEIGHT)
-		display->pos->y = HEIGHT - 1;
+	if (display->pos->y > HEIGHT_MM)
+		display->pos->y = HEIGHT_MM - 1;
 	if (display->pos->y < 0)
 		display->pos->y = 0;
-	if (display->pos->x > WIDTH)
-		display->pos->x = WIDTH - 1;
+	if (display->pos->x > WIDTH_MM)
+		display->pos->x = WIDTH_MM - 1;
 	if (display->pos->x < 0)
 		display->pos->x = 0;
 	mlx_put_pixel(display->mm_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
@@ -175,15 +194,15 @@ void	draw_cube(t_display *display, bool wall)
 	i = 0;
 	j = 0;
 	maps = display->maps;
-    while (i < display->maps->x_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
+    while (i < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
     {
     	if (wall)
 			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
 		else
 			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
         j = 1;
-		maps->y0 = (maps->y * display->maps->y_coeff);
-		while(j < display->maps->y_coeff - 1 && maps->x0 < WIDTH && maps->y0 < HEIGHT)
+		maps->y0 = (maps->y * mapS);
+		while(j < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
 		{
 			if (wall)
 				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
@@ -211,6 +230,7 @@ int	main(int argc, char **argv)
 	// check_input(argc, argv, display);
 	init_display(argc, argv, display);
 	cub3d(argv, display);
+	// exit(0);
 	clean_up(display);
 	return (0);
 }

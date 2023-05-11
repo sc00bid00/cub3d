@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 15:59:52 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:45:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->wall->line_h = 0;
 	display->wall->line_off = 0;
 	display->wall->count = 0;
+	display->wall->x0 = 0;
+	display->wall->y0 = 0;
+	display->wall->x_coeff = WIDTH / WIDTH_MM;
+	display->wall->y_coeff = HEIGHT / HEIGHT_MM;
+	display->wall->shading = 0;
 }
 
 

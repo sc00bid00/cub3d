@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 16:00:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:43:44 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,32 @@
 # include <MLX42.h>
 # include <math.h>
 
-#define mapS 64      //map cube size
-#define WIDTH mapS * 16		// minimap width
-#define HEIGHT mapS * 16	// minimap height
-#define	WIDTH_W mapS * 16 // window width
-#define	HEIGHT_W mapS * 16 // window height
+#define WIDTH 1920	
+#define HEIGHT 1200	// players height 600 pixel 
+#define WIDTH_MM 512
+#define	HEIGHT_MM 512
+#define mapS 64     //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
-#define SCREEN_W mapS * 16 // screen width
-#define SCREEN_H mapS * 16 // screen height
+// #define SCREEN_W mapS * 16 // screen width
+// #define SCREEN_H mapS * 16 // screen height
 
 
+// variables related to 3D
 typedef struct s_wall
 {
 	int		count;
 	float	dis_t; // distance to wall from player
-	float	ca;
+	float	ca; // angle between player and ray
 	float	line_h; // line height
 	float	line_off; // full window height - line height / 2; line offset
+	float	x0;	// pixel coordinate x
+	float 	y0; // pixel coordinate y
+	float	dis_v;
+	float	dis_h;
+	float	x_coeff;
+	float 	y_coeff;
+	uint32_t	shading;
 	
 }	t_wall;
 
@@ -77,8 +85,6 @@ typedef	struct s_pos
 }	t_pos;
 
 // map
-
-
 typedef struct s_maps
 {
 	int x;
@@ -98,6 +104,7 @@ typedef struct s_maps
 typedef struct s_display
 {
 	mlx_t			*mlx;
+	mlx_image_t		*s_img; // image layer for 3d scene
 	mlx_image_t		*mm_img; // image layer for minimap
 	mlx_image_t		*f_c_img; // image layer for floor and ceiling
 	t_pos			*pos;

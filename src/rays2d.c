@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/10 16:03:00 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/11 15:24:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 			ray->hx = ray->x0;
 			ray->hy = ray->y0;
 			ray->dis_h = dist(pos, ray->hx, ray->hy, ray->a);
+			// printf("ray dist h = %f\n", ray->dis_h);
 			count = display->maps->max_y;
 		}
 		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
@@ -100,6 +101,7 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 			ray->vx = ray->x0;
 			ray->vy = ray->y0;
 			ray->dis_v = dist(pos, ray->vx, ray->vy, ray->a);
+			// wall->dis_v = wall_dist(pos, ray->vx, ray->vy, ray->a);
 			count = display->maps->max_y;
 		}
 		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
@@ -146,19 +148,21 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->x0 = ray->vx;
 		ray->y0 = ray->vy;
 		wall->dis_t = ray->dis_v;
+		wall->shading = get_rgba(20,60,100);
 	}
 	else if (ray->dis_h < ray->dis_v)
 	{
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
 		wall->dis_t = ray->dis_h;
+		wall->shading = get_rgba(0,80,100);
 	}
 }
 
 void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 {
-	if (pos->x > 0 && pos->x < WIDTH && ray->x0 > 0 && ray->x0 < WIDTH - 1
-		&& pos->y > 0 && pos->y < HEIGHT && ray->y0 > 0 && ray->y0 < HEIGHT)
+	if (pos->x > 0 && pos->x < WIDTH_MM && ray->x0 > 0 && ray->x0 < WIDTH_MM - 1
+		&& pos->y > 0 && pos->y < HEIGHT_MM && ray->y0 > 0 && ray->y0 < HEIGHT_MM)
 		{
 			draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
 		}		
@@ -171,20 +175,26 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 
 	i = 0;
 	j = 0;
-	while (i < 320 / 64)
+	// printf("line - offset is %f\n", wall->line_off);
+	// printf("Wall x0 is %f\n", wall->x0);
+	// wall->line_off = 100;
+	// printf("distance to ceiling is: %f\n", HEIGHT - wall->line_off);
+
+	while (i < WIDTH_MM / 60)
 	{
 		j = 0;
-		maps->y0 = 0;
-		while (j < HEIGHT_W -1 && maps->x0 >=0 && maps->x0 <= HEIGHT_W - 1 && maps->y0 >= 0 && maps->y0 <= HEIGHT -1)
+		wall->y0 = 0;
+		while (j < HEIGHT_MM -1 && wall->x0 >=0 && wall->x0 <= WIDTH_MM - 1 && wall->y0 >= 0 && wall->y0 <= HEIGHT_MM -1)
 		{
-			if (maps->y0 < HEIGHT_W - wall->line_off && maps->y0 > wall->line_off)
-				mlx_put_pixel(display->f_c_img, maps->x0, maps->y0, get_rgba(0,80,100));
+			// if (wall->y0 < (HEIGHT_MM - wall->line_off))
+			if (wall->y0 > wall->line_off && wall->y0 < (HEIGHT_MM - wall->line_off))
+				mlx_put_pixel(display->s_img, wall->x0, wall->y0, wall->shading );
 			else
-				mlx_put_pixel(display->f_c_img, maps->x0, maps->y0, get_rgba(80,0,100));
-			maps->y0++;
+				mlx_put_pixel(display->s_img, wall->x0, wall->y0, get_rgba(20, 20, 200));
+			wall->y0++;
 			j++;
 		}
-		maps->x0++;
+		wall->x0++;
 		i++;
 	}
 }
@@ -206,15 +216,21 @@ void	draw_scene3D(t_display *display)
 void	calculate_3D_param(t_wall *wall, t_pos *pos, t_ray *ray)
 {
 	wall->ca = pos->a - ray->a;
+	// printf("angle difference is %f\n", wall->ca);
 	if (wall->ca < 0)
 		wall->ca += 2 * M_PI;
 	if (wall->ca > 2 * M_PI)
 		wall->ca -= 2 * M_PI;
 	wall->dis_t = wall->dis_t * cos(wall->ca);
-	wall->line_h = (mapS * SCREEN_W) / wall->dis_t;
-	if (wall->line_h > SCREEN_W)
-		wall->line_h = SCREEN_W;
-	wall->line_off = SCREEN_H - wall->line_h / 2;
+	printf("wall distance is %f\n", wall->dis_t);
+	wall->line_h = (HEIGHT_MM * mapS) / (wall->dis_t);
+	printf("line height is %f\n", wall->line_h);
+	if (wall->line_h > HEIGHT_MM)
+		wall->line_h = HEIGHT_MM;
+	wall->line_off = (HEIGHT_MM - wall->line_h) / 2;
+	
+	printf("wall->line_off is %f\n", wall->line_off);
+	
 }
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
@@ -224,7 +240,9 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 {
 	ray->a = pos->a - DR * 30;
 	reset_angles(display);
-	for (ray->r = 0; ray->r < 60; ray->r++)
+	ray->r = 0;
+	wall->x0 = 0;
+	while (ray->r < 60)
 	{
 		find_horizontal_intersec(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
@@ -234,6 +252,7 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		draw_column(display, ray, wall, display->maps);
 		ray->a += DR;
 		reset_angles(display);
+		ray->r++;
 	}
 }
 
@@ -253,8 +272,8 @@ void drawMap2D(t_display *display)
 		maps->x0 = 0;
 		while (maps->x < maps->max_x)
 		{
-			maps->y0 = (maps->y * maps->y_coeff);
-			maps->x0 = (maps->x * maps->x_coeff);
+			maps->y0 = (maps->y * mapS);
+			maps->x0 = (maps->x * mapS);
 			if (map[maps->y][maps->x] == '1')
 				draw_cube(display, true);
 			else
