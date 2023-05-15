@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 11:26:49 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:40:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->wall->x0 = 0;
 	display->wall->y0 = 0;
 	display->wall->shading = 0;
+	display->wall->pos_x = 0;
+	display->wall->pos_y = 0;
 }
 
 

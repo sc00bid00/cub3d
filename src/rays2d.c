@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:33:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:43:43 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->x0 = ray->vx;
 		ray->y0 = ray->vy;
 		ray->dis_t = ray->dis_v;
+		// wall->dis_t = ray->dis_t * HEIGHT/HEIGHT_MM;
 		wall->shading = get_rgba(0,133,120);
 	}
 	else if (ray->dis_h <= ray->dis_v)
@@ -153,6 +154,7 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
 		ray->dis_t = ray->dis_h;
+		// wall->dis_t = ray->dis_t * WIDTH/WIDTH_MM;
 		wall->shading = get_rgba(0,89,79);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:32:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:40:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_wall
 	float		line_off; // (full window height - line height) / 2; line offset
 	float		x0;	// pixel coordinate x
 	float 		y0; // pixel coordinate y
+	float		pos_x;
+	float		pos_y;
 	uint32_t	shading;
 	
 }	t_wall;
