@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 13:13:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 14:58:08 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 
 # include <libft.h>
 # include <stdio.h>
-# include <debug.h>
 # include <unistd.h>
 # include <MLX42.h>
 # include <math.h>
 # include <fcntl.h>
 # include <errors.h>
+# include <debug.h>
+# include <stdbool.h>
 
 #define WIDTH 1920	
 #define HEIGHT 1200	// players height 600 pixel
-#define WIDTH_MM 400
-#define	HEIGHT_MM 400
-#define mapS 50   //map cube size
+// #define WIDTH_MM 400
+// #define	HEIGHT_MM 400
+// #define mapS 15   //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
 
@@ -140,6 +141,10 @@ typedef struct s_maps
 	int		max_x;	// number of columns in map (x max) (from cub file?)
 	int		max_y;  // number of rows in map (y max) (from cub file?)
 	// int map_s;
+	int		height_mm;
+	int		width_mm;
+	int		map_sx;
+	int		map_sy;
 	int		x_coeff; // adjust map to pixel: WIDTH / map_x
 	int		y_coeff; // adjust map to pixel: HEIGHT / may_y
 	char	**par;// all other overhead parameter from cub file, exact format tbd
@@ -179,5 +184,5 @@ void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 float		dist(t_pos *pos, float bx, float by, float ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
-void		calculate_3D_param(t_wall *wall, t_pos *pos, t_ray *ray);
+void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
 #endif

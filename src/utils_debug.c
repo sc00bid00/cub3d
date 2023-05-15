@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 13:17:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 14:09:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	tmp_freearr(char **arr)
 	int	i;
 
 	i = 0;
-	printf("=== debug tmp_freearr ===");
 	while (arr && arr[i])
 	{
 		free(arr[i]);
@@ -100,7 +99,6 @@ void	tmp_freearr(char **arr)
 
 void	tmp_freedisplay(t_display *d)
 {
-	printf("=== debug freedisplay ===\n");
 	if (d && d->pdata && d->pdata->file_data)
 		tmp_freelst(d->pdata->file_data);
 	if (d && d->pdata && d->pdata->textures_path)

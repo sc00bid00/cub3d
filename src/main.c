@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 13:17:06 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 14:21:55 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	cub3d(char **argv, t_display *display)
 	display->s_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
 	ft_memset(display->s_img->pixels, COLOR, display->s_img->width \
 			* display->s_img->height * sizeof(int32_t));
-	display->mm_img = mlx_new_image(display->mlx, WIDTH_MM, HEIGHT_MM);
+	display->mm_img = mlx_new_image(display->mlx, display->maps->width_mm, display->maps->height_mm);
 	ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
 			* display->mm_img->height * sizeof(int32_t));
 	mlx_key_hook(display->mlx, &my_keyhook, display);
@@ -125,6 +125,7 @@ void	my_hook(void *param)
 /* must be adjusted to avoid fishbowl effect */
 float 	dist(t_pos *pos, float bx, float by, float ang)
 {
+	(void) ang;
 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
 }
 
@@ -148,12 +149,12 @@ void	draw_player_mm(t_display *display)
 
 void	my_put_pixel(t_display *display)
 {
-	if (display->pos->y > HEIGHT_MM)
-		display->pos->y = HEIGHT_MM - 1;
+	if (display->pos->y > display->maps->height_mm)
+		display->pos->y = display->maps->height_mm - 1;
 	if (display->pos->y < 0)
 		display->pos->y = 0;
-	if (display->pos->x > WIDTH_MM)
-		display->pos->x = WIDTH_MM - 1;
+	if (display->pos->x > display->maps->width_mm)
+		display->pos->x = display->maps->width_mm - 1;
 	if (display->pos->x < 0)
 		display->pos->x = 0;
 	mlx_put_pixel(display->mm_img, display->pos->x, display->pos->y, get_rgba(255,255,255));

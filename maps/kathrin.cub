@@ -1,0 +1,16 @@
+NO ./textures/greystone.png
+SO ./textures/purplestone.png
+WE ./textures/colorstone.png
+EA ./textures/wood.png
+
+C 225,10,0
+F 255, 255, 1
+
+11111111
+10000001
+10111101
+10000001
+100S0001
+10000001
+10111101
+11111111
