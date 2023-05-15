@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 09:33:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:15:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,39 +171,6 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 }
 
 
-/*	function is called for each map coordinate and draws pixel in corresponding
-	cube */
-
-void	draw_cube(t_display *display, bool wall)
-{
-	int i;
-	int j;
-	t_maps	*maps;
-
-	i = 0;
-	j = 0;
-	maps = display->maps;
-    while (i < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
-    {
-    	if (wall)
-			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
-		else
-			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
-        j = 1;
-		maps->y0 = (maps->y * mapS);
-		while(j < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
-		{
-			if (wall)
-				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
-			else
-				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
-			maps->y0++;
-			j++;
-		}
-		maps->x0++;
-		i++;
-	}
-}
 
 
 int	main(int argc, char **argv)

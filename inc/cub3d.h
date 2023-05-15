@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 09:43:41 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:52:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <MLX42.h>
 # include <math.h>
 
-#define WIDTH 1920	
-#define HEIGHT 1200	// players height 600 pixel 
+#define WIDTH 1920
+// #define WIDTH 1200	
+#define HEIGHT 1200	// players height 600 pixel
 #define WIDTH_MM 512
 #define	HEIGHT_MM 512
 #define mapS 64     //map cube size

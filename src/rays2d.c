@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 09:54:06 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:57:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char *map[] = {
     "10000001",
     "10000001",
     "10000001",
-    "10000001",
+    "10111101",
     "11111111"
 };
 
@@ -172,11 +172,11 @@ void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
 /*	compare distances and select closer distance to determine ray length. */
 void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 {
-	ray->a = pos->a - DR * 30;
+	ray->a = pos->a - (DR * 30);
 	reset_angles(display);
 	ray->r = 0;
 	wall->x0 = 0;
-	while (ray->r < 60)
+	while (ray->r < ray->ray_max)
 	{
 		find_horizontal_intersec(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
@@ -184,7 +184,7 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		draw_rays(display, pos, ray);
 		calculate_3D_param(wall, pos, ray);
 		draw_column(display, ray, wall, display->maps);
-		ray->a += DR;
+		ray->a += DR * 60/ray->ray_max;
 		reset_angles(display);
 		ray->r++;
 	}
@@ -194,6 +194,41 @@ void	draw_minimap(t_display *display)
 {
 	drawMap2D(display);
 	draw_player_mm(display);
+}
+
+
+/*	function is called for each map coordinate and draws pixel in corresponding
+	cube */
+
+void	draw_cube(t_display *display, bool wall)
+{
+	int i;
+	int j;
+	t_maps	*maps;
+
+	i = 0;
+	j = 0;
+	maps = display->maps;
+    while (i < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
+    {
+    	if (wall)
+			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
+		else
+			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
+        j = 1;
+		maps->y0 = (maps->y * mapS);
+		while(j < mapS - 1 && maps->x0 < WIDTH_MM && maps->y0 < HEIGHT_MM)
+		{
+			if (wall)
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
+			else
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
+			maps->y0++;
+			j++;
+		}
+		maps->x0++;
+		i++;
+	}
 }
 
 /*	iterates through coordinate system */
