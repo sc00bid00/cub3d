@@ -6,18 +6,21 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:40:18 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:54:58 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <libft.h>
+# include <stdio.h>
+# include <debug.h>
 # include <unistd.h>
 # include <MLX42.h>
 # include <math.h>
+# include <fcntl.h>
+# include <errors.h>
 
 #define WIDTH 1920	
 #define HEIGHT 1200	// players height 600 pixel
@@ -68,6 +71,48 @@ typedef struct s_ray
 	
 }	t_ray;
 	
+enum	tex_ix
+{
+	NO,
+	SO,
+	EA,
+	WE
+};
+
+enum	fc_ix
+{
+	F,
+	C
+};
+
+/* t_pdata = structure to collect all parsed data
+fdata		support list with all lines from gnl
+			(support = needed for parsing purposes only)
+first		support pointer to the first table line
+tab			table array
+max_len		longest line in the table (num of columns = width)
+num_lines	number of lines (height)
+tex			textures array indexed by tex_ix
+info		support array for floor and ceiling colors indexed by fc_ix
+fd			[0] floor [1] ceiling colors, both unsigned
+play_tab	starting player position in tabe coodinates (x,y)
+play_dir	starting player orientation in radiants
+*/
+typedef struct s_pdata
+{
+	char		**argv;
+	t_list		*fdata;
+	t_list		*first;
+	char		**tab;
+	int			max_len;
+	int			num_lines;
+	char		**tex;
+	char		**info;
+	uint32_t	fc[2];
+	int			play_tab[2];
+	float		play_dir;
+}	t_pdata;
+
 // player
 typedef	struct s_pos
 {
@@ -81,23 +126,22 @@ typedef	struct s_pos
 	float	a0; // starting angle (derived from N, S, W, E)
 	float	x0_s;	// coordinate on 3d scale
 	float	y0_s;	// coordinate on 3d scale
-
 }	t_pos;
 
 // map
 typedef struct s_maps
 {
-	int x;
-	int y;
-	int x0;		// coordinate in pixel value
-	int y0;		// coordinate in pixel value
-	int max_x;	// number of columns in map (x max);
-	int max_y;  // number of rows in map (y max);
+
+	int		x;
+	int		y;
+	int		x0;		// coordinate in pixel value
+	int		y0;		// coordinate in pixel value
+	int		max_x;	// number of columns in map (x max) (from cub file?)
+	int		max_y;  // number of rows in map (y max) (from cub file?)
 	// int map_s;
-	int	x_coeff; // adjust map to pixel: WIDTH / map_x
-	int	y_coeff; // adjust map to pixel: HEIGHT / may_y
-	char	*arr[]; // parsed from cub file
-	// und alle weiteren overhead parameter aus dem cub file
+	int		x_coeff; // adjust map to pixel: WIDTH / map_x
+	int		y_coeff; // adjust map to pixel: HEIGHT / may_y
+	char	**par;// all other overhead parameter from cub file, exact format tbd
 }	t_maps;
 
 // overall struct to hold pointers to all structs
@@ -109,6 +153,7 @@ typedef struct s_display
 	mlx_image_t		*f_c_img; // image layer for floor and ceiling
 	t_pos			*pos;
 	t_maps			*maps;
+	t_pdata			*pdata;
 	t_ray			*ray;
 	t_ray			*ray_max;
 	t_wall			*wall;
