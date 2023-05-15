@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 15:36:39 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:54:06 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,14 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 	{
 		ray->x0 = ray->vx;
 		ray->y0 = ray->vy;
-		wall->dis_t = ray->dis_v;
+		ray->dis_t = ray->dis_v;
 		wall->shading = get_rgba(0,133,120);
 	}
 	else if (ray->dis_h < ray->dis_v)
 	{
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
-		wall->dis_t = ray->dis_h;
+		ray->dis_t = ray->dis_h;
 		wall->shading = get_rgba(0,89,79);
 	}
 }
@@ -188,6 +188,12 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		reset_angles(display);
 		ray->r++;
 	}
+}
+
+void	draw_minimap(t_display *display)
+{
+	drawMap2D(display);
+	draw_player_mm(display);
 }
 
 /*	iterates through coordinate system */

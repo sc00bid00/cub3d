@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 15:34:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:43:41 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ typedef struct s_wall
 	float	line_off; // full window height - line height / 2; line offset
 	float	x0;	// pixel coordinate x
 	float 	y0; // pixel coordinate y
-	float	dis_v;
-	float	dis_h;
+	// float	dis_v;
+	// float	dis_h;
 	float	x_coeff;
 	float 	y_coeff;
+	
 	uint32_t	shading;
 	
 }	t_wall;
@@ -52,6 +53,7 @@ typedef struct s_wall
 typedef struct s_ray
 {
 	int		r;	// number of rays
+	int		ray_max;	// number of rays
 	int		x;	// coordinate on grid
 	int		y;	// coordinate on grid
 	float	a;	// ray angle
@@ -65,6 +67,7 @@ typedef struct s_ray
 	float	vy;
 	float	dis_h;
 	float	dis_v;
+	float	dis_t;
 	float	atan;
 	float	ntan;
 	
@@ -81,6 +84,8 @@ typedef	struct s_pos
 	float	x0; //	x coordinate of start position
 	float	y0; // y coordinate of start position
 	float	a0; // starting angle (derived from N, S, W, E)
+	float	x0_s;	// coordinate on 3d scale
+	float	y0_s;	// coordinate on 3d scale
 
 }	t_pos;
 
@@ -110,13 +115,15 @@ typedef struct s_display
 	t_pos			*pos;
 	t_maps			*maps;
 	t_ray			*ray;
+	t_ray			*ray_max;
 	t_wall			*wall;
 }	t_display;
 
 
 // functions
 void		init_display(int argc, char **argv, t_display *display);
-void		draw_player(t_display *display);
+void		draw_minimap(t_display *display);
+void		draw_player_mm(t_display *display);
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 int			clean_up(t_display *display);

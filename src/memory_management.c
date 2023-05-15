@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/11 14:45:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:49:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->ray->dis_v = 10000;
 	display->ray->atan	= 0;
 	display->ray->ntan	= 0;
+	display->ray->ray_max = 60;
 
 	display->wall->dis_t = 0;
 	display->wall->ca = 0;

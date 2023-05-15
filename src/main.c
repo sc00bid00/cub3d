@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 14:02:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:33:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cub3d(char **argv, t_display *display)
 	// display->f_c_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
 	// ft_memset(display->f_c_img->pixels, 100, display->f_c_img->width \
 	// 		* display->f_c_img->height * sizeof(int32_t));
-	display->s_img = mlx_new_image(display->mlx, WIDTH_MM, HEIGHT_MM);
+	display->s_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
 	ft_memset(display->s_img->pixels, COLOR, display->s_img->width \
 			* display->s_img->height * sizeof(int32_t));
 	display->mm_img = mlx_new_image(display->mlx, WIDTH_MM, HEIGHT_MM);
@@ -35,17 +35,17 @@ void	cub3d(char **argv, t_display *display)
 	mlx_key_hook(display->mlx, &my_keyhook, display);
 	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
 	mlx_loop_hook(display->mlx, &my_hook, display);
-	drawMap2D(display);
-	draw_player(display);
+	draw_minimap(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
 	// exit(0);
 	// mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
+	mlx_image_to_window(display->mlx, display->s_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);
-	mlx_image_to_window(display->mlx, display->s_img, 512, 0);
 	mlx_loop(display->mlx);
 	return ;
 }
+
 /*	MY_KEYHOOK
 *	------------
 *	function is called by MLX lib function and specifies the actions to be
@@ -114,9 +114,10 @@ void	my_hook(void *param)
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
 	}
-	drawMap2D(display);
+	draw_minimap(display);
+	// drawMap2D(display);
 	// draw_line(display, display->pos->x, display->pos->y);
-	draw_player(display);
+	// draw_player_mm(display);
 	calc_rays(display, display->pos, display->ray, display->wall);
 }
 
@@ -126,18 +127,6 @@ float 	dist(t_pos *pos, float bx, float by, float ang)
 {
 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
 }
-
-// float 	wall_dist(t_pos *pos, float bx, float by, float ang)
-// {
-// 	float x;
-// 	float y;
-
-// 	x = pos->x
-// 	printf("player pos x = %f\n", pos->x);
-// 	printf("player pos y = %f\n", pos->y);
-// 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
-// }
-
 
 /* specify line details */
 void	draw_line(t_display *display, float posx, float posy)
@@ -152,7 +141,7 @@ void	draw_line(t_display *display, float posx, float posy)
 	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
 }
 
-void	draw_player(t_display *display)
+void	draw_player_mm(t_display *display)
 {
 	my_put_pixel(display);
 }
