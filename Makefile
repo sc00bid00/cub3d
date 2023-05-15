@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/15 13:42:06 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/15 16:57:16 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRC =	main.c \
 		rays2d.c \
 		scene.c \
 		utils_debug.c \
-		utils_parse.c
+		utils_parse.c \
+		minimap.c \
+		calc_intersections.c
 # =======================
 
 BRED	=	\033[1;31m

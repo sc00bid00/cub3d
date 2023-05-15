@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:37:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:50:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	scale_minimap(t_display *display)
 		display->maps->height_mm = display->maps->map_s * display->maps->max_y;
 		display->maps->width_mm = display->maps->height_mm * display->maps->max_x / display->maps->max_y;
 	}
-	display->maps->x_coeff = display->maps->map_s;
-	display->maps->y_coeff = display->maps->map_s;
+	// display->maps->x_coeff = display->maps->map_s;
+	// display->maps->y_coeff = display->maps->map_s;
 }
 
 void	init_display(int argc, char **argv, t_display *display)
@@ -72,7 +72,6 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->pos->dy = sin(display->pos->a) * 5; 
 	display->pos->x0 = 0;
 	display->pos->y0 = 0;
-	display->pos->a0 = 0;
 	display->maps->x = 0;
 	display->maps->y = 0;
 	display->maps->x0 = 0;

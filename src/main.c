@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 14:21:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:47:00 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	cub3d(char **argv, t_display *display)
 	draw_minimap(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
-	// exit(0);
 	// mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->s_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:33:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:58:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,28 +125,20 @@ typedef	struct s_pos
 	float	a;	// player view angle
 	float	x0; //	x coordinate of start position
 	float	y0; // y coordinate of start position
-	float	a0; // starting angle (derived from N, S, W, E)
-	float	x0_s;	// coordinate on 3d scale
-	float	y0_s;	// coordinate on 3d scale
 }	t_pos;
 
 // map
 typedef struct s_maps
 {
-
 	int		x;
 	int		y;
 	int		x0;		// coordinate in pixel value
 	int		y0;		// coordinate in pixel value
 	int		max_x;	// number of columns in map (x max) (from cub file?)
 	int		max_y;  // number of rows in map (y max) (from cub file?)
-	// int map_s;
 	int		height_mm;
 	int		width_mm;
 	int		map_s;
-	int		x_coeff; // adjust map to pixel: WIDTH / map_x
-	int		y_coeff; // adjust map to pixel: HEIGHT / may_y
-	char	**par;// all other overhead parameter from cub file, exact format tbd
 }	t_maps;
 
 // overall struct to hold pointers to all structs
@@ -184,4 +176,5 @@ float		dist(t_pos *pos, float bx, float by, float ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
+void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
 #endif
