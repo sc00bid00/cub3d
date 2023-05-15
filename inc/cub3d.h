@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:54:58 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:13:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_ray
 	
 }	t_ray;
 	
-enum	tex_ix
+enum	texture_index
 {
 	NO,
 	SO,
@@ -79,7 +79,7 @@ enum	tex_ix
 	WE
 };
 
-enum	fc_ix
+enum	colors_index
 {
 	F,
 	C
@@ -101,16 +101,17 @@ play_dir	starting player orientation in radiants
 typedef struct s_pdata
 {
 	char		**argv;
-	t_list		*fdata;
-	t_list		*first;
-	char		**tab;
-	int			max_len;
-	int			num_lines;
-	char		**tex;
-	char		**info;
-	uint32_t	fc[2];
-	int			play_tab[2];
-	float		play_dir;
+	t_list		*file_data;
+	t_list		*first_maprow;
+	char		**map;
+	char		**map_testfill;
+	int			num_cols;
+	int			num_rows;
+	char		**textures_path;
+	char		**color_string;
+	uint32_t	colors_fc[2];
+	int			player_positionxy[2];
+	float		player_directionrad;
 }	t_pdata;
 
 // player
