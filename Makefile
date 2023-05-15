@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/15 12:53:05 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/15 13:25:18 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ COLOR_INSTALL = $(BYELLOW)
 COLOR_CLEAN = $(BRED)
 COLOR_CHECK = $(BBLUE)
 DEFCL = $(WHITE)
+
+SRC = 
 
 BREW = /Users/$(USER)/.brew/
 HOMEBREW = /Users/$(USER)/homebrew/

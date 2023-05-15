@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 18:51:13 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/15 13:15:57 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -462,20 +462,3 @@ bool	init_pdata(t_display *d, char **argv)
 	return (true);
 }
 
-/* error management and testing purpose */
-int	main(int argc, char **argv)
-{
-	t_display	*d;
-
-	d = ft_calloc(1, sizeof(t_display));
-	if (!d)
-		return (put_err(ERR_MEMORY));
-	if (chk_args(argc, argv))
-	{
-		if (init_pdata(d, argv) && get_data(d->pdata))
-			/* if we are here all input data should be ok */
-			;
-	}
-	tmp_freedisplay(d);
-	return (0);
-}

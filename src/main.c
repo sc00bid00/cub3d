@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 13:13:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:17:06 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,20 +173,37 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 
 
 
+// int	main(int argc, char **argv)
+// {
+// 	t_display	*display;
+// 	(void)		argc;
+// 	(void)		argv;
+
+// 	display = ft_calloc(sizeof(t_display), 1);
+// 	if (!display)
+// 		return (0);
+	
+// 	// exit(0);
+// 	clean_up(display);
+// 	return (0);
+// }
+
 int	main(int argc, char **argv)
 {
 	t_display	*display;
-	(void)		argc;
-	(void)		argv;
 
-	display = ft_calloc(sizeof(t_display), 1);
+	display = ft_calloc(1, sizeof(t_display));
 	if (!display)
-		return (0);
-	allocate_memory(display);
-	// check_input(argc, argv, display);
-	init_display(argc, argv, display);
-	cub3d(argv, display);
-	// exit(0);
+		return (put_err(ERR_MEMORY));
+	if (chk_args(argc, argv))
+	{
+		if (init_pdata(display, argv) && get_data(display->pdata))
+		{
+			allocate_memory(display);
+			init_display(argc, argv, display);
+			cub3d(argv, display);
+		}
+	}
 	clean_up(display);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:40:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:19:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void allocate_memory(t_display *display)
 		clean_up(display);
 }
 
+
+void	read_data(t_display *display)
+{
+	
+	
+}
 /*	initialize mlx, map and player */
 
 void	init_display(int argc, char **argv, t_display *display)
@@ -91,6 +97,7 @@ void	init_display(int argc, char **argv, t_display *display)
 
 int	clean_up(t_display *display)
 {
+	tmp_freedisplay(display);
 	if (display->pos)
 		free (display->pos);
 	if (display->maps)

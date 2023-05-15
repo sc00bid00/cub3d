@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/11 18:40:39 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/15 13:17:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,4 @@ void	tmp_freedisplay(t_display *d)
 		ft_freesplit(d->pdata->map_testfill);
 	if (d && d->pdata)
 		free(d->pdata);
-	if (d)
-		free(d);
 }

@@ -6,22 +6,22 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 12:43:43 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:23:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <cub3d.h>
 
-char *map[] = {
-    "11111111",
-    "10000001",
-    "10111101",
-    "10000001",
-    "10000001",
-    "10000001",
-    "10111101",
-    "11111111"
-};
+// char *map[] = {
+//     "11111111",
+//     "10000001",
+//     "10111101",
+//     "10000001",
+//     "10000001",
+//     "10000001",
+//     "10111101",
+//     "11111111"
+// };
 
 void	reset_angles(t_display *display)
 {
@@ -42,7 +42,7 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 		ray->y = (int) (ray->y0 / mapS);
 		ray->x = (int) (ray->x0 / mapS);
 		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y 
-			&& ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
+			&& ray->x < display->maps->max_x && display->pdata->map[ray->y][ray->x] == '1')
 		{
 			ray->hx = ray->x0;
 			ray->hy = ray->y0;
@@ -95,7 +95,7 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 		ray->y = (int) (ray->y0 / mapS);
 		ray->x = (int) (ray->x0 / mapS);
 		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
-			&& ray->x < display->maps->max_x && map[ray->y][ray->x] == '1')
+			&& ray->x < display->maps->max_x && display->pdata->map[ray->y][ray->x] == '1')
 		{
 			ray->vx = ray->x0;
 			ray->vy = ray->y0;
