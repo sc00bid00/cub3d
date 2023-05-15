@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 10:57:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:26:49 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->maps->y = 0;
 	display->maps->x0 = 0;
 	display->maps->y0 = 0;
-	display->maps->max_x = 8;
+	display->maps->max_x = 9;
 	display->maps->max_y = 8;
 	display->maps->x_coeff = mapS;
 	display->maps->y_coeff = mapS;
@@ -81,8 +81,6 @@ void	init_display(int argc, char **argv, t_display *display)
 	display->wall->count = 0;
 	display->wall->x0 = 0;
 	display->wall->y0 = 0;
-	display->wall->x_coeff = WIDTH / WIDTH_MM;
-	display->wall->y_coeff = HEIGHT / HEIGHT_MM;
 	display->wall->shading = 0;
 }
 

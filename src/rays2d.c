@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 10:57:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:33:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
 			ray->x0 = ((int)(pos->x/mapS)) * mapS - 1;
 			ray->x_off = -mapS;
 		}
-		if (ray->a <= M_PI_2 || ray->a >= (3 * M_PI_2))
+		if (ray->a <= M_PI_2 || ray->a > (3 * M_PI_2))
 		{
 			ray->x0 = ((int)(pos->x/mapS)) * mapS + mapS;
 			ray->x_off = mapS;
@@ -148,7 +148,7 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->dis_t = ray->dis_v;
 		wall->shading = get_rgba(0,133,120);
 	}
-	else if (ray->dis_h < ray->dis_v)
+	else if (ray->dis_h <= ray->dis_v)
 	{
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
@@ -232,6 +232,33 @@ void	draw_cube(t_display *display, bool wall)
 }
 
 /*	iterates through coordinate system */
+// void drawMap2D(t_display *display)
+// {
+// 	t_maps	*maps;
+
+// 	maps = display->maps;
+// 	maps->x = 0;
+// 	maps->y = 0;
+// 	maps->x0 = 0;
+// 	maps->y0 = 0;
+// 	while (maps->y < maps->max_y)
+// 	{
+// 		maps->x = 0;
+// 		maps->x0 = 0;
+// 		while (maps->x < maps->max_x)
+// 		{
+// 			maps->y0 = (maps->y * mapS);
+// 			maps->x0 = (maps->x * mapS);
+// 			if (map[maps->y][maps->x] == '1')
+// 				draw_cube(display, true);
+// 			else
+// 				draw_cube(display, false);
+// 			maps->x++;
+// 		}
+// 		maps->y++;
+// 	}
+// }
+/*	iterates through coordinate system */
 void drawMap2D(t_display *display)
 {
 	t_maps	*maps;
@@ -241,20 +268,22 @@ void drawMap2D(t_display *display)
 	maps->y = 0;
 	maps->x0 = 0;
 	maps->y0 = 0;
-	while (maps->y < maps->max_y)
+	while (maps->y0 < HEIGHT_MM)
 	{
 		maps->x = 0;
 		maps->x0 = 0;
-		while (maps->x < maps->max_x)
+		while (maps->x0 < WIDTH_MM)
 		{
-			maps->y0 = (maps->y * mapS);
-			maps->x0 = (maps->x * mapS);
+			maps->y = (int)(maps->y0 / mapS);
+			maps->x = (int)(maps->x0 / mapS);
 			if (map[maps->y][maps->x] == '1')
-				draw_cube(display, true);
+				// draw_cube(display, true);
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
 			else
-				draw_cube(display, false);
-			maps->x++;
+				// draw_cube(display, false);
+				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
+			maps->x0++;
 		}
-		maps->y++;
+		maps->y0++;
 	}
 }
