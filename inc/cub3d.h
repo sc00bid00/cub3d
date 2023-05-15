@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 14:58:08 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:33:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,7 @@ typedef struct s_maps
 	// int map_s;
 	int		height_mm;
 	int		width_mm;
-	int		map_sx;
-	int		map_sy;
+	int		map_s;
 	int		x_coeff; // adjust map to pixel: WIDTH / map_x
 	int		y_coeff; // adjust map to pixel: HEIGHT / may_y
 	char	**par;// all other overhead parameter from cub file, exact format tbd

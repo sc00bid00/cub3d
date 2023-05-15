@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 15:01:05 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:32:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray
 	if (wall->ca > 2 * M_PI)
 		wall->ca -= 2 * M_PI;
 	wall->dis_t = wall->dis_t * cos(wall->ca);
-	wall->line_h = (HEIGHT * display->maps->map_sy * 4) / (wall->dis_t);
+	wall->line_h = (HEIGHT * display->maps->map_s * 4) / (wall->dis_t);
 	if (wall->line_h > HEIGHT)
 		wall->line_h = HEIGHT;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;

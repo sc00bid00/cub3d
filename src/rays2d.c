@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:22:50 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:43:13 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 	count = 0;
 	while (count < display->maps->max_y)
 	{
-		ray->y = (int) (ray->y0 / display->maps->map_sy);
-		ray->x = (int) (ray->x0 / display->maps->map_sx);
+		ray->y = (int) (ray->y0 / display->maps->map_s);
+		ray->x = (int) (ray->x0 / display->maps->map_s);
 		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y 
 			&& ray->x < display->maps->max_x && display->pdata->map[ray->y][ray->x] == '1')
 		{
@@ -60,17 +60,16 @@ void	find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray)
 	ray->hy = pos->y; 
 	if (ray->a > M_PI && ray->a <= M_PI * 2)
 	{
-		ray->y0 = ((int)(pos->y/display->maps->map_sy)) * display->maps->map_sy - 1;
-		ray->y_off = -display->maps->map_sy;
+		ray->y0 = ((int)(pos->y/display->maps->map_s)) * display->maps->map_s - 1;
+		ray->y_off = -display->maps->map_s;
 	}
 	if (ray->a <= M_PI && ray->a >= 0)
 	{
-		ray->y0 = ((int)(pos->y/display->maps->map_sy)) * display->maps->map_sy + display->maps->map_sy;
-		ray->y_off = display->maps->map_sy;
+		ray->y0 = ((int)(pos->y/display->maps->map_s)) * display->maps->map_s + display->maps->map_s;
+		ray->y_off = display->maps->map_s;
 	}
 	ray->x0 = pos->x + ((pos->y - ray->y0) * ray->atan);
 	ray->x_off = -(ray->y_off) * ray->atan;
-	calc_next_h_intersection(display, pos, ray);
 }
 
 /*	if ray hits wall, calculate distance, else, add offset and check again */
@@ -81,8 +80,8 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 	count = 0;
 	while (count < display->maps->max_y)
 	{
-		ray->y = (int) (ray->y0 / display->maps->map_sy);
-		ray->x = (int) (ray->x0 / display->maps->map_sx);
+		ray->y = (int) (ray->y0 / display->maps->map_s);
+		ray->x = (int) (ray->x0 / display->maps->map_s);
 		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
 			&& ray->x < display->maps->max_x && display->pdata->map[ray->y][ray->x] == '1')
 		{
@@ -113,17 +112,16 @@ void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
 		ray->vy = pos->y;
 		if (ray->a > M_PI_2 && ray->a <= (3 * M_PI_2))
 		{
-			ray->x0 = ((int)(pos->x/display->maps->map_sx)) * display->maps->map_sx - 1;
-			ray->x_off = -display->maps->map_sx;
+			ray->x0 = ((int)(pos->x/display->maps->map_s)) * display->maps->map_s - 1;
+			ray->x_off = -display->maps->map_s;
 		}
 		if (ray->a <= M_PI_2 || ray->a > (3 * M_PI_2))
 		{
-			ray->x0 = ((int)(pos->x/display->maps->map_sx)) * display->maps->map_sx + display->maps->map_sx;
-			ray->x_off = display->maps->map_sx;
+			ray->x0 = ((int)(pos->x/display->maps->map_s)) * display->maps->map_s + display->maps->map_s;
+			ray->x_off = display->maps->map_s;
 		}
 		ray->y0 = pos->y + ((pos->x - ray->x0) * ray->ntan);
 		ray->y_off = -(ray->x_off) * ray->ntan;
-		calc_next_v_intersection(display, pos, ray);
 }
 
 /* check if horizontal or vertical intersection is closer to player and */
@@ -170,7 +168,9 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 	while (ray->r < ray->ray_max)
 	{
 		find_horizontal_intersec(display, pos, ray);
+		calc_next_h_intersection(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
+		calc_next_v_intersection(display, pos, ray);
 		compare_dist(ray, wall);
 		draw_rays(display, pos, ray);
 		calculate_3D_param(display, wall, pos, ray);
@@ -187,102 +187,24 @@ void	draw_minimap(t_display *display)
 	draw_player_mm(display);
 }
 
-
-/*	function is called for each map coordinate and draws pixel in corresponding
-	cube */
-
-// void	draw_cube(t_display *display, bool wall)
-// {
-// 	int i;
-// 	int j;
-// 	t_maps	*maps;
-
-// 	i = 0;
-// 	j = 0;
-// 	maps = display->maps;
-//     while (i < mapS - 1 && maps->x0 < display->maps->width_mm && maps->y0 < display->maps->height_mm)
-//     {
-//     	if (wall)
-// 			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
-// 		else
-// 			mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
-//         j = 1;
-// 		maps->y0 = (maps->y * mapS);
-// 		while(j < mapS - 1 && maps->x0 < display->maps->width_mm && maps->y0 < display->maps->height_mm)
-// 		{
-// 			if (wall)
-// 				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
-// 			else
-// 				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
-// 			maps->y0++;
-// 			j++;
-// 		}
-// 		maps->x0++;
-// 		i++;
-// 	}
-// }
-
-/*	iterates through coordinate system */
-// void drawMap2D(t_display *display)
-// {
-// 	t_maps	*maps;
-
-// 	maps = display->maps;
-// 	maps->x = 0;
-// 	maps->y = 0;
-// 	maps->x0 = 0;
-// 	maps->y0 = 0;
-// 	while (maps->y < maps->max_y)
-// 	{
-// 		maps->x = 0;
-// 		maps->x0 = 0;
-// 		while (maps->x < maps->max_x)
-// 		{
-// 			maps->y0 = (maps->y * mapS);
-// 			maps->x0 = (maps->x * mapS);
-// 			if (map[maps->y][maps->x] == '1')
-// 				draw_cube(display, true);
-// 			else
-// 				draw_cube(display, false);
-// 			maps->x++;
-// 		}
-// 		maps->y++;
-// 	}
-// }
-/*	iterates through coordinate system */
 void drawMap2D(t_display *display)
 {
 	t_maps	*maps;
 
 	maps = display->maps;
-	// maps->x = 0;
 	maps->y = 0;
-	// maps->x0 = 0;
 	maps->y0 = 0;
-	// printf("map max_y is %d\n", maps->max_y);
-	// printf("map max_x is %d\n", maps->max_x);
 	while (maps->y0 < display->maps->height_mm && maps->y < maps->max_y)
 	{
 		maps->x = 0;
 		maps->x0 = 0;
-		// printf("next y loop\n");
 		while (maps->x0 < display->maps->width_mm && maps->x < maps->max_x)
 		{
-			maps->y = (int)(maps->y0 / maps->map_sy);
-			maps->x = (int)(maps->x0 / maps->map_sx);
-			// printf("map y is %d\n", display->maps->y);
-			// printf("map x is %d\n", display->maps->x);
-			// printf("(%d, %d) value %c\n", maps->x, maps->y, display->pdata->map[maps->y][maps->x]);
-			if (display->pdata->map[maps->y][maps->x] == '1' && maps->x0 >= 0 && maps->y0 >= 0 && maps->x0 < maps->width_mm && maps->y0 < maps->height_mm)
-			// 	// draw_cube(display, true);
-			{
-				printf("map width_mm is %d\n", maps->width_mm);
-				printf("map height_mm is %d\n", maps->height_mm);
-				printf("y0 is %d x0 is %d\n", maps->x0, maps->y0);
+			maps->y = (int)(maps->y0 / maps->map_s);
+			maps->x = (int)(maps->x0 / maps->map_s);
+			if (display->pdata->map[maps->y][maps->x] == '1')
 				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
-			}
-			else if (display->pdata->map[maps->y][maps->x] == '0' && maps->x0 >= 0 && maps->y0 >= 0 && maps->x0 < maps->width_mm && maps->y0 < maps->height_mm)
-			// 	// draw_cube(display, false);
+			else
 				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
 			maps->x0++;
 		}

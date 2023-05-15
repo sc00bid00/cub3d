@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:30:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:37:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void allocate_memory(t_display *display)
 
 void	read_data(t_display *display)
 {
-	display->pos->x = display->pdata->player_positionxy[0] * display->maps->map_sx;
-	display->pos->y = display->pdata->player_positionxy[1] * display->maps->map_sy;
+	display->pos->x = display->pdata->player_positionxy[0] * display->maps->map_s;
+	display->pos->y = display->pdata->player_positionxy[1] * display->maps->map_s;
 	display->pos->a = display->pdata->player_directionrad;
 	display->maps->max_x = display->pdata->num_cols - 1;
 	display->maps->max_y = display->pdata->num_rows;
@@ -45,22 +45,17 @@ void	scale_minimap(t_display *display)
 	if (display->maps->max_x >= display->maps->max_y)
 	{
 		display->maps->map_s = WIDTH / 5 / display->maps->max_x;
-		// display->maps->map_sy = display->maps->map_sx  display->maps->max_y;
-		display->maps->width_mm = display->maps->map_sx * display->maps->max_x;
+		display->maps->width_mm = display->maps->map_s * display->maps->max_x;
 		display->maps->height_mm = display->maps->width_mm * display->maps->max_y / display->maps->max_x;
 	}
 	else
 	{
 		display->maps->map_s = HEIGHT / 5 / display->maps->max_y;
-		// display->maps->map_sx = WIDTH / 5 / display->maps->max_x;
-		display->maps->height_mm = display->maps->map_sy * display->maps->max_y;
+		display->maps->height_mm = display->maps->map_s * display->maps->max_y;
 		display->maps->width_mm = display->maps->height_mm * display->maps->max_x / display->maps->max_y;
 	}
-	display->maps->x_coeff = display->maps->map_sx;
-	display->maps->y_coeff = display->maps->map_sy;
-	// printf("map sy is %d\n", display->maps->map_sy);
-	// printf("map sx is %d\n", display->maps->map_sx);
-	// exit (0);
+	display->maps->x_coeff = display->maps->map_s;
+	display->maps->y_coeff = display->maps->map_s;
 }
 
 void	init_display(int argc, char **argv, t_display *display)
