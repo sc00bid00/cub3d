@@ -6,12 +6,60 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/16 11:28:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:40:12 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
+
+// void	draw_ceiling(t_display *display)
+// {
+// 	int x0;
+// 	int y0;
+
+// 	y0 = 0;
+// 	while (y0 < HEIGHT / 2 && y0 >= 0)
+// 	{
+// 		x0 = 0;
+// 		while (x0 < WIDTH && x0 >= 0)
+// 		{
+// 			my_put_pixel(display->f_c_img, x0, y0, get_rgba(43, 176, 13));
+// 			x0++;
+// 		}
+// 		y0++;
+// 	}
+	// while (y0 < HEIGHT && y0 >= HEIGHT/2)
+	// {
+	// 	x0 = 0;
+	// 	while (x0 < WIDTH && x0 >= 0)
+	// 	{
+	// 		my_put_pixel(display->f_c_img, x0, y0, get_rgba(13, 176, 43));
+	// 		x0++;
+	// 	}
+	// 	y0++;
+	// }
+// }
+void	draw_floor_ceiling(t_display *display)
+{
+	int x0;
+	int y0;
+
+	x0 = 0;
+	while (x0 < WIDTH && x0 >= 0)
+	{
+		y0 = 0;
+		while (y0 < HEIGHT && y0 >= 0)
+		{
+			if ( y0> HEIGHT /2)
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(43, 176, 13));
+			else
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(13, 48, 190));
+			y0++;
+		}
+		x0++;
+	}
+}
 
 /*	CUB3D
 *	--------
@@ -28,7 +76,10 @@ void	cub3d(t_display *display)
 	draw_minimap(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
+	draw_floor_ceiling(display);
+	mlx_texture_to_image(display->mlx, display->tex[NO]);
 	// mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
+	mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->s_img, 0, 0);
 	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);
 	mlx_loop(display->mlx);
@@ -63,50 +114,30 @@ void	my_hook(void *param)
 	display = param;
 	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
 	{
-		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
-			* display->mm_img->height * sizeof(int32_t));
-		ft_memset(display->s_img->pixels, 255, display->s_img->width \
-			* display->s_img->height * sizeof(int32_t));
 		display->pos->x += display->pos->dx;
 		display->pos->y += display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
 	{
-		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
-			* display->mm_img->height * sizeof(int32_t));
-		ft_memset(display->s_img->pixels, 255, display->s_img->width \
-			* display->s_img->height * sizeof(int32_t));
 		display->pos->x -= display->pos->dx;
 		display->pos->y -= display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
 	{
-		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
-			* display->mm_img->height * sizeof(int32_t));
-		ft_memset(display->s_img->pixels, 255, display->s_img->width \
-			* display->s_img->height * sizeof(int32_t));
 		display->pos->a -=0.05;
-		if(display->pos->a < 0)
-			display->pos->a += 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
-		ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
-			* display->mm_img->height * sizeof(int32_t));
-		ft_memset(display->s_img->pixels, 255, display->s_img->width \
-			* display->s_img->height * sizeof(int32_t));
 		display->pos->a +=0.05;
-		if(display->pos->a > 2 * M_PI)
-			display->pos->a -= 2 * M_PI;
 		display->pos->dx = cos(display->pos->a) * 5;
 		display->pos->dy = sin(display->pos->a) * 5;
 	}
+	reset_angles(display);
+	memset_window(display);
+	draw_floor_ceiling(display);
 	draw_minimap(display);
-	// drawMap2D(display);
-	// draw_line(display, display->pos->x, display->pos->y);
-	// draw_player_mm(display);
 	calc_rays(display, display->pos, display->ray, display->wall);
 }
 
@@ -161,6 +192,50 @@ int	main(int argc, char **argv)
 			cub3d(display);
 		}
 	}
+	printf("EA is %s\n", display->pdata->textures_path[EA]);
 	clean_up(display);
 	return (0);
 }
+
+// #include <stdio.h>
+// #include <unistd.h>
+// #include <stdlib.h>
+// #include <cub3d.h>
+
+
+// static void error(void)
+// {
+// 	puts(mlx_strerror(mlx_errno));
+// 	exit(EXIT_FAILURE);
+// }
+
+// int32_t	main(void)
+// {
+// 	// Start mlx
+// 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
+// 	if (!mlx)
+//         error();
+
+// 	// Try to load the file
+// 	mlx_texture_t* texture = mlx_load_png("./textures/redbrick.png");
+// 	if (!texture)
+//         error();
+	
+// 	// Convert texture to a displayable image
+// 	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+// 	if (!img)
+//         error();
+
+// 	// Display the image
+// 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
+//         error();
+
+// 	mlx_loop(mlx);
+
+// 	mlx_delete_image(mlx, img);
+// 	mlx_delete_texture(texture);
+
+//         // Optional, terminate will clean up any leftover images (not textures!)
+// 	mlx_terminate(mlx);
+// 	return (EXIT_SUCCESS);
+// }

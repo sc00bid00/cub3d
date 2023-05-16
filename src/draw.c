@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:26:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:33:28 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 11:48:32 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end
     }
 }
 
+/* function protects minimap */
 void	my_put_pixel_mm(t_display *display, float x, float y, int color)
 {
 	if (y > display->maps->height_mm)
@@ -64,4 +65,18 @@ void	my_put_pixel_mm(t_display *display, float x, float y, int color)
 	if (x < 0)
 		x = 0;
 	mlx_put_pixel(display->mm_img, x, y, color);
+}
+
+/* function protects regular map */
+void	my_put_pixel(mlx_image_t *img, float x, float y, int color)
+{
+	if (y > HEIGHT)
+		y = HEIGHT;
+	if (y < 0)
+		y = 0;
+	if (x > WIDTH)
+		x = WIDTH;
+	if (x < 0)
+		x = 0;
+	mlx_put_pixel(img, x, y, color);
 }

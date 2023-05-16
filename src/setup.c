@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:12:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:55:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	setup_rays(t_ray *ray)
 	ft_bzero(ray, sizeof(t_ray));
 	ray->dis_h = 10000;
 	ray->dis_v = 10000;
-	ray->ray_max = 1000;
+	ray->ray_max = 60;
 }
 
 void	setup_wall(t_wall *wall)
@@ -66,10 +66,14 @@ void	setup_windows(t_display *display)
 		memset_window(display);
 }
 
-
 /* path to be updated with values from file */
-void	load_tex(t_display *display)
+void	load_tex(t_display *display, t_pdata *pdata)
 {
+	(void) pdata;
+	// display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
+	// display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
+	// display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
+	// display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
 	display->tex[NO] = mlx_load_png("./textures/redbrick.png");
 	display->tex[SO] = mlx_load_png("./textures/redbrick.png");
 	display->tex[WE] = mlx_load_png("./textures/redbrick.png");
@@ -83,5 +87,5 @@ void	setup_display(t_display *display)
 	setup_rays(display->ray);
 	setup_wall(display->wall);
 	setup_windows(display);
-	load_tex(display);
+	load_tex(display, display->pdata);
 }

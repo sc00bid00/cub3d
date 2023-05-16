@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:53:34 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:31:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 11:37:12 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void drawMap2D(t_display *display)
 			maps->y = (int)(maps->y0 / maps->map_s);
 			maps->x = (int)(maps->x0 / maps->map_s);
 			if (display->pdata->map[maps->y][maps->x] == '1')
-				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(0,80,100));
+				my_put_pixel_mm(display, maps->x0, maps->y0, get_rgba(0,80,100));
 			else
-				mlx_put_pixel(display->mm_img, maps->x0, maps->y0, get_rgba(100,100,100));
+				my_put_pixel_mm(display, maps->x0, maps->y0, get_rgba(100,100,100));
 			maps->x0++;
 		}
 		maps->y0++;

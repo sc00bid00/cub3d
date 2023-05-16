@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 09:46:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:58:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
 
-/*	draw && wall->y0 >= 0 && wall->y0 <= HEIGHT*/
 void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 {
 	int i;
@@ -44,9 +43,8 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 		while (j < HEIGHT-1 && wall->x0 >=0 && wall->x0 <= WIDTH)
 		{
 			if (wall->y0 >= wall->line_off && wall->y0 <= (HEIGHT - wall->line_off))
-				mlx_put_pixel(display->s_img, wall->x0, wall->y0, wall->shading );
-			else
-				mlx_put_pixel(display->s_img, wall->x0, wall->y0, get_rgba(134, 200, 188));
+				my_put_pixel(display->s_img, wall->x0, wall->y0, wall->shading );
+			// my_put_pixel(display->s_img, wall->x0, wall->y0, get_rgba(134, 200, 188));
 			wall->y0++;
 			j++;
 		}

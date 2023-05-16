@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:33:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:39:57 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <debug.h>
 # include <stdbool.h>
 
+// #define WIDTH 512
+// #define HEIGHT 512
 #define WIDTH 1920	
 #define HEIGHT 1200	// players height 600 pixel
 // #define WIDTH_MM 400
@@ -168,7 +170,7 @@ void		setup_display(t_display *display);
 void		setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps);
 void		setup_maps(t_maps *maps, t_pdata *pdata);
 void		setup_windows(t_display *display);
-void		load_tex(t_display *display);
+void		load_tex(t_display *display, t_pdata *pdata);
 /* MLX_UTILS */
 void		memset_window(t_display *display);
 /*	INTERSECTIONS */
@@ -193,4 +195,6 @@ float		dist(t_pos *pos, float bx, float by, float ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
+void		my_put_pixel(mlx_image_t *img, float x, float y, int color);
+void		reset_angles(t_display *display);
 #endif

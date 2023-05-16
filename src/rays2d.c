@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:16:24 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 14:37:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	reset_angles(t_display *display)
 {
-	if (display->ray->a < 0)
+	if (display->ray->a <= 0)
 		display->ray->a += 2 * M_PI;
-	if (display->ray->a > 2 * M_PI)
+	if (display->ray->a >= 2 * M_PI)
 		display->ray->a -= 2 * M_PI;
 }
 
@@ -39,7 +39,6 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		wall->shading = get_rgba(0,89,79);
 	}
 }
-
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */
