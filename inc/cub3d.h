@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:58:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 11:33:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_display
 	mlx_image_t		*s_img; // image layer for 3d scene
 	mlx_image_t		*mm_img; // image layer for minimap
 	mlx_image_t		*f_c_img; // image layer for floor and ceiling
+	mlx_texture_t	**tex; //texture
 	t_pos			*pos;
 	t_maps			*maps;
 	t_pdata			*pdata;
@@ -158,23 +159,38 @@ typedef struct s_display
 
 
 // functions
-void		init_display(int argc, char **argv, t_display *display);
+
+/* MEMORY_MANAGEMENT */
+void		allocate_memory(t_display *display);
+int			clean_up(t_display *display);
+/* SETUP																	*/
+void		setup_display(t_display *display);
+void		setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps);
+void		setup_maps(t_maps *maps, t_pdata *pdata);
+void		setup_windows(t_display *display);
+void		load_tex(t_display *display);
+/* MLX_UTILS */
+void		memset_window(t_display *display);
+/*	INTERSECTIONS */
+void		find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray);
+void		calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray);
+void		find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray);
+void		calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray);
+/* MINIMAP */
 void		draw_minimap(t_display *display);
+void		drawMap2D(t_display *display);
 void		draw_player_mm(t_display *display);
+void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
+/* DRAW */
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
-int			clean_up(t_display *display);
-void		allocate_memory(t_display *display);
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
-void		my_put_pixel(t_display *display);
-void		drawMap2D(t_display *display);
+void		my_put_pixel_mm(t_display *display, float x, float y, int color);
 void		draw_line(t_display *display, float posx, float posy);
 void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
-void		draw_cube(t_display *display, bool wall);
 void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 float		dist(t_pos *pos, float bx, float by, float ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
-void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 16:47:00 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 11:28:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,9 @@
 *	It calls the drawing function.
 */
 
-void	cub3d(char **argv, t_display *display)
+void	cub3d(t_display *display)
 {
-	(void)	argv;
-
-	// display->f_c_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
-	// ft_memset(display->f_c_img->pixels, 100, display->f_c_img->width \
-	// 		* display->f_c_img->height * sizeof(int32_t));
-	display->s_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
-	ft_memset(display->s_img->pixels, COLOR, display->s_img->width \
-			* display->s_img->height * sizeof(int32_t));
-	display->mm_img = mlx_new_image(display->mlx, display->maps->width_mm, display->maps->height_mm);
-	ft_memset(display->mm_img->pixels, COLOR, display->mm_img->width \
-			* display->mm_img->height * sizeof(int32_t));
+	setup_windows(display);
 	mlx_key_hook(display->mlx, &my_keyhook, display);
 	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
 	mlx_loop_hook(display->mlx, &my_hook, display);
@@ -141,23 +131,7 @@ void	draw_line(t_display *display, float posx, float posy)
 	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
 }
 
-void	draw_player_mm(t_display *display)
-{
-	my_put_pixel(display);
-}
 
-void	my_put_pixel(t_display *display)
-{
-	if (display->pos->y > display->maps->height_mm)
-		display->pos->y = display->maps->height_mm - 1;
-	if (display->pos->y < 0)
-		display->pos->y = 0;
-	if (display->pos->x > display->maps->width_mm)
-		display->pos->x = display->maps->width_mm - 1;
-	if (display->pos->x < 0)
-		display->pos->x = 0;
-	mlx_put_pixel(display->mm_img, display->pos->x, display->pos->y, get_rgba(255,255,255));
-}
 
 
 /*	GET_RGBA
@@ -171,23 +145,6 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 }
 
 
-
-
-// int	main(int argc, char **argv)
-// {
-// 	t_display	*display;
-// 	(void)		argc;
-// 	(void)		argv;
-
-// 	display = ft_calloc(sizeof(t_display), 1);
-// 	if (!display)
-// 		return (0);
-	
-// 	// exit(0);
-// 	clean_up(display);
-// 	return (0);
-// }
-
 int	main(int argc, char **argv)
 {
 	t_display	*display;
@@ -200,8 +157,8 @@ int	main(int argc, char **argv)
 		if (init_pdata(display, argv) && get_data(display->pdata))
 		{
 			allocate_memory(display);
-			init_display(argc, argv, display);
-			cub3d(argv, display);
+			setup_display(display);
+			cub3d(display);
 		}
 	}
 	clean_up(display);

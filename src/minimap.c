@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:53:34 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/15 16:55:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 11:31:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	draw_minimap(t_display *display)
 	drawMap2D(display);
 	draw_player_mm(display);
 }
-
 
 void drawMap2D(t_display *display)
 {
@@ -51,4 +50,9 @@ void	draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray)
 		{
 			draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
 		}		
+}
+
+void	draw_player_mm(t_display *display)
+{
+	my_put_pixel_mm(display, display->pos->x, display->pos->y, get_rgba(255,255,255));
 }
