@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/16 14:40:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:02:13 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	draw_floor_ceiling(t_display *display)
 		while (y0 < HEIGHT && y0 >= 0)
 		{
 			if ( y0> HEIGHT /2)
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(43, 176, 13));
+				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
 			else
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(13, 48, 190));
+				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
 			y0++;
 		}
 		x0++;
