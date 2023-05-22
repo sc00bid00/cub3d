@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 10:42:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 11:49:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->x0 = ray->vx;
 		ray->y0 = ray->vy;
 		ray->dis_t = ray->dis_v;
-		wall->shading = get_rgba(0,133,120);
-		wall->hit = 1;
+		// wall->shading = get_rgba(0,133,120);
+		wall->dir = 1;
 	}
 	else if (ray->dis_h <= ray->dis_v)
 	{
 		ray->x0 = ray->hx;
 		ray->y0 = ray->hy;
 		ray->dis_t = ray->dis_h;
-		wall->shading = get_rgba(0,89,79);
-		wall->hit = 0;
+		// wall->shading = get_rgba(0,89,79);
+		wall->dir = 0;
 	}
 }
 
@@ -58,6 +58,7 @@ void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		find_vertical_intersec(display, pos, ray);
 		calc_next_v_intersection(display, pos, ray);
 		compare_dist(ray, wall);
+		get_wall_dir(display);
 		draw_rays_2D(display, pos, ray);
 		calculate_3D_param(display, wall, pos, ray);
 		draw_column(display, ray, wall, display->maps);

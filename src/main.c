@@ -6,62 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/22 10:02:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:41:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-
-// void	draw_ceiling(t_display *display)
-// {
-// 	int x0;
-// 	int y0;
-
-// 	y0 = 0;
-// 	while (y0 < HEIGHT / 2 && y0 >= 0)
-// 	{
-// 		x0 = 0;
-// 		while (x0 < WIDTH && x0 >= 0)
-// 		{
-// 			my_put_pixel(display->f_c_img, x0, y0, get_rgba(43, 176, 13));
-// 			x0++;
-// 		}
-// 		y0++;
-// 	}
-	// while (y0 < HEIGHT && y0 >= HEIGHT/2)
-	// {
-	// 	x0 = 0;
-	// 	while (x0 < WIDTH && x0 >= 0)
-	// 	{
-	// 		my_put_pixel(display->f_c_img, x0, y0, get_rgba(13, 176, 43));
-	// 		x0++;
-	// 	}
-	// 	y0++;
-	// }
-// }
-void	draw_floor_ceiling(t_display *display)
-{
-	int x0;
-	int y0;
-
-	x0 = 0;
-	while (x0 < WIDTH && x0 >= 0)
-	{
-		y0 = 0;
-		while (y0 < HEIGHT && y0 >= 0)
-		{
-			if ( y0> HEIGHT /2)
-				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(190, 123, 67));
-			else
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(0, 30, 220));
-				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
-			y0++;
-		}
-		x0++;
-	}
-}
 
 /*	CUB3D
 *	--------
@@ -71,19 +20,17 @@ void	draw_floor_ceiling(t_display *display)
 
 void	cub3d(t_display *display)
 {
+	// (void) display;
+ 	// exit (0);
 	setup_windows(display);
-	mlx_key_hook(display->mlx, &my_keyhook, display);
-	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
-	mlx_loop_hook(display->mlx, &my_hook, display);
 	draw_minimap(display);
 	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
 	draw_floor_ceiling(display);
-	mlx_texture_to_image(display->mlx, display->tex[NO]);
-	// mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
-	mlx_image_to_window(display->mlx, display->f_c_img, 0, 0);
-	mlx_image_to_window(display->mlx, display->s_img, 0, 0);
-	mlx_image_to_window(display->mlx, display->mm_img, 0, 0);
+	image_to_window(display);
+	mlx_key_hook(display->mlx, &my_keyhook, display);
+	mlx_loop_hook(display->mlx, &my_hook, display);
+	// mlx_scroll_hook(display->mlx, &my_scrollhook, display);
 	mlx_loop(display->mlx);
 	return ;
 }

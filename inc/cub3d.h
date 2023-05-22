@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 10:38:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:01:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 typedef struct s_wall
 {
 	// int			count;
-	int			hit; // indicates if vertical or horizontal wall is hit by ray
+	int			dir; // indicates if vertical or horizontal wall is hit by ray
 	float		dis_t; // distance to wall from player
 	float		ca; // angle between player and ray
 	float		line_h; // line height
@@ -128,6 +128,7 @@ typedef	struct s_pos
 	float	a;	// player view angle
 	float	x0; //	x coordinate of start position
 	float	y0; // y coordinate of start position
+	float	fov;
 }	t_pos;
 
 // map
@@ -151,6 +152,7 @@ typedef struct s_display
 	mlx_image_t		*s_img; // image layer for 3d scene
 	mlx_image_t		*mm_img; // image layer for minimap
 	mlx_image_t		*f_c_img; // image layer for floor and ceiling
+	mlx_image_t		*img_tex; // test layer for texture
 	mlx_texture_t	**tex; //texture
 	t_pos			*pos;
 	t_maps			*maps;
@@ -174,6 +176,7 @@ void		setup_windows(t_display *display);
 void		load_tex(t_display *display, t_pdata *pdata);
 /* MLX_UTILS */
 void		memset_window(t_display *display);
+void		image_to_window(t_display *display);
 /*	INTERSECTIONS */
 void		find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray);
 void		calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray);
@@ -185,6 +188,7 @@ void		drawMap2D(t_display *display);
 void		draw_player_mm(t_display *display);
 void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
 /* DRAW */
+void		draw_floor_ceiling(t_display *display);
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
@@ -198,4 +202,7 @@ void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
 void		my_put_pixel(mlx_image_t *img, float x, float y, int color);
 void		reset_angles(t_display *display);
+void		get_wall_dir(t_display *display);
+int img_pixel(double x_p, double y_p, mlx_texture_t *tex);
+int get_color(uint8_t *start);
 #endif

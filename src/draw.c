@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:26:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:48:32 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 13:35:10 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,28 @@ void	my_put_pixel(mlx_image_t *img, float x, float y, int color)
 	if (x < 0)
 		x = 0;
 	mlx_put_pixel(img, x, y, color);
+}
+
+/* floor and ceiling have their own image layer*/
+void	draw_floor_ceiling(t_display *display)
+{
+	int x0;
+	int y0;
+
+	x0 = 0;
+	while (x0 < WIDTH && x0 >= 0)
+	{
+		y0 = 0;
+		while (y0 < HEIGHT && y0 >= 0)
+		{
+			if ( y0> HEIGHT /2)
+				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(190, 123, 67));
+			else
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(0, 30, 220));
+				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
+			y0++;
+		}
+		x0++;
+	}
 }

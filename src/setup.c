@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 09:20:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:02:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps)
 	pos->x = pdata->player_positionxy[0] * maps->map_s;
 	pos->y = pdata->player_positionxy[1] * maps->map_s;
 	pos->a = pdata->player_directionrad;
-	// pos->a = 1.0472; // angle expressed in radians
+	pos->fov = 1.0472;
 	pos->dx = cos(pos->a) * 5;
 	pos->dy = sin(pos->a) * 5; 
 }
@@ -48,36 +48,12 @@ void	setup_rays(t_ray *ray)
 	ft_bzero(ray, sizeof(t_ray));
 	ray->dis_h = 10000;
 	ray->dis_v = 10000;
-	ray->ray_max = 320;
+	ray->ray_max = 640;
 }
 
 void	setup_wall(t_wall *wall)
 {
 	ft_bzero(wall, sizeof(t_wall));
-}
-
-/* init window layers for floor/ceiling, scene and minimap */
-void	setup_windows(t_display *display)
-{
-		display->f_c_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
-		display->s_img = mlx_new_image(display->mlx, WIDTH, HEIGHT);
-		display->mm_img = mlx_new_image(display->mlx, display->maps->width_mm, \
-		display->maps->height_mm);
-		memset_window(display);
-}
-
-/* path to be updated with values from file */
-void	load_tex(t_display *display, t_pdata *pdata)
-{
-	(void) pdata;
-	// display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
-	// display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
-	// display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
-	// display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
-	display->tex[NO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[SO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[WE] = mlx_load_png("./textures/redbrick.png");
-	display->tex[EA] = mlx_load_png("./textures/redbrick.png");
 }
 
 void	setup_display(t_display *display)
