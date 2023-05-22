@@ -6,28 +6,28 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 16:07:07 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:39:48 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <cub3d.h>
+#include <cub3d.h>
 
 /* vertical walls: wall_dir  = 1*/
 void	get_wall_dir(t_display *display)
 {
 	char	wall_tex;
-	
+
 	if (display->wall->dir == 1)
 	{
 		if (display->ray->x_off <= 0)
 		{
 			wall_tex = 'W';
-			display->wall->shading = get_rgba(0,133,120);
+			display->wall->shading = get_rgba(0, 133, 120);
 		}
 		else if (display->ray->x_off > 0)
 		{
 			wall_tex = 'E';
-			display->wall->shading = get_rgba(0,89,79);
+			display->wall->shading = get_rgba(0, 89, 79);
 		}
 	}
 	if (display->wall->dir == 0)
@@ -57,10 +57,6 @@ void	load_tex(t_display *display, t_pdata *pdata)
 	display->tex[SO] = mlx_load_png("./textures/redbrick.png");
 	display->tex[WE] = mlx_load_png("./textures/redbrick.png");
 	display->tex[EA] = mlx_load_png("./textures/redbrick.png");
-
-	printf("texture width is %d\n", display->tex[NO]->width);
-	printf("texture height is %d\n", display->tex[NO]->height);
-	printf("texture is %s\n", (char *)display->tex[EA]);
 }
 
 int get_color(uint8_t *start)
@@ -90,26 +86,3 @@ int img_pixel(double x_p, double y_p, mlx_texture_t *tex)
     ptr = &tex->pixels[(int)(x * 4 + y * 4)];
     return (get_color(ptr));
 }
-
-// int	get_color(double x, double y, )
-// {
-// 	uint32_t color;
-	
-	
-	
-// 	return (color);
-// }
-
-
-
-
-
-
-
-// int	img_pixel(double x, double y, mlx_texture_t *tex)
-// {
-// 	uint32_t color;
-// 	int position = 
-
-// 	return (color);
-// }

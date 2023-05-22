@@ -6,25 +6,26 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:56:42 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 13:21:13 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:37:37 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <cub3d.h>
+#include <cub3d.h>
 
 
 /*	if ray hits wall, calculate distance, else, add offset and check again */
 void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (count < display->maps->max_y)
 	{
-		ray->y = (int) (ray->y0 / display->maps->map_s);
-		ray->x = (int) (ray->x0 / display->maps->map_s);
-		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y 
-			&& ray->x < display->maps->max_x && display->pdata->map[ray->y][ray->x] == '1')
+		ray->y = (int)(ray->y0 / display->maps->map_s);
+		ray->x = (int)(ray->x0 / display->maps->map_s);
+		if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y \
+			&& ray->x < display->maps->max_x \
+			&& display->pdata->map[ray->y][ray->x] == '1')
 		{
 			ray->hx = ray->x0;
 			ray->hy = ray->y0;
