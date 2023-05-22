@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 14:58:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 09:17:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 /*	remove fisheye effet with cosinus, calculate line height using distance, */
 /*	calculate offset from middle horizontal line */
-void	calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray)
+void	calculate_3D_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 {
-	wall->dis_t = ray->dis_t * HEIGHT/display->maps->height_mm;
+	wall->dis_t = ray->dis_t * HEIGHT/d->maps->height_mm;
 	wall->ca = pos->a - ray->a;
 	if (wall->ca < 0)
 		wall->ca += 2 * M_PI;
 	if (wall->ca > 2 * M_PI)
 		wall->ca -= 2 * M_PI;
 	wall->dis_t = wall->dis_t * cos(wall->ca);
-	wall->line_h = (HEIGHT * display->maps->map_s * 4) / (wall->dis_t);
+	wall->line_h = (HEIGHT * d->maps->map_s * 4) / (wall->dis_t);
 	if (wall->line_h > HEIGHT)
 		wall->line_h = HEIGHT;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;

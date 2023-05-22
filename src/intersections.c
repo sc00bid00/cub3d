@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:56:42 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 11:16:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 09:28:37 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray)
 	ray->hy = pos->y; 
 	if (ray->a > M_PI && ray->a <= M_PI * 2)
 	{
-		ray->y0 = ((int)(pos->y/display->maps->map_s)) * display->maps->map_s - 1;
+		ray->y0 = ((int)(pos->y/display->maps->map_s)) * display->maps->map_s - 0.00001;
 		ray->y_off = -display->maps->map_s;
 	}
 	if (ray->a <= M_PI && ray->a >= 0)
@@ -105,7 +105,7 @@ void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
 		ray->vy = pos->y;
 		if (ray->a > M_PI_2 && ray->a <= (3 * M_PI_2))
 		{
-			ray->x0 = ((int)(pos->x/display->maps->map_s)) * display->maps->map_s - 1;
+			ray->x0 = ((int)(pos->x/display->maps->map_s)) * display->maps->map_s - 0.00001;
 			ray->x_off = -display->maps->map_s;
 		}
 		if (ray->a <= M_PI_2 || ray->a > (3 * M_PI_2))

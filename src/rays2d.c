@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 14:37:48 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 09:22:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	reset_angles(t_display *display)
 {
-	if (display->ray->a <= 0)
+	if (display->ray->a < 0)
 		display->ray->a += 2 * M_PI;
-	if (display->ray->a >= 2 * M_PI)
+	if (display->ray->a > 2 * M_PI)
 		display->ray->a -= 2 * M_PI;
 }
 

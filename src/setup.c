@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 14:55:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 09:20:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps)
 	ft_bzero(pos, sizeof(t_pos));
 	pos->x = pdata->player_positionxy[0] * maps->map_s;
 	pos->y = pdata->player_positionxy[1] * maps->map_s;
-	// pos->a = >pdata->player_directionrad;
-	pos->a = 1.0472; // angle expressed in radians
+	pos->a = pdata->player_directionrad;
+	// pos->a = 1.0472; // angle expressed in radians
 	pos->dx = cos(pos->a) * 5;
 	pos->dy = sin(pos->a) * 5; 
 }
@@ -48,7 +48,7 @@ void	setup_rays(t_ray *ray)
 	ft_bzero(ray, sizeof(t_ray));
 	ray->dis_h = 10000;
 	ray->dis_v = 10000;
-	ray->ray_max = 60;
+	ray->ray_max = 320;
 }
 
 void	setup_wall(t_wall *wall)

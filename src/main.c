@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/16 15:02:13 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 09:10:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,6 @@ void	draw_line(t_display *display, float posx, float posy)
 	y_end = posy + length * sin(display->pos->a);
 	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
 }
-
-
-
 
 /*	GET_RGBA
 *	----------
