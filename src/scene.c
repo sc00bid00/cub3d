@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 18:33:49 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:53:30 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 			wall->y0++;
 			j++;
 		}
-		// printf("vx, vy is %f %f\n", ray->vx, ray->vy);
-		// printf("hx, hy is %f %f\n", ray->hx, ray->hy);
+		printf("vx, vy is %f %f\n", ray->vx, ray->vy);
+		printf("hx, hy is %f %f\n", ray->hx, ray->hy);
 		wall->x0++;
 		i++;
 	}
