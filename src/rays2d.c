@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 09:22:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:42:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	reset_angles(t_display *display)
 {
-	if (display->ray->a < 0)
+	if (display->ray->a <= 0)
 		display->ray->a += 2 * M_PI;
-	if (display->ray->a > 2 * M_PI)
+	if (display->ray->a >= 2 * M_PI)
 		display->ray->a -= 2 * M_PI;
 }
 
@@ -30,6 +30,7 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->y0 = ray->vy;
 		ray->dis_t = ray->dis_v;
 		wall->shading = get_rgba(0,133,120);
+		wall->hit = 1;
 	}
 	else if (ray->dis_h <= ray->dis_v)
 	{
@@ -37,6 +38,7 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		ray->y0 = ray->hy;
 		ray->dis_t = ray->dis_h;
 		wall->shading = get_rgba(0,89,79);
+		wall->hit = 0;
 	}
 }
 

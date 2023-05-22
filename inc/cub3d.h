@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 14:39:57 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:38:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 // variables related to 3D
 typedef struct s_wall
 {
-	int			count;
+	// int			count;
+	int			hit; // indicates if vertical or horizontal wall is hit by ray
 	float		dis_t; // distance to wall from player
 	float		ca; // angle between player and ray
 	float		line_h; // line height

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/22 09:10:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:02:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ void	draw_floor_ceiling(t_display *display)
 		while (y0 < HEIGHT && y0 >= 0)
 		{
 			if ( y0> HEIGHT /2)
-				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
+				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(190, 123, 67));
 			else
-				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
+				my_put_pixel(display->f_c_img, x0, y0, get_rgba(0, 30, 220));
+				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
 			y0++;
 		}
 		x0++;
@@ -186,6 +188,8 @@ int	main(int argc, char **argv)
 		{
 			allocate_memory(display);
 			setup_display(display);
+			printf("floor color is %d\n", display->pdata->colors_fc[0]);
+			printf("ceiling color is %d\n", display->pdata->colors_fc[1]);
 			cub3d(display);
 		}
 	}
