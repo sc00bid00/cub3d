@@ -6,13 +6,15 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:13:27 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 18:38:36 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:55:36 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+/*	functions address the three image layers used to display floor/ceiling */
+/*	3D scene and minimap */
 
-/* reset window to  */
+/* reset window */
 void	memset_window(t_display *display)
 {
 	ft_memset(display->f_c_img->pixels, COLOR, WIDTH \

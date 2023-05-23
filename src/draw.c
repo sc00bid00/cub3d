@@ -6,11 +6,24 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:26:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 09:39:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:00:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <cub3d.h>
+
+/* specify line details */
+void	draw_line(t_display *display, double posx, double posy)
+{
+	double	x_end;
+	double	y_end;
+	int		length;
+
+	length = 20;
+	x_end = posx + length * cos(display->pos->a);
+	y_end = posy + length * sin(display->pos->a);
+	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
+}
 
 /* to be updated with Luca's Bresenham function */
 void draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color)

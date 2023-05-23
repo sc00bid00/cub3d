@@ -6,11 +6,21 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 13:30:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:54:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+void	setup_display(t_display *display)
+{
+	setup_maps(display->maps, display->pdata);
+	setup_pos(display->pos, display->pdata, display->maps);
+	setup_rays(display->ray);
+	setup_wall(display->wall);
+	setup_windows(display);
+	load_tex(display, display->pdata);
+}
 
 /*	init map and scale minimap */
 void	setup_maps(t_maps *maps, t_pdata *pdata)
@@ -40,28 +50,16 @@ void	setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps)
 	pos->a = pdata->player_directionrad;
 	pos->fov = 1.0472;
 	pos->dx = cos(pos->a) * 5;
-	pos->dy = sin(pos->a) * 5; 
+	pos->dy = sin(pos->a) * 5;
 }
 
 void	setup_rays(t_ray *ray)
 {
 	ft_bzero(ray, sizeof(t_ray));
-	ray->dis_h = 10000;
-	ray->dis_v = 10000;
 	ray->ray_max = 620;
 }
 
 void	setup_wall(t_wall *wall)
 {
 	ft_bzero(wall, sizeof(t_wall));
-}
-
-void	setup_display(t_display *display)
-{
-	setup_maps(display->maps, display->pdata);
-	setup_pos(display->pos, display->pdata, display->maps);
-	setup_rays(display->ray);
-	setup_wall(display->wall);
-	setup_windows(display);
-	load_tex(display, display->pdata);
 }

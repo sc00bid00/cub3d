@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 14:40:24 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:49:10 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,11 @@ void	calculate_3D_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 		angle_dist -= 2 * M_PI;
 	wall->dis_t = wall->dis_t * cos(angle_dist);
 	wall->line_h = (HEIGHT * mapS) / (wall->dis_t);
-	wall->tex_offset = d->tex[NO]->height / wall->line_h;
-	// wall->line_h = (HEIGHT * d->maps->map_s * 4) / (wall->dis_t);
 	if (wall->line_h > HEIGHT)
 		wall->line_h = HEIGHT - 1;
 	wall->line_w = WIDTH / pos->fov;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
-
-// void	draw_scene(t_display *display)
-// {
-	
-// }
-
-// void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
-// {
-// 	long	ray_end;
-// 	float	texel_pos;
-// 	(void)	maps;
-
-// 	ray->ray_start[0] = display->pos->x0;
-// 	ray->ray_start[1] = display->pos->y0;
-	
-// 	ray_end = ray->ray_end[1] / 64 *  display->tex[NO]->width;
-// 	while (count_x < wall->line_w)
-// 	{
-// 		ray->ray_start[0] = 
-// 		ray->ray_start[1] = HEIGHT / 2 - wall->line_h / 2;
-// 		ray->ray_end[1] = ray->ray_start[1] + wall_line_h;
-// 		texel_pos = wall->tex_offset;
-// 		draw_scene(display);
-// 		count_x++;
-// 	}
-// }
-
-
 
 void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 {
@@ -79,11 +49,18 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 		{
 			int texel = 0xffffff;
 			double offset = (j - start) / (end - start);
+			double offset_x = 1200 / wall->line_h;
+			// if (offset_x > 1)
+			// 	offset_x = 1;	
+			offset_x = offset_x * cos(display->pos->a - ray->a);
+			// printf(" offset x is %f\n", offset_x);
 			// texel = texel * offset;
 			if (ray->hx - (int) ray->hx == 0) {
-				texel = img_pixel(ray->hy - (int) ray->hy, offset, display->tex[SO]);
+				// texel = img_pixel(ray->hy - (int) ray->hy, offset, display->wall->texture);
+				texel = img_pixel(offset_x, offset, display->wall->texture);
 			} else {
-				texel = img_pixel(ray->hx - (int) ray->hx, offset, display->tex[SO]);
+				texel = img_pixel(offset_x, offset, display->wall->texture);
+				// texel = img_pixel(ray->hx - (int) ray->hx, offset, display->wall->texture);
 			}
 			// printf("%x\n", texel);
 			my_put_pixel(display->s_img, wall->x0, j, texel);

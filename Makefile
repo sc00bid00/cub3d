@@ -6,14 +6,13 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/22 14:33:02 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/23 17:03:12 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-#CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g -MMD
-CFLAGS = -Wextra -Wall -Werror -Ofast -g -MMD
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g -MMD
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
@@ -24,6 +23,7 @@ SRC =	main.c \
 		setup.c \
 		memory_management.c \
 		draw.c \
+		hooks.c \
 		rays2d.c \
 		scene.c \
 		utils_debug.c \
@@ -31,7 +31,7 @@ SRC =	main.c \
 		minimap.c \
 		texture.c \
 		window.c \
-		intersections.c
+		rays.c
 # =======================
 
 BRED	=	\033[1;31m

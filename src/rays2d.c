@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 10:36:05 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:41:50 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,7 @@ void	reset_angles(t_display *display)
 		display->ray->a -= 2 * M_PI;
 }
 
-/* check if horizontal or vertical intersection is closer to player and */
-/*	set variables for drawing + 3D calculation accordingly*/
-void	compare_dist(t_ray *ray, t_wall *wall)
-{
-	if (ray->dis_h > ray->dis_v)
-	{
-		ray->x0 = ray->vx;
-		ray->y0 = ray->vy;
-		ray->dis_t = ray->dis_v;
-		// wall->shading = get_rgba(0,133,120);
-		wall->dir = 1;
-	}
-	else if (ray->dis_h <= ray->dis_v)
-	{
-		ray->x0 = ray->hx;
-		ray->y0 = ray->hy;
-		ray->dis_t = ray->dis_h;
-		// wall->shading = get_rgba(0,89,79);
-		wall->dir = 0;
-	}
-	ray->ray_end[0] = ray->x0;
-	ray->ray_end[1] = ray->y0;
-}
+
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */

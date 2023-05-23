@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/23 09:39:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:04:23 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	cub3d(t_display *display)
  	// exit (0);
 	setup_windows(display);
 	draw_minimap(display);
-	// draw_line(display, display->pos->x, display->pos->y);
 	calc_rays(display, display->pos, display->ray, display->wall);
 	draw_floor_ceiling(display);
 	image_to_window(display);
@@ -35,60 +34,6 @@ void	cub3d(t_display *display)
 	return ;
 }
 
-/*	MY_KEYHOOK
-*	------------
-*	function is called by MLX lib function and specifies the actions to be
-*	executed, if a particular key is being pressed. Void parameter has to be
-*	assigned.
-*	Press esc: clean up function is called: window closes + pointers freed.
-*/
-
-void	my_keyhook(mlx_key_data_t keydata, void *param)
-{
-	mlx_t		*mlx;
-	t_display	*display;
-	(void) keydata;
-
-	display = param;
-	mlx = display->mlx;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(mlx);
-}
-
-/*	keys W and S to move forward / backward, keys A and D to rotate */
-void	my_hook(void *param)
-{
-	t_display	*display;
-
-	display = param;
-	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
-	{
-		display->pos->x += display->pos->dx;
-		display->pos->y += display->pos->dy;
-	}
-	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
-	{
-		display->pos->x -= display->pos->dx;
-		display->pos->y -= display->pos->dy;
-	}
-	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
-	{
-		display->pos->a -=0.05;
-		display->pos->dx = cos(display->pos->a) * 5;
-		display->pos->dy = sin(display->pos->a) * 5;
-	}
-	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
-	{
-		display->pos->a +=0.05;
-		display->pos->dx = cos(display->pos->a) * 5;
-		display->pos->dy = sin(display->pos->a) * 5;
-	}
-	reset_angles(display);
-	memset_window(display);
-	draw_floor_ceiling(display);
-	draw_minimap(display);
-	calc_rays(display, display->pos, display->ray, display->wall);
-}
 
 /* uses pythagoran theorem to return distance from player */
 /* must be adjusted to avoid fishbowl effect */
@@ -98,18 +43,6 @@ double 	dist(t_pos *pos, double bx, double by, double ang)
 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
 }
 
-/* specify line details */
-void	draw_line(t_display *display, double posx, double posy)
-{
-	double	x_end;
-	double	y_end;
-	int		length;
-
-	length = 20;
-	x_end = posx + length * cos(display->pos->a);
-	y_end = posy + length * sin(display->pos->a);
-	draw_line_bresenham(display, posx, posy, x_end, y_end, 270);
-}
 
 /*	GET_RGBA
 *	----------
@@ -144,46 +77,3 @@ int	main(int argc, char **argv)
 	clean_up(display);
 	return (0);
 }
-
-// #include <stdio.h>
-// #include <unistd.h>
-// #include <stdlib.h>
-// #include <cub3d.h>
-
-
-// static void error(void)
-// {
-// 	puts(mlx_strerror(mlx_errno));
-// 	exit(EXIT_FAILURE);
-// }
-
-// int32_t	main(void)
-// {
-// 	// Start mlx
-// 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
-// 	if (!mlx)
-//         error();
-
-// 	// Try to load the file
-// 	mlx_texture_t* texture = mlx_load_png("./textures/redbrick.png");
-// 	if (!texture)
-//         error();
-	
-// 	// Convert texture to a displayable image
-// 	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
-// 	if (!img)
-//         error();
-
-// 	// Display the image
-// 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-//         error();
-
-// 	mlx_loop(mlx);
-
-// 	mlx_delete_image(mlx, img);
-// 	mlx_delete_texture(texture);
-
-//         // Optional, terminate will clean up any leftover images (not textures!)
-// 	mlx_terminate(mlx);
-// 	return (EXIT_SUCCESS);
-// }

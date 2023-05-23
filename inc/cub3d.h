@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 11:28:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:00:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@
 # include <debug.h>
 # include <stdbool.h>
 
-// #define WIDTH 512
-// #define HEIGHT 512
 #define WIDTH 1920	
 #define HEIGHT 1200	// players height 600 pixel
-// #define WIDTH_MM 400
-// #define	HEIGHT_MM 400
 #define mapS 64   //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
@@ -37,19 +33,16 @@
 // variables related to 3D
 typedef struct s_wall
 {
-	// int			count;
-	int			dir; // indicates if vertical or horizontal wall is hit by ray
-	double		dis_t; // distance to wall from player
-	double		ca; // angle between player and ray
-	double		line_h; // line height
-	double		line_w; // line width
-	double		line_off; // (full window height - line height) / 2; line offset
-	double		x0;	// pixel coordinate x
-	double 		y0; // pixel coordinate y
-	double		pos_x;
-	double		pos_y;
-	double		tex_offset;
-	uint32_t	shading;
+	int				dir; // indicates if vertical or horizontal wall is hit by ray
+	double			dis_t; // distance to wall from player
+	double			line_h; // line height
+	double			line_w; // line width
+	double			line_off; // (full window height - line height) / 2; line offset
+	double			x0;	// pixel coordinate x
+	double 			y0; // pixel coordinate y
+	double			pos_x;
+	double			pos_y;
+	mlx_texture_t	*texture;
 	
 }	t_wall;
 
@@ -172,39 +165,44 @@ typedef struct s_display
 /* MEMORY_MANAGEMENT */
 void		allocate_memory(t_display *display);
 int			clean_up(t_display *display);
-/* SETUP																	*/
+/* SETUP	*/
 void		setup_display(t_display *display);
-void		setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps);
 void		setup_maps(t_maps *maps, t_pdata *pdata);
-void		setup_windows(t_display *display);
-void		load_tex(t_display *display, t_pdata *pdata);
-/* MLX_UTILS */
+void		setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps);
+void		setup_rays(t_ray *ray);
+void		setup_wall(t_wall *wall);
+/*	WINDOW	*/
 void		memset_window(t_display *display);
+void		setup_windows(t_display *display);
 void		image_to_window(t_display *display);
-/*	INTERSECTIONS */
+/* MLX_UTILS */
+void		load_tex(t_display *display, t_pdata *pdata);
+/*	RAYS	*/
 void		find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray);
 void		calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray);
 void		find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray);
 void		calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray);
-/* MINIMAP */
+void		compare_dist(t_ray *ray, t_wall *wall);
+/* MINIMAP	*/
 void		draw_minimap(t_display *display);
 void		drawMap2D(t_display *display);
 void		draw_player_mm(t_display *display);
 void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
-/* DRAW */
+/* DRAW		*/
+void		draw_line(t_display *display, double posx, double posy);
+void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		draw_floor_ceiling(t_display *display);
+void		my_put_pixel_mm(t_display *display, double x, double y, int color);
+void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
+/*	HOOKS	*/
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
-void		my_put_pixel_mm(t_display *display, double x, double y, int color);
-void		draw_line(t_display *display, double posx, double posy);
-void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 double		dist(t_pos *pos, double bx, double by, double ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
-void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		reset_angles(t_display *display);
 void		get_wall_dir(t_display *display);
 int			img_pixel(double x_p, double y_p, mlx_texture_t *tex);
