@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/23 09:40:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:45:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,11 +267,11 @@ void	get_direction(double *player_directionrad, char c)
 	if (c == 'E')
 		*player_directionrad = 0;
 	else if (c == 'N')
-		*player_directionrad = M_PI_2;
+		*player_directionrad = 1.5 * M_PI;
 	else if (c == 'W')
 		*player_directionrad = M_PI;
 	else if (c == 'S')
-		*player_directionrad = 1.5 * M_PI;
+		*player_directionrad = M_PI_2;
 }
 
 bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
