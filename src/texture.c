@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 18:39:48 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:33:37 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	load_tex(t_display *display, t_pdata *pdata)
 	// display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
 	// display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
 	display->tex[NO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[SO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[WE] = mlx_load_png("./textures/redbrick.png");
-	display->tex[EA] = mlx_load_png("./textures/redbrick.png");
+	display->tex[SO] = mlx_load_png("./textures/greystone.png");
+	display->tex[WE] = mlx_load_png("./textures/bluestone.png");
+	display->tex[EA] = mlx_load_png("./textures/purplestone.png");
 }
 
 int get_color(uint8_t *start)
@@ -86,3 +86,29 @@ int img_pixel(double x_p, double y_p, mlx_texture_t *tex)
     ptr = &tex->pixels[(int)(x * 4 + y * 4)];
     return (get_color(ptr));
 }
+
+// static uint32_t	*get_color(mlx_texture_t *texture)
+// {
+// 	int				i;
+// 	unsigned int	pos;
+// 	uint8_t			rgb[4];
+// 	uint32_t		*colors;
+
+// 	i = 0;
+// 	colors = malloc(sizeof(uint32_t) * (texture->width + 1)
+// 			* (texture->height + 1));
+// 	if (colors == NULL)
+// 		ft_error("Allocation error!\n", NULL);
+// 	pos = 0;
+// 	while (pos < texture->width * texture->height * texture->bytes_per_pixel)
+// 	{
+// 		rgb[0] = texture->pixels[pos];
+// 		rgb[1] = texture->pixels[pos + 1];
+// 		rgb[2] = texture->pixels[pos + 2];
+// 		rgb[3] = texture->pixels[pos + 3];
+// 		colors[i] = (rgb[0] << 24) + (rgb[1] << 16) + (rgb[2] << 8) + rgb[3];
+// 		pos += texture->bytes_per_pixel;
+// 		i++;
+// 	}
+// 	return (colors);
+// }

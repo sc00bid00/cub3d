@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 17:01:48 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 11:28:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #define HEIGHT 1200	// players height 600 pixel
 // #define WIDTH_MM 400
 // #define	HEIGHT_MM 400
-// #define mapS 15   //map cube size
+#define mapS 64   //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
 
@@ -39,14 +39,16 @@ typedef struct s_wall
 {
 	// int			count;
 	int			dir; // indicates if vertical or horizontal wall is hit by ray
-	float		dis_t; // distance to wall from player
-	float		ca; // angle between player and ray
-	float		line_h; // line height
-	float		line_off; // (full window height - line height) / 2; line offset
-	float		x0;	// pixel coordinate x
-	float 		y0; // pixel coordinate y
-	float		pos_x;
-	float		pos_y;
+	double		dis_t; // distance to wall from player
+	double		ca; // angle between player and ray
+	double		line_h; // line height
+	double		line_w; // line width
+	double		line_off; // (full window height - line height) / 2; line offset
+	double		x0;	// pixel coordinate x
+	double 		y0; // pixel coordinate y
+	double		pos_x;
+	double		pos_y;
+	double		tex_offset;
 	uint32_t	shading;
 	
 }	t_wall;
@@ -58,20 +60,22 @@ typedef struct s_ray
 	int		ray_max;	// number of rays
 	int		x;	// coordinate on grid
 	int		y;	// coordinate on grid
-	float	a;	// ray angle
-	float	x0;	// coordinate in pixel
-	float	y0; // coordinate in pixel
-	float	x_off; // x offset in pixel
-	float	y_off; // y offset in pixel
-	float	hx;
-	float 	hy;
-	float	vx;
-	float	vy;
-	float	dis_h;
-	float	dis_v;
-	float	dis_t;
-	float	atan;
-	float	ntan;
+	double	a;	// ray angle
+	double	x0;	// coordinate in pixel
+	double	y0; // coordinate in pixel
+	double	x_off; // x offset in pixel
+	double	y_off; // y offset in pixel
+	double	hx;
+	double 	hy;
+	double	vx;
+	double	vy;
+	double	ray_end[2];
+	double	ray_start[2];
+	double	dis_h;
+	double	dis_v;
+	double	dis_t;
+	double	atan;
+	double	ntan;
 	
 }	t_ray;
 	
@@ -115,20 +119,20 @@ typedef struct s_pdata
 	char		**color_string;
 	uint32_t	colors_fc[2];
 	int			player_positionxy[2];
-	float		player_directionrad;
+	double		player_directionrad;
 }	t_pdata;
 
 // player
 typedef	struct s_pos
 {
-	float	x;	// coordinate on grid
-	float	y;	// coordinate on grid
-	float	dx; // delta x
-	float	dy; // delta y
-	float	a;	// player view angle
-	float	x0; //	x coordinate of start position
-	float	y0; // y coordinate of start position
-	float	fov;
+	double	x;	// coordinate on grid
+	double	y;	// coordinate on grid
+	double	dx; // delta x
+	double	dy; // delta y
+	double	a;	// player view angle
+	double	x0; //	x coordinate of start position
+	double	y0; // y coordinate of start position
+	double	fov;
 }	t_pos;
 
 // map
@@ -192,17 +196,18 @@ void		draw_floor_ceiling(t_display *display);
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
-void		my_put_pixel_mm(t_display *display, float x, float y, int color);
-void		draw_line(t_display *display, float posx, float posy);
+void		my_put_pixel_mm(t_display *display, double x, double y, int color);
+void		draw_line(t_display *display, double posx, double posy);
 void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
 void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
-float		dist(t_pos *pos, float bx, float by, float ang);
+double		dist(t_pos *pos, double bx, double by, double ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
 void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
-void		my_put_pixel(mlx_image_t *img, float x, float y, int color);
+void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		reset_angles(t_display *display);
 void		get_wall_dir(t_display *display);
-int img_pixel(double x_p, double y_p, mlx_texture_t *tex);
+int			img_pixel(double x_p, double y_p, mlx_texture_t *tex);
 int get_color(uint8_t *start);
+// uint32_t	*get_color(mlx_texture_t *texture);
 #endif

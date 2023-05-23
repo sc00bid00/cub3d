@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/22 14:41:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:39:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,17 @@ void	my_hook(void *param)
 
 /* uses pythagoran theorem to return distance from player */
 /* must be adjusted to avoid fishbowl effect */
-float 	dist(t_pos *pos, float bx, float by, float ang)
+double 	dist(t_pos *pos, double bx, double by, double ang)
 {
 	(void) ang;
 	return (sqrt((bx - pos->x) * (bx - pos->x) + (by - pos->y) * (by - pos->y)));
 }
 
 /* specify line details */
-void	draw_line(t_display *display, float posx, float posy)
+void	draw_line(t_display *display, double posx, double posy)
 {
-	float	x_end;
-	float	y_end;
+	double	x_end;
+	double	y_end;
 	int		length;
 
 	length = 20;

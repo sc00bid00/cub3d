@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 18:55:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 13:30:33 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	setup_rays(t_ray *ray)
 	ft_bzero(ray, sizeof(t_ray));
 	ray->dis_h = 10000;
 	ray->dis_v = 10000;
-	ray->ray_max = 240;
+	ray->ray_max = 620;
 }
 
 void	setup_wall(t_wall *wall)

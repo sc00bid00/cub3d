@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/22 09:57:57 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:40:01 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ bool	get_rows(t_pdata *p)
 	change_chartozero(p);
 	return (true);
 }
-void	get_direction(float *player_directionrad, char c)
+void	get_direction(double *player_directionrad, char c)
 {
 	if (c == 'E')
 		*player_directionrad = 0;

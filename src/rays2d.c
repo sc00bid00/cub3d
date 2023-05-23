@@ -6,11 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 11:49:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:36:05 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <cub3d.h>
+#include <cub3d.h>
 
 void	reset_angles(t_display *display)
 {
@@ -40,6 +40,8 @@ void	compare_dist(t_ray *ray, t_wall *wall)
 		// wall->shading = get_rgba(0,89,79);
 		wall->dir = 0;
 	}
+	ray->ray_end[0] = ray->x0;
+	ray->ray_end[1] = ray->y0;
 }
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/

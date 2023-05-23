@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:56:42 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/22 18:37:37 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:30:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 		count++;
 	}
 }
-
 
 /* calculate y offset, looking left or right*/
 void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
