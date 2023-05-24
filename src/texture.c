@@ -17,28 +17,28 @@ void	get_wall_dir(t_display *display)
 {
 	if (display->wall->dir == 1)
 	{
-		if (display->ray->x_off <= 0)
+		if (display->ray->x_off < 0)
 		{
-			display->wall->offset_x = 1200 / display->wall->line_h * sin(display->ray->a);
+			display->wall->offset_x = 640 / display->wall->line_h * sin(display->ray->a);
 			display->wall->texture = display->tex[WE];
 		}
 		else if (display->ray->x_off > 0)
 		{
-			display->wall->offset_x = 1200 / display->wall->line_h * sin(display->ray->a);
+			display->wall->offset_x = 640 / display->wall->line_h * sin(display->ray->a);
 			display->wall->texture = display->tex[EA];
 		}	
 	}
 	if (display->wall->dir == 0)
 	{
-		if (display->ray->y_off <= 0)
+		if (display->ray->y_off < 0)
 		{
-			display->wall->offset_x = 1200 / display->wall->line_h * cos(display->ray->a);
+			display->wall->offset_x = 640 / display->wall->line_h * cos(display->ray->a);
 			display->wall->texture = display->tex[NO];
 		}
 		else if (display->ray->y_off > 0)
 		{
 			display->wall->texture = display->tex[SO];
-			display->wall->offset_x = 1200 / display->wall->line_h * cos(display->ray->a);
+			display->wall->offset_x = 640 / display->wall->line_h * cos(display->ray->a);
 		}
 	}
 }

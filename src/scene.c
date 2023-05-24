@@ -37,41 +37,20 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 	double start;
 	double end;
 	double j;
-	//double x;
-	//if (wall->x0 > 64)
-	//	x = (int)wall->x0 % 64;
-		// x = (int)wall->x0 % 64 / (wall->dis_t * tan(display->pos->fov / 2));
-	//else
-	//	x = wall->x0;
-		// x = wall->x0 / (wall->dis_t * tan(display->pos->fov / 2));
+
 	int i;
+	start = HEIGHT / 2 - wall->line_h / 2;
+	end = HEIGHT / 2 + wall->line_h / 2;
 	(void) maps;
 	i = 0;
 	while (i <= WIDTH / ray->ray_max)
 	{
-		start = HEIGHT / 2 - wall->line_h / 2;
-		end = HEIGHT / 2 + wall->line_h / 2;
 		j = start;
 		while (j < end)
 		{
 			int texel = 0;
 			double offset = (j - start) / (end - start);
-			//double offset_x = 1200 / wall->line_h;
-			//if (ray)
-			//offset_x = offset_x * cos(ray->a);
-			// if (offset_x > 1)
-			// 	offset_x = 1;	
-			
-			// printf(" offset x is %f\n", offset_x);
-			if (ray->hx - (int) ray->hx == 0) {
-				// texel = img_pixel(ray->hy - (int) ray->hy, offset, display->wall->texture);
-				texel = img_pixel(wall->offset_x, offset, display->wall->texture);
-			} else {
-				
-				texel = img_pixel(wall->offset_x, offset, display->wall->texture);
-				// texel = img_pixel(ray->hx - (int) ray->hx, offset, display->wall->texture);
-			}
-			// printf("%x\n", texel);
+			texel = img_pixel(wall->offset_x, offset, display->wall->texture);
 			my_put_pixel(display->s_img, wall->x0, j, texel);
 			j++;
 		}

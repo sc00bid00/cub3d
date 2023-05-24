@@ -14,9 +14,9 @@
 
 void	reset_angles(t_display *display)
 {
-	if (display->ray->a <= 0)
+	if (display->ray->a < 0)
 		display->ray->a += 2 * M_PI;
-	if (display->ray->a >= 2 * M_PI)
+	if (display->ray->a > 2 * M_PI)
 		display->ray->a -= 2 * M_PI;
 }
 
