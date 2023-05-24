@@ -74,9 +74,6 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 /* calculate y offset, looking left or right*/
 void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
 {
-	int	count;
-
-	count = 0;
 	ray->ntan = -tan(ray->a);
 	ray->dis_v = 100000;
 	ray->vx = pos->x;
