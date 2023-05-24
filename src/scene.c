@@ -31,12 +31,24 @@ void	calculate_3D_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 	wall->line_w = WIDTH / pos->fov;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
+// double	norm_x(t_wall *wall)
+// {
+// 	if (wall->x0 > 64)
+// 	{
+
+// 	}
+// }
 
 void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 {
 	double start;
 	double end;
 	double j;
+	double x;
+	if (wall->x0 > 64)
+		x = (int)wall->x0 % 64;
+	else
+		x = wall->x0;
 	int i;
 	(void) maps;
 	i = 0;
@@ -47,12 +59,12 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 		j = start;
 		while (j < end)
 		{
-			int texel = 0xffffff;
+			int texel = 0;
 			double offset = (j - start) / (end - start);
-			double offset_x = 1200 / wall->line_h;
+			double offset_x = x / 64;
 			// if (offset_x > 1)
 			// 	offset_x = 1;	
-			offset_x = offset_x * cos(display->pos->a - ray->a);
+			// offset_x = offset_x * cos(display->pos->a - ray->a);
 			// printf(" offset x is %f\n", offset_x);
 			// texel = texel * offset;
 			if (ray->hx - (int) ray->hx == 0) {
