@@ -31,24 +31,19 @@ void	calculate_3D_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 	wall->line_w = WIDTH / pos->fov;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
-// double	norm_x(t_wall *wall)
-// {
-// 	if (wall->x0 > 64)
-// 	{
-
-// 	}
-// }
 
 void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 {
 	double start;
 	double end;
 	double j;
-	double x;
-	if (wall->x0 > 64)
-		x = (int)wall->x0 % 64;
-	else
-		x = wall->x0;
+	//double x;
+	//if (wall->x0 > 64)
+	//	x = (int)wall->x0 % 64;
+		// x = (int)wall->x0 % 64 / (wall->dis_t * tan(display->pos->fov / 2));
+	//else
+	//	x = wall->x0;
+		// x = wall->x0 / (wall->dis_t * tan(display->pos->fov / 2));
 	int i;
 	(void) maps;
 	i = 0;
@@ -61,17 +56,19 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 		{
 			int texel = 0;
 			double offset = (j - start) / (end - start);
-			double offset_x = x / 64;
+			//double offset_x = 1200 / wall->line_h;
+			//if (ray)
+			//offset_x = offset_x * cos(ray->a);
 			// if (offset_x > 1)
 			// 	offset_x = 1;	
-			// offset_x = offset_x * cos(display->pos->a - ray->a);
+			
 			// printf(" offset x is %f\n", offset_x);
-			// texel = texel * offset;
 			if (ray->hx - (int) ray->hx == 0) {
 				// texel = img_pixel(ray->hy - (int) ray->hy, offset, display->wall->texture);
-				texel = img_pixel(offset_x, offset, display->wall->texture);
+				texel = img_pixel(wall->offset_x, offset, display->wall->texture);
 			} else {
-				texel = img_pixel(offset_x, offset, display->wall->texture);
+				
+				texel = img_pixel(wall->offset_x, offset, display->wall->texture);
 				// texel = img_pixel(ray->hx - (int) ray->hx, offset, display->wall->texture);
 			}
 			// printf("%x\n", texel);

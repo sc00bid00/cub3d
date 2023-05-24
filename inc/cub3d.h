@@ -42,6 +42,7 @@ typedef struct s_wall
 	double 			y0; // pixel coordinate y
 	double			pos_x;
 	double			pos_y;
+	double			offset_x;
 	mlx_texture_t	*texture;
 	
 }	t_wall;

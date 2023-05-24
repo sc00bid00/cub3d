@@ -56,7 +56,7 @@ void	setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps)
 void	setup_rays(t_ray *ray)
 {
 	ft_bzero(ray, sizeof(t_ray));
-	ray->ray_max = 640;
+	ray->ray_max = 1920;
 }
 
 void	setup_wall(t_wall *wall)
