@@ -6,13 +6,13 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/25 09:23:01 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/25 12:41:43 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -Ofast -g -MMD
+CFLAGS = -Wextra -Wall -Werror -Wunreachable-code -O3 -g -MMD
 FFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/

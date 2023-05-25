@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 09:23:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:10:25 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ typedef struct s_ray
 	double 	hy;
 	double	vx;
 	double	vy;
-	double	ray_end[2];
-	double	ray_start[2];
 	double	dis_h;
 	double	dis_v;
 	double	dis_t;
@@ -124,8 +122,8 @@ typedef	struct s_pos
 	double	dx; // delta x
 	double	dy; // delta y
 	double	a;	// player view angle
-	double	x0; //	x coordinate of start position
-	double	y0; // y coordinate of start position
+	// double	x0; //	x coordinate of start position
+	// double	y0; // y coordinate of start position
 	double	fov;
 }	t_pos;
 

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 10:42:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:03:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	reset_offset(t_wall *wall)
 {
 	while (wall->offset_x < 0)
-	{	
 		wall->offset_x += 1;
-		printf(" ");
-	}
 	while (wall->offset_x > 1)
 		wall->offset_x -= 1;
 }
@@ -28,34 +25,28 @@ void	get_wall_dir(t_display *display)
 {
 	if (display->wall->dir == 1)
 	{
+		display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
 		if (display->ray->x_off < 0)
-		{
-			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
-			reset_offset(display->wall);
 			display->wall->texture = display->tex[WE];
-		}
 		else if (display->ray->x_off > 0)
-		{
-			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
-			reset_offset(display->wall);
 			display->wall->texture = display->tex[EA];
-		}	
 	}
 	if (display->wall->dir == 0)
 	{
+		display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
 		if (display->ray->y_off < 0)
-		{
-			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
-			reset_offset(display->wall);
 			display->wall->texture = display->tex[NO];
-		}
 		else if (display->ray->y_off > 0)
-		{
-			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
-			reset_offset(display->wall);
 			display->wall->texture = display->tex[SO];
-		}
 	}
+	printf("x_offset is: %f\n", display->wall->offset_x);
+	printf("player pos is: %f\n", display->pos->x);
+	double player_offset = display->pos->x - (int)display->pos->x;
+	printf("player offset is: %f\n", player_offset);
+	reset_offset(display->wall);
+	display->wall->offset_x = player_offset - display->wall->offset_x;
+	reset_offset(display->wall);
+	// - pos->x;
 }
 
 /* path to be updated with values from file */
