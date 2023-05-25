@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:01:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 09:24:11 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:49:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ void	my_hook(void *param)
 		display->pos->x -= display->pos->dx;
 		display->pos->y -= display->pos->dy;
 	}
+	if (mlx_is_key_down(display->mlx, MLX_KEY_LEFT))
+	{
+		display->pos->a -=0.05;
+		display->pos->dx = cos(display->pos->a) * 5;
+		display->pos->dy = sin(display->pos->a) * 5;
+	}
+	if (mlx_is_key_down(display->mlx, MLX_KEY_RIGHT))
+	{
+		display->pos->a +=0.05;
+		display->pos->dx = cos(display->pos->a) * 5;
+		display->pos->dy = sin(display->pos->a) * 5;
+	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
 	{
 		display->pos->a -=0.05;
@@ -49,9 +61,8 @@ void	my_hook(void *param)
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
-		display->pos->a +=0.05;
-		display->pos->dx = cos(display->pos->a) * 5;
-		display->pos->dy = sin(display->pos->a) * 5;
+		display->pos->x += display->pos->dx;
+		display->pos->y -= display->pos->dy;
 	}
 	reset_angles(display);
 	memset_window(display);
