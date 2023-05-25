@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:01:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 11:49:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:45:45 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,13 @@ void	my_hook(void *param)
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_A))
 	{
-		display->pos->a -=0.05;
-		display->pos->dx = cos(display->pos->a) * 5;
-		display->pos->dy = sin(display->pos->a) * 5;
+		display->pos->x -= display->pos->dy;
+		display->pos->y += display->pos->dx;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_D))
 	{
-		display->pos->x += display->pos->dx;
-		display->pos->y -= display->pos->dy;
+		display->pos->x += display->pos->dy;
+		display->pos->y -= display->pos->dx;
 	}
 	reset_angles(display);
 	memset_window(display);
