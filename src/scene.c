@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 10:06:12 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 10:34:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps)
 		j = start;
 		while (j < end)
 		{
-			// if (wall->offset_x < 0 || wall->offset_x > 0)
+			// if (wall->offset_x < -1 || wall->offset_x > 1)
 			// 	printf("offset is out of bounds: %f\n", display->wall->offset_x);
 			int texel = 0;
 			double offset = (j - start) / (end - start);

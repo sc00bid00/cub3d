@@ -6,11 +6,22 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 10:06:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 10:42:53 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+void	reset_offset(t_wall *wall)
+{
+	while (wall->offset_x < 0)
+	{	
+		wall->offset_x += 1;
+		printf(" ");
+	}
+	while (wall->offset_x > 1)
+		wall->offset_x -= 1;
+}
 
 /* vertical walls: wall_dir  = 1	*/
 void	get_wall_dir(t_display *display)
@@ -20,11 +31,13 @@ void	get_wall_dir(t_display *display)
 		if (display->ray->x_off < 0)
 		{
 			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
+			reset_offset(display->wall);
 			display->wall->texture = display->tex[WE];
 		}
 		else if (display->ray->x_off > 0)
 		{
 			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
+			reset_offset(display->wall);
 			display->wall->texture = display->tex[EA];
 		}	
 	}
@@ -33,11 +46,13 @@ void	get_wall_dir(t_display *display)
 		if (display->ray->y_off < 0)
 		{
 			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
+			reset_offset(display->wall);
 			display->wall->texture = display->tex[NO];
 		}
 		else if (display->ray->y_off > 0)
 		{
 			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
+			reset_offset(display->wall);
 			display->wall->texture = display->tex[SO];
 		}
 	}
@@ -75,12 +90,11 @@ int get_color(uint8_t *start)
 
 int img_pixel(double x_p, double y_p, mlx_texture_t *tex)
 {
-    uint8_t *ptr;
-    int     x;
+	uint8_t *ptr;
+	int     x;
     int     y;
 
     x = (int)(x_p * tex->width);
-   	// y = (int)(y_p * tex->height);
 	y = (int)(y_p * tex->height) * (tex->width);
     ptr = &tex->pixels[(int)(x * 4 + y * 4)];
     return (get_color(ptr));
