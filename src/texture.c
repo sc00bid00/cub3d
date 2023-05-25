@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 10:42:53 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:56:05 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	reset_offset(t_wall *wall)
 {
 	while (wall->offset_x < 0)
-	{	
+	{
 		wall->offset_x += 1;
 		printf(" ");
 	}
@@ -39,7 +39,7 @@ void	get_wall_dir(t_display *display)
 			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
 			reset_offset(display->wall);
 			display->wall->texture = display->tex[EA];
-		}	
+		}
 	}
 	if (display->wall->dir == 0)
 	{
@@ -61,15 +61,10 @@ void	get_wall_dir(t_display *display)
 /* path to be updated with values from file */
 void	load_tex(t_display *display, t_pdata *pdata)
 {
-	(void) pdata;
-	// display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
-	// display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
-	// display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
-	// display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
-	display->tex[NO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[SO] = mlx_load_png("./textures/greystone.png");
-	display->tex[WE] = mlx_load_png("./textures/bluestone.png");
-	display->tex[EA] = mlx_load_png("./textures/walkstone.png");
+	display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
+	display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
+	display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
+	display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
 }
 
 int get_color(uint8_t *start)
