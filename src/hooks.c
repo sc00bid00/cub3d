@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:01:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 17:02:47 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 09:24:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void	my_hook(void *param)
 	memset_window(display);
 	draw_floor_ceiling(display);
 	draw_minimap(display);
-	calc_rays(display, display->pos, display->ray, display->wall);
+	render(display, display->pos, display->ray, display->wall);
 }

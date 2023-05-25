@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays2d.c                                           :+:      :+:    :+:   */
+/*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 16:41:50 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 09:43:11 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	reset_angles(t_display *display)
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */
 /*	compare distances and select closer distance to determine ray length. */
-void	calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
+void	render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 {
 	ray->a = pos->a - (DR * 30);
 	reset_angles(display);

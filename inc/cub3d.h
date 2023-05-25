@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 09:23:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
-void		calc_rays(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
+void		render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 double		dist(t_pos *pos, double bx, double by, double ang);
 void		draw_scene3D(t_display *display);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);

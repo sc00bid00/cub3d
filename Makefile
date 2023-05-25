@@ -6,7 +6,7 @@
 #    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/23 17:03:12 by kczichow         ###   ########.fr        #
+#    Updated: 2023/05/25 09:23:01 by kczichow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC =	main.c \
 		memory_management.c \
 		draw.c \
 		hooks.c \
-		rays2d.c \
+		rendering.c \
 		scene.c \
 		utils_debug.c \
 		utils_parse.c \

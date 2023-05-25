@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 16:33:21 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 10:06:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	get_wall_dir(t_display *display)
 	{
 		if (display->ray->x_off < 0)
 		{
-			display->wall->offset_x = 640 / display->wall->line_h * sin(display->ray->a);
+			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
 			display->wall->texture = display->tex[WE];
 		}
 		else if (display->ray->x_off > 0)
 		{
-			display->wall->offset_x = 640 / display->wall->line_h * sin(display->ray->a);
+			display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
 			display->wall->texture = display->tex[EA];
 		}	
 	}
@@ -32,13 +32,13 @@ void	get_wall_dir(t_display *display)
 	{
 		if (display->ray->y_off < 0)
 		{
-			display->wall->offset_x = 640 / display->wall->line_h * cos(display->ray->a);
+			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
 			display->wall->texture = display->tex[NO];
 		}
 		else if (display->ray->y_off > 0)
 		{
+			display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
 			display->wall->texture = display->tex[SO];
-			display->wall->offset_x = 640 / display->wall->line_h * cos(display->ray->a);
 		}
 	}
 }
