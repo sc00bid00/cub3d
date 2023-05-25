@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:26:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:26 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:27:09 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,9 @@ void	draw_floor_ceiling(t_display *display)
 		while (y0 < HEIGHT && y0 >= 0)
 		{
 			if ( y0 > HEIGHT / 2)
-				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[0]);
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(190, 123, 67));
+				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[F]);
 			else
-				my_put_pixel(display->f_c_img, x0, y0, get_rgba(0, 30, 220));
-				// my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[1]);
+				my_put_pixel(display->f_c_img, x0, y0, display->pdata->colors_fc[C]);
 			y0++;
 		}
 		x0++;

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/25 12:55:48 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/25 13:26:47 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ bool	chk_records(t_pdata *p)
 bool	chk_colors(t_pdata *p)
 {
 	int		i[2];
+	int		colors[3];
 	char	**arr;
 	int		n;
 
@@ -122,10 +123,11 @@ bool	chk_colors(t_pdata *p)
 			if (n < 0 || n > 255)
 				return (ft_freesplit(arr), put_err(ERR_COLORBYTE));
 			else
-				p->colors_fc[i[0]] |= n << (unsigned)(24 - i[1]++ * 8);
+				colors[i[1]++] = n;
 		}
 		if (i[1] != 3)
 			return (ft_freesplit(arr), put_err(ERR_MISSINGCOLORS));
+		p->colors_fc[i[0]] = get_rgba(colors[0], colors[1], colors[2]);
 		ft_freesplit(arr);
 		i[0]++;
 	}
@@ -145,9 +147,9 @@ bool	get_colors(t_pdata *p)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "F", 1))
-			p->color_string[F] = ft_strtrim(dum, "F \t");
+			p->color_string[F] = ft_strtrim(dum, "F \t\n");
 		else if (!ft_strncmp(dum, "C", 1))
-			p->color_string[C] = ft_strtrim(dum, "C \t");
+			p->color_string[C] = ft_strtrim(dum, "C \t\n");
 		free(dum);
 		tmp = tmp->next;
 	}
