@@ -1,7 +1,7 @@
-NO ./textures/greystone.png
-SO ./textures/purplestone.png
-WE ./textures/colorstone.png
-EA ./textures/wood.png
+NO	./textures/redbrick.png
+SO	./textures/greystone.png
+WE	./textures/bluestone.png
+EA	./textures/walkstone.png
 
 C 225,10,0
 F 255, 255, 1

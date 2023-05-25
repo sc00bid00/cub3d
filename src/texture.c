@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 13:03:17 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:11:29 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,10 @@ void	get_wall_dir(t_display *display)
 /* path to be updated with values from file */
 void	load_tex(t_display *display, t_pdata *pdata)
 {
-	(void) pdata;
-	// display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
-	// display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
-	// display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
-	// display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
-	display->tex[NO] = mlx_load_png("./textures/redbrick.png");
-	display->tex[SO] = mlx_load_png("./textures/greystone.png");
-	display->tex[WE] = mlx_load_png("./textures/bluestone.png");
-	display->tex[EA] = mlx_load_png("./textures/walkstone.png");
+	display->tex[NO] = mlx_load_png(pdata->textures_path[NO]);
+	display->tex[SO] = mlx_load_png(pdata->textures_path[SO]);
+	display->tex[WE] = mlx_load_png(pdata->textures_path[WE]);
+	display->tex[EA] = mlx_load_png(pdata->textures_path[EA]);
 }
 
 int get_color(uint8_t *start)

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:06:06 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/23 17:45:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/05/25 12:55:48 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ bool	chk_textures(t_pdata *p)
 	if (i != 4)
 		return(put_err(ERR_TEXTURENUMBER));
 	i = 0;
-	while (p->textures_path[4])
+	while (p->textures_path[i])
 	{
-		if (!ft_strncmp(p->textures_path[i], ".png", ft_strlen(p->textures_path[i]) - 4) \
-			&& mlx_load_png(p->textures_path[i]) && mlx_errno)
-				return (false);
+		if (!mlx_load_png(p->textures_path[i]))
+			return (false);
 		else if (mlx_load_xpm42(p->textures_path[i]) && mlx_errno)
 			return (false);
 		i++;
@@ -78,17 +77,17 @@ bool	get_textures(t_pdata *p)
 	{
 		dum = ft_strtrim(tmp->content, " \t");
 		if (!ft_strncmp(dum, "NO", 2))
-			p->textures_path[NO] = ft_strtrim(dum, "NO \t");
+			p->textures_path[NO] = ft_strtrim(dum, "NO \t\n");
 		else if (!ft_strncmp(dum, "SO", 2))
-			p->textures_path[SO] = ft_strtrim(dum, "SO \t");
+			p->textures_path[SO] = ft_strtrim(dum, "SO \t\n");
 		else if (!ft_strncmp(dum, "EA", 2))
-			p->textures_path[EA] = ft_strtrim(dum, "EA \t");
+			p->textures_path[EA] = ft_strtrim(dum, "EA \t\n");
 		else if (!ft_strncmp(dum, "WE", 2))
-			p->textures_path[WE] = ft_strtrim(dum, "WE \t");
+			p->textures_path[WE] = ft_strtrim(dum, "WE \t\n");
 		free(dum);
 		tmp = tmp->next;
 	}
-	return (chk_textures(p) && true);
+	return (chk_textures(p));
 }
 
 bool	chk_records(t_pdata *p)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/25 09:23:55 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:00:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 			cub3d(display);
 		}
 	}
-	printf("EA is %s\n", display->pdata->textures_path[EA]);
+	// printf("EA is %s\n", display->pdata->textures_path[EA]);
 	clean_up(display);
 	return (0);
 }
