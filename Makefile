@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+         #
+#    By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 09:54:24 by lsordo            #+#    #+#              #
-#    Updated: 2023/05/25 12:41:43 by kczichow         ###   ########.fr        #
+#    Updated: 2023/06/01 18:00:33 by lsordo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,15 @@ SRC =	main.c \
 		hooks.c \
 		rendering.c \
 		scene.c \
-		utils_debug.c \
-		utils_parse.c \
 		minimap.c \
+		parse_1_init_check.c \
+		parse_2_getdata.c \
+		parse_3_gettable.c \
+		parse_4_playerdata.c \
+		parse_5_colors_textures.c \
+		parse_6_other_check.c \
 		texture.c \
+		utils_debug.c \
 		window.c \
 		rays.c
 # =======================
