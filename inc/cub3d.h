@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 13:10:25 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:01:04 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 # define CUB3D_H
 
 # include <libft.h>
+# include <debug.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <MLX42.h>
 # include <math.h>
 # include <fcntl.h>
 # include <errors.h>
-# include <debug.h>
 # include <stdbool.h>
 
-#define WIDTH 1920	
+#define WIDTH 1920
 #define HEIGHT 1200	// players height 600 pixel
 #define mapS 64   //map cube size
 #define COLOR 0
@@ -44,7 +44,7 @@ typedef struct s_wall
 	double			pos_y;
 	double			offset_x;
 	mlx_texture_t	*texture;
-	
+
 }	t_wall;
 
 // rays
@@ -68,9 +68,9 @@ typedef struct s_ray
 	double	dis_t;
 	double	atan;
 	double	ntan;
-	
+
 }	t_ray;
-	
+
 enum	texture_index
 {
 	NO,
@@ -205,6 +205,43 @@ void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ra
 void		reset_angles(t_display *display);
 void		get_wall_dir(t_display *display);
 int			img_pixel(double x_p, double y_p, mlx_texture_t *tex);
-int get_color(uint8_t *start);
+int			get_color(uint8_t *start);
 // uint32_t	*get_color(mlx_texture_t *texture);
+
+/* parse_1_init_check.c */
+bool		chk_name(char *s);
+bool		chk_args(int argc, char **argv);
+bool		init_pdata(t_display *d, char **argv);
+void		change_chartozero(t_pdata *p);
+bool		put_err(error_t ERR_NUM);
+
+/* parse_2_getdata.c */
+bool		get_restofdata(t_pdata *p);
+bool		get_data(t_pdata *p);
+bool		get_rows(t_pdata *p);
+bool		get_table(t_pdata *p);
+bool		get_table_elements(t_pdata *p);
+
+/* parse_3_table_fill.c */
+void		flood_fill(int col, int row, t_pdata *p);
+bool		chk_flood_fill(t_pdata *p);
+
+/* parse_4_palyerdata.c */
+bool		get_player(t_pdata *p);
+bool		get_xypostion(int *player_chk, t_pdata *p, int i, int j);
+void		get_direction(double *player_directionrad, char c);
+
+/* parse_5_colors_textures.c */
+bool		get_colors(t_pdata *p);
+bool		chk_colors(t_pdata *p);
+bool		get_textures(t_pdata *p);
+bool		chk_textures(t_pdata *p);
+bool		chk_records(t_pdata *p);
+
+/* parse_6_other_check.c */
+bool		chk_empty(char *str);
+bool		chk_valid(t_list *tmp, int *chk);
+bool		chk_data(t_pdata *p);
+bool		chk_rows(t_pdata *p);
+
 #endif
