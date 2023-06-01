@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/15 14:09:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:59:44 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_freesplit_2(char **arr, int n)
 	}
 	free(arr);
 }
+
 void	ft_freesplit(char **arr)
 {
 	int	i;
@@ -84,6 +85,7 @@ void	tmp_prtarr(char **arr)
 	}
 	printf("\n");
 }
+
 void	tmp_freearr(char **arr)
 {
 	int	i;
