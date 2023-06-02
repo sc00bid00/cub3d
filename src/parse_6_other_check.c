@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:39:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/01 17:49:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/02 14:51:17 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ bool	chk_valid(t_list *tmp, int *chk)
 	int		flag;
 	char	*test;
 
+	dum = NULL;
 	test = "NSWEFC";
 	while (tmp)
 	{
@@ -41,8 +42,7 @@ bool	chk_valid(t_list *tmp, int *chk)
 			flag |= 1 << (ft_strchr(test, dum[0]) - test);
 			if (flag & *chk)
 				return (free(dum), false);
-			else
-				*chk |= flag;
+			*chk |= flag;
 		}
 		if (dum)
 			free(dum);

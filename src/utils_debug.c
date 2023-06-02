@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/01 17:59:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/02 14:52:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ void	tmp_freelst(t_list *lst)
 	{
 		if (lst->content)
 			free(lst->content);
-		if (lst)
-			free(lst);
 		tmp = lst->next;
 		if (!tmp)
 			break ;
 		lst = tmp;
 	}
+	if (lst)
+		free(lst);
 }
 
 void	tmp_prtarr(char **arr)
