@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/16 13:32:58 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/12 16:54:01 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,18 @@ void allocate_memory(t_display *display)
 	if (!display->tex)
 		clean_up(display);
 }
+/* free texture datas */
+void	free_textures(t_display *display)
+{
+	int	i;
 
+	i = 0;
+	while (i < 4)
+	{
+		mlx_delete_texture(display->tex[i]);
+		i++;
+	}
+}
 /*	free all allocated memory */
 int	clean_up(t_display *display)
 {
@@ -48,7 +59,7 @@ int	clean_up(t_display *display)
 	if (display->wall)
 		free (display->wall);
 	if (display->tex)
-		free (display->tex);
+		free_textures(display);
 	if (display->mlx)
 	{
 		// mlx_delete_image(display->mlx, display->mm_img);
