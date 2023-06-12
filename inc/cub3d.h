@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 10:27:39 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:09:34 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #define mapS 64   //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians
+#define	COEFF 5
 
 
 // variables related to 3D
@@ -171,7 +172,7 @@ void		setup_display(t_display *display);
 void		setup_maps(t_maps *maps, t_pdata *pdata);
 void		setup_pos(t_pos *pos, t_pdata *pdata, t_maps *maps);
 void		setup_rays(t_ray *ray);
-void		setup_wall(t_wall *wall);
+void		setup_wall(t_wall *wall, t_pos *pos);
 /*	WINDOW	*/
 void		memset_window(t_display *display);
 void		setup_windows(t_display *display);
@@ -198,6 +199,10 @@ void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 /*	HOOKS	*/
 void		my_hook(void *param);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
+void		move_left_right(t_display *display);
+void		move_up_down(t_display	*display);
+void		rotate(t_display *display);
+
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
 void		render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
 double		dist(t_pos *pos, double bx, double by, double ang);
