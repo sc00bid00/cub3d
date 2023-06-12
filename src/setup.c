@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 10:47:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:30:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	setup_display(t_display *display)
 	setup_maps(display->maps, display->pdata);
 	setup_pos(display->pos, display->pdata, display->maps);
 	setup_rays(display->ray);
-	setup_wall(display->wall);
+	setup_wall(display->wall, display->pos);
 	setup_windows(display);
 	load_tex(display, display->pdata);
 }
@@ -30,13 +30,13 @@ void	setup_maps(t_maps *maps, t_pdata *pdata)
 	maps->max_y = pdata->num_rows;
 	if (maps->max_x >= maps->max_y)
 	{
-		maps->map_s = WIDTH / 5 / maps->max_x;
+		maps->map_s = WIDTH / COEFF / maps->max_x;
 		maps->width_mm = maps->map_s * maps->max_x;
 		maps->height_mm = maps->width_mm * maps->max_y / maps->max_x;
 	}
 	else
 	{
-		maps->map_s = HEIGHT / 5 / maps->max_y;
+		maps->map_s = HEIGHT / COEFF / maps->max_y;
 		maps->height_mm = maps->map_s * maps->max_y;
 		maps->width_mm = maps->height_mm * maps->max_x / maps->max_y;
 	}
@@ -59,7 +59,9 @@ void	setup_rays(t_ray *ray)
 	ray->ray_max = 1920;
 }
 
-void	setup_wall(t_wall *wall)
+// line_w: distance from projection plane
+void	setup_wall(t_wall *wall, t_pos *pos)
 {
+	(void) pos;
 	ft_bzero(wall, sizeof(t_wall));
 }
