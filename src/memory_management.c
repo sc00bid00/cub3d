@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 17:37:29 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:08:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 void allocate_memory(t_display *display)
 {
 	display->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
-		if (!display->mlx)
-			exit(EXIT_FAILURE);
+	if (!display->mlx)
+	{
+		clean_up(display);
+		exit(EXIT_FAILURE);
+	}
 	display->pos = ft_calloc(1, sizeof(t_pos));
 	if (!display->pos)
 		clean_up(display);
@@ -41,10 +44,7 @@ void	free_textures(t_display *display)
 
 	i = 0;
 	while (i < 4)
-	{
-		mlx_delete_texture(display->tex[i]);
-		i++;
-	}
+		mlx_delete_texture(display->tex[i++]);
 }
 /*	free all allocated memory */
 int	clean_up(t_display *display)

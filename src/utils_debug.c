@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:45:55 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:58:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	tmp_freelst(t_list *lst)
 	t_list	*tmp;
 
 	tmp = lst;
-	printf("=== debug tmp_freelst ===\n");
 	while (lst)
 	{
 		if (lst->content)
