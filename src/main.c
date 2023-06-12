@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/05/25 12:00:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:01:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 void	cub3d(t_display *display)
 {
-	// (void) display;
- 	// exit (0);
 	setup_windows(display);
 	draw_minimap(display);
 	render(display, display->pos, display->ray, display->wall);
@@ -54,7 +52,6 @@ uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
 	return ((uint32_t)(red << 24 | green << 16 | blue << 8 | 255));
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_display	*display;
@@ -73,7 +70,6 @@ int	main(int argc, char **argv)
 			cub3d(display);
 		}
 	}
-	// printf("EA is %s\n", display->pdata->textures_path[EA]);
 	clean_up(display);
 	return (0);
 }
