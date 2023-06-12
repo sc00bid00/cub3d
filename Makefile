@@ -3,7 +3,7 @@ OS	= $(shell uname)
 
 #Compiler
 CC =	cc
-CFLAGS	=	-Wall -Wextra -Werror #
+CFLAGS	=	-Wall -Wextra -Werror -g #
 CFLAGS	+= -O2 -MMD
 #CFLAGS	+=	-g -fsanitize=address
 
@@ -55,7 +55,11 @@ LIBFT_D = ./lib/libft
 LIBFT_F = $(LIBFT_D)/libft.a
 LIBFT_URL = https://github.com/Kathinka42/42_libft
 MLX42_D	=	./lib/MLX42
-MLX42_BUILD_D = $(MLX42_D)/build
+ifeq ($(OS), Darwin)
+	MLX42_BUILD_D = $(MLX42_D)/build
+else
+	MLX42_BUILD_D = $(MLX42_D)/build_lx
+endif
 LSAN_D = ./lib/LeakSanitizer
 LSAN_F = $(LSAN_D)/liblsan.a
 
