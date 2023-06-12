@@ -3,9 +3,9 @@ OS	= $(shell uname)
 
 #Compiler
 CC =	cc
-CFLAGS	=	-Wall -Wextra -Werror -g #
+CFLAGS	=	-Wall -Wextra -Werror -g
 CFLAGS	+= -O2 -MMD
-#CFLAGS	+=	-g -fsanitize=address
+# CFLAGS	+=	-g -fsanitize=address
 
 #Interplatform compatibility
 ifeq ($(OS), Darwin)
