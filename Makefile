@@ -4,7 +4,7 @@ OS	= $(shell uname)
 #Compiler
 CC =	cc
 CFLAGS	=	-Wall -Wextra -Werror #
-CFLAGS	+=  -MMD
+CFLAGS	+=  -O2 -MMD
 #CFLAGS	+=	-g -fsanitize=address
 
 #Interplatform compatibility
