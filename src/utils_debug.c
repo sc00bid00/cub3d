@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/02 14:52:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:31:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	tmp_prtlst(t_list *lst)
 		printf("%s", (char *)tmp->content);
 		tmp = tmp->next;
 	}
-	printf("\n");
+	printf("=== debug tmp_prtlst ===\n");
 }
 
 void	tmp_freelst(t_list *lst)

@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 16:54:01 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:34:08 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int	clean_up(t_display *display)
 	if (display->wall)
 		free (display->wall);
 	if (display->tex)
+	{
 		free_textures(display);
+		free(display->tex);
+	}
 	if (display->mlx)
 	{
 		// mlx_delete_image(display->mlx, display->mm_img);
