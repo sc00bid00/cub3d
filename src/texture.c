@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 13:11:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:05:03 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,38 @@ void	reset_offset(t_wall *wall)
 		wall->offset_x -= 1;
 }
 
+// /* vertical walls: wall_dir  = 1	*/
+// void	get_wall_dir(t_display *display)
+// {
+// 	if (display->wall->dir == 1)
+// 	{
+// 		display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
+// 		if (display->ray->x_off < 0)
+// 			display->wall->texture = display->tex[WE];
+// 		else if (display->ray->x_off > 0)
+// 			display->wall->texture = display->tex[EA];
+// 	}
+// 	if (display->wall->dir == 0)
+// 	{
+// 		display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
+// 		if (display->ray->y_off < 0)
+// 			display->wall->texture = display->tex[NO];
+// 		else if (display->ray->y_off > 0)
+// 			display->wall->texture = display->tex[SO];
+// 	}
+// 	double player_offset = display->pos->x - (int)display->pos->x;
+// 	// reset_offset(display->wall);
+// 	display->wall->offset_x = player_offset - display->wall->offset_x;
+// 	reset_offset(display->wall);
+// }
+
 /* vertical walls: wall_dir  = 1	*/
 void	get_wall_dir(t_display *display)
 {
+	// display->wall->new_wall = 1;
 	if (display->wall->dir == 1)
 	{
-		display->wall->offset_x = display->wall->line_w / display->wall->line_h * sin(display->ray->a);
+		display->wall->offset_x = (display->wall->line_w / display->wall->line_h - display->pos->x / WIDTH) * sin(display->ray->a);
 		if (display->ray->x_off < 0)
 			display->wall->texture = display->tex[WE];
 		else if (display->ray->x_off > 0)
@@ -33,20 +59,25 @@ void	get_wall_dir(t_display *display)
 	}
 	if (display->wall->dir == 0)
 	{
-		display->wall->offset_x = display->wall->line_w / display->wall->line_h * cos(display->ray->a);
+		display->wall->offset_x = (display->wall->line_w / display->wall->line_h - display->pos->y / WIDTH) * cos(display->ray->a) ;
 		if (display->ray->y_off < 0)
 			display->wall->texture = display->tex[NO];
 		else if (display->ray->y_off > 0)
 			display->wall->texture = display->tex[SO];
 	}
-	printf("x_offset is: %f\n", display->wall->offset_x);
-	printf("player pos is: %f\n", display->pos->x);
-	double player_offset = display->pos->x - (int)display->pos->x;
-	printf("player offset is: %f\n", player_offset);
+	if (display->wall->texture == display->wall->old_tex)
+		display->wall->new_wall = 0;
+	display->wall->old_tex = display->wall->texture;
+	// if (display->wall->new_wall == 1)
+	// {
+	// 	display->wall->offset_x = 0;
+	// }
+	// else
+	// {
+	// 	display->wall->offset_x += 0.5;
+	// }
 	reset_offset(display->wall);
-	display->wall->offset_x = player_offset - display->wall->offset_x;
-	reset_offset(display->wall);
-	// - pos->x;
+	printf("DEBUG: offset_x = %.3f\n", display->wall->offset_x);
 }
 
 /* path to be updated with values from file */

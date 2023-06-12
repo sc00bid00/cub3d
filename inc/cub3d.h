@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/01 18:01:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 10:27:39 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 typedef struct s_wall
 {
 	int				dir; // indicates if vertical or horizontal wall is hit by ray
+	int				new_wall;
 	double			dis_t; // distance to wall from player
 	double			line_h; // line height
 	double			line_w; // line width
@@ -44,6 +45,7 @@ typedef struct s_wall
 	double			pos_y;
 	double			offset_x;
 	mlx_texture_t	*texture;
+	mlx_texture_t	*old_tex;
 
 }	t_wall;
 

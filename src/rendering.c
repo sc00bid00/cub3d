@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 13:52:42 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:12:47 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	reset_angles(t_display *display)
 	if (display->ray->a >= 2 * M_PI)
 		display->ray->a -= 2 * M_PI;
 }
-
-
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */
