@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:14:08 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:48:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	main(int argc, char **argv)
 		{
 			allocate_memory(display);
 			setup_display(display);
-			printf("floor color is %d\n", display->pdata->colors_fc[0]);
-			printf("ceiling color is %d\n", display->pdata->colors_fc[1]);
 			cub3d(display);
 		}
 	}
