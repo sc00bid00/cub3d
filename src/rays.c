@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:56:42 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/23 16:57:03 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:11:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 	int	count;
 
 	count = 0;
-	while (count < display->maps->max_y)
+	while (count < display->maps->max_x)
 	{
 		ray->y = (int)(ray->y0 / display->maps->map_s);
 		ray->x = (int)(ray->x0 / display->maps->map_s);
@@ -111,7 +111,7 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 			ray->vx = ray->x0;
 			ray->vy = ray->y0;
 			ray->dis_v = dist(pos, ray->vx, ray->vy, ray->a);
-			count = display->maps->max_y;
+			count = display->maps->max_x;
 		}
 		else if (ray->y >= 0 && ray->x >= 0 && ray->y < display->maps->max_y
 			&& ray->x < display->maps->max_x)
