@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 15:30:26 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:34:38 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,24 @@ void	setup_maps(t_maps *maps, t_pdata *pdata)
 	ft_bzero(maps, sizeof(t_maps));
 	maps->max_x = pdata->num_cols - 1;
 	maps->max_y = pdata->num_rows;
+
 	if (maps->max_x >= maps->max_y)
 	{
-		maps->map_s = WIDTH / COEFF / maps->max_x;
-		maps->width_mm = maps->map_s * maps->max_x;
-		maps->height_mm = maps->width_mm * maps->max_y / maps->max_x;
+		maps->width_mm = WIDTH / COEFF;
+		maps->height_mm = (double)maps->max_y / (double)maps->max_x * maps->width_mm;
+		maps->map_s = maps->width_mm / maps->max_x;
+		// maps->map_s = WIDTH / COEFF / maps->max_x;
+		// maps->width_mm = maps->map_s * maps->max_x;
+		// maps->height_mm = maps->width_mm * maps->max_y / maps->max_x;
 	}
 	else
 	{
-		maps->map_s = HEIGHT / COEFF / maps->max_y;
-		maps->height_mm = maps->map_s * maps->max_y;
-		maps->width_mm = maps->height_mm * maps->max_x / maps->max_y;
+		maps->height_mm = HEIGHT / COEFF;
+		maps->width_mm = (double)maps->max_x / (double)maps->max_y * maps->height_mm;
+		maps->map_s = maps->height_mm / maps->max_y;
+		// maps->height_mm = maps->map_s * maps->max_y;
+		// maps->map_s = HEIGHT / COEFF / maps->max_y;
+		// maps->width_mm = maps->height_mm * maps->max_x / maps->max_y;
 	}
 }
 
