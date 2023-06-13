@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   memory_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 10:40:41 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/13 14:48:38 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
 /* allocate memory for all structs within t_display struct */
-void allocate_memory(t_display *display)
+void	allocate_memory(t_display *display)
 {
 	display->mlx = mlx_init(WIDTH, HEIGHT, "Cub3d", true);
 	if (!display->mlx)
@@ -37,6 +37,7 @@ void allocate_memory(t_display *display)
 	if (!display->tex)
 		clean_up(display);
 }
+
 /* free texture datas */
 void	free_textures(t_display *display)
 {
@@ -46,6 +47,7 @@ void	free_textures(t_display *display)
 	while (i < 4)
 		mlx_delete_texture(display->tex[i++]);
 }
+
 /*	free all allocated memory */
 int	clean_up(t_display *display)
 {
@@ -64,14 +66,8 @@ int	clean_up(t_display *display)
 		free(display->tex);
 	}
 	if (display->mlx)
-	{
-		// mlx_delete_image(display->mlx, display->mm_img);
-		// mlx_delete_image(display->mlx, display->f_c_img);
-		// mlx_delete_image(display->mlx, display->s_img);
 		mlx_terminate(display->mlx);
-	}
 	if (display)
 		free (display);
-	// system ("leaks cub3D");
 	return (0);
 }

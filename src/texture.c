@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 17:00:24 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 15:40:49 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	get_wall_dir(t_display *display)
 		else if (display->ray->x_off > 0)
 			display->wall->texture = display->tex[EA];
 		display->wall->offset_x = (double)(((int)(display->ray->y0 * COEFF) \
-			% (mapS)) / (double) mapS);
+			% (MAPS)) / (double) MAPS);
 	}
 	if (display->wall->dir == 0)
 	{
@@ -39,7 +39,7 @@ void	get_wall_dir(t_display *display)
 		else if (display->ray->y_off > 0)
 			display->wall->texture = display->tex[SO];
 		display->wall->offset_x = (double)(((int)(display->ray->x0 * COEFF) \
-			% (mapS)) / (double) mapS);
+			% (MAPS)) / (double) MAPS);
 	}
 	reset_offset(display->wall);
 }

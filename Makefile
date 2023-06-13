@@ -33,6 +33,7 @@ endif
 VPATH	= 	./src
 
 SRC_F	=	draw.c \
+			draw_utils.c \
 			hooks.c \
 			main.c \
 			memory_management.c \

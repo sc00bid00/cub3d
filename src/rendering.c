@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 12:58:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:51:50 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@ void	render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 	wall->x0 = 0;
 	while (ray->r < ray->ray_max)
 	{
-		// exit (0);
 		find_horizontal_intersec(display, pos, ray);
 		calc_next_h_intersection(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);
 		calc_next_v_intersection(display, pos, ray);
 		compare_dist(ray, wall);
 		get_wall_dir(display);
-		draw_rays_2D(display, pos, ray);
-		calculate_3D_param(display, wall, pos, ray);
-		draw_column(display, ray, wall, display->maps);
-		ray->a += DR * 60/ray->ray_max;
+		draw_rays(display, pos, ray);
+		calc_3d_param(display, wall, pos, ray);
+		draw_column(display, ray, wall);
+		ray->a += DR * 60 / ray->ray_max;
 		reset_angles(display);
 		ray->r++;
 	}
 }
-

@@ -6,11 +6,22 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:01:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 14:29:28 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:44:54 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+int	wall_collision(char **map, double y, double x)
+{
+	if (map[(int)(x + 0.5)][(int)(y + 0.5)] != 1
+		&& map[(int)(x - 0.5)][(int)(y - 0.5)] != 1
+		&& map[(int)(x - 0.5)][(int)(y + 0.5)] != 1
+		&& map[(int)(x + 0.5)][(int)(y - 0.5)] != 1)
+		return (0);
+	else
+		return (1);
+}
 
 /*	Press esc: clean up function is called: window closes */
 void	my_keyhook(mlx_key_data_t keydata, void *param)
@@ -39,17 +50,41 @@ void	move_left_right(t_display *display)
 	}
 }
 
+// void	move_up_down(t_display	*display)
+// {
+// 	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
+// 	{
+// 		display->pos->x += display->pos->dx;
+// 		display->pos->y += display->pos->dy;
+// 	}
+// 	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
+// 	{
+// 		display->pos->x -= display->pos->dx;
+// 		display->pos->y -= display->pos->dy;
+// 	}
+// }
+
 void	move_up_down(t_display	*display)
 {
+	double	tmp_x;
+	double	tmp_y;
+	
+	tmp_x = display->pos->x;
+	tmp_y = display->pos->y;
 	if (mlx_is_key_down(display->mlx, MLX_KEY_W))
 	{
-		display->pos->x += display->pos->dx;
-		display->pos->y += display->pos->dy;
+		tmp_x += display->pos->dx;
+		tmp_y += display->pos->dy;
 	}
 	if (mlx_is_key_down(display->mlx, MLX_KEY_S))
 	{
-		display->pos->x -= display->pos->dx;
-		display->pos->y -= display->pos->dy;
+		tmp_x -= display->pos->dx;
+		tmp_y -= display->pos->dy;
+	}
+	if (!wall_collision(display->pdata->map, tmp_y / display->maps->map_s, tmp_x / display->maps->map_s))
+	{
+		display->pos->x = tmp_x;
+		display->pos->y = tmp_y;
 	}
 }
 

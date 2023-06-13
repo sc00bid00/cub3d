@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 11:30:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:53:09 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,36 @@
 # include <errors.h>
 # include <stdbool.h>
 
-#define WIDTH 1920
-#define HEIGHT 1280	// players height 600 pixel
-#define mapS 64   //map cube size
-#define COLOR 0
-#define DR 0.0174533 // 1 degree in radians
-#define	COEFF 5
+/*
+players height at 600 pixel
+mapS = map cube size
+DR = degrees in radians
+*/
 
+# define WIDTH 1920
+# define HEIGHT 1280
+# define MAPS 64
+# define COLOR 0
+# define DR 0.0174533
+# define COEFF 5
 
-// variables related to 3D
+/* t_wall = struct to hold all variables need for 3D projection
+dir			ndicates if vertical or horizontal wall is hit by ray
+line_h		line height
+line_w		distance to projection plane
+line_off	(HEIGHT - line height) / 2: line offset
+x0			pixel coordinate x
+y0			pixel coordinate y
+*/
 typedef struct s_wall
 {
-	int				dir; // indicates if vertical or horizontal wall is hit by ray
-	int				new_wall;
-	double			dis_t; // distance to wall from player
-	double			line_h; // line height
-	double			line_w; // line width
-	double			line_off; // (full window height - line height) / 2; line offset
-	double			x0;	// pixel coordinate x
-	double 			y0; // pixel coordinate y
+	int				dir;
+	double			dis_t;
+	double			line_h;
+	double			line_w;
+	double			line_off;
+	double			x0;
+	double			y0;
 	double			pos_x;
 	double			pos_y;
 	double			offset_x;
@@ -50,20 +61,30 @@ typedef struct s_wall
 
 }	t_wall;
 
-// rays
+/*	t_ray = struct to hold all information related to rays
+r			number of rays
+ray_max 	max number of rays
+x			coordinate on grid
+y			coordinate on grid
+a			ray angle
+x0			coordinate in pixel
+y0			coordinate in pixel
+x_off		x offset in pixel
+y_off		y offset in pixel
+*/
 typedef struct s_ray
 {
-	int		r;	// number of rays
-	int		ray_max;	// number of rays
-	int		x;	// coordinate on grid
-	int		y;	// coordinate on grid
-	double	a;	// ray angle
-	double	x0;	// coordinate in pixel
-	double	y0; // coordinate in pixel
-	double	x_off; // x offset in pixel
-	double	y_off; // y offset in pixel
+	int		r;
+	int		ray_max;
+	int		x;
+	int		y;
+	double	a;
+	double	x0;
+	double	y0;
+	double	x_off;
+	double	y_off;
 	double	hx;
-	double 	hy;
+	double	hy;
 	double	vx;
 	double	vy;
 	double	dis_h;
@@ -117,42 +138,57 @@ typedef struct s_pdata
 	double		player_directionrad;
 }	t_pdata;
 
-// player
-typedef	struct s_pos
+/*	t_pos = struct to hold player data
+x		coordinate on grid
+y		coordinate on grid
+dx		delta x
+dy		delta y
+a		player view angle
+fov		field of view, initialized to 60 degrees (in radians)
+*/
+typedef struct s_pos
 {
-	double	x;	// coordinate on grid
-	double	y;	// coordinate on grid
-	double	dx; // delta x
-	double	dy; // delta y
-	double	a;	// player view angle
-	// double	x0; //	x coordinate of start position
-	// double	y0; // y coordinate of start position
+	double	x;
+	double	y;
+	double	dx;
+	double	dy;
+	double	a;
 	double	fov;
 }	t_pos;
 
-// map
+/*	t_maps = struct to hold map information
+x0		coordinate in pixel value
+y0		coordinate in pixel value
+max_x	number of columns in map
+max_y	number of rows in map
+map_s	number of pixel per cube in minimap
+*/
 typedef struct s_maps
 {
 	int		x;
 	int		y;
-	int		x0;		// coordinate in pixel value
-	int		y0;		// coordinate in pixel value
-	int		max_x;	// number of columns in map (x max) (from cub file?)
-	int		max_y;  // number of rows in map (y max) (from cub file?)
+	int		x0;
+	int		y0;
+	int		max_x;
+	int		max_y;
 	int		height_mm;
 	int		width_mm;
 	int		map_s;
 }	t_maps;
 
-// overall struct to hold pointers to all structs
+/* t_display = overall struct to hold pointers to all structs
+s_img		image layer for 3d scene
+mm_img		image layer for minimap
+f_c_img		image layer for floor and ceiling
+*/
 typedef struct s_display
 {
 	mlx_t			*mlx;
-	mlx_image_t		*s_img; // image layer for 3d scene
-	mlx_image_t		*mm_img; // image layer for minimap
-	mlx_image_t		*f_c_img; // image layer for floor and ceiling
-	mlx_image_t		*img_tex; // test layer for texture
-	mlx_texture_t	**tex; //texture
+	mlx_image_t		*s_img;
+	mlx_image_t		*mm_img;
+	mlx_image_t		*f_c_img;
+	// mlx_image_t		*img_tex; // test layer for texture
+	mlx_texture_t	**tex;
 	t_pos			*pos;
 	t_maps			*maps;
 	t_pdata			*pdata;
@@ -161,11 +197,11 @@ typedef struct s_display
 	t_wall			*wall;
 }	t_display;
 
-
-// functions
+/* FUNCTIONS */
 
 /* MEMORY_MANAGEMENT */
 void		allocate_memory(t_display *display);
+void		free_textures(t_display *display);
 int			clean_up(t_display *display);
 /* SETUP	*/
 void		setup_display(t_display *display);
@@ -177,8 +213,6 @@ void		setup_wall(t_wall *wall, t_pos *pos);
 void		memset_window(t_display *display);
 void		setup_windows(t_display *display);
 void		image_to_window(t_display *display);
-/* MLX_UTILS */
-void		load_tex(t_display *display, t_pdata *pdata);
 /*	RAYS	*/
 void		find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray);
 void		calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray);
@@ -187,32 +221,32 @@ void		calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray);
 void		compare_dist(t_ray *ray, t_wall *wall);
 /* MINIMAP	*/
 void		draw_minimap(t_display *display);
-void		drawMap2D(t_display *display);
-void		draw_player_mm(t_display *display);
-void		draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray);
+void		draw_rays(t_display *display, t_pos *pos, t_ray *ray);
 /* DRAW		*/
-void		draw_line(t_display *display, double posx, double posy);
-void		draw_line_bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end, int color);
-void		draw_floor_ceiling(t_display *display);
+void		draw_line(t_display *d, int *dist, int *s, int err, int e2);
+void		bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end);
 void		my_put_pixel_mm(t_display *display, double x, double y, int color);
 void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
+void		draw_floor_ceiling(t_display *display);
 /*	HOOKS	*/
-void		my_hook(void *param);
+int			wall_collision(char **map, double y, double x);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 void		move_left_right(t_display *display);
 void		move_up_down(t_display	*display);
 void		rotate(t_display *display);
-
-uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
-void		render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
-double		dist(t_pos *pos, double bx, double by, double ang);
-void		draw_scene3D(t_display *display);
-void		draw_column(t_display *display, t_ray *ray, t_wall *wall, t_maps *maps);
-void		calculate_3D_param(t_display *display, t_wall *wall, t_pos *pos, t_ray *ray);
+void		my_hook(void *param);
+/*	SCENE	*/
+void		calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray);
+void		draw_column(t_display *display, t_ray *ray, t_wall *wall);
+/*	RENDERING	*/
 void		reset_angles(t_display *display);
+void		render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
+/*	TEXTURE	*/
+void		reset_offset(t_wall *wall);
 void		get_wall_dir(t_display *display);
-int			img_pixel(double x_p, double y_p, mlx_texture_t *tex);
+void		load_tex(t_display *display, t_pdata *pdata);
 int			get_color(uint8_t *start);
+int			img_pixel(double x_p, double y_p, mlx_texture_t *tex);
 // uint32_t	*get_color(mlx_texture_t *texture);
 
 /* parse_1_init_check.c */
@@ -250,5 +284,9 @@ bool		chk_empty(char *str);
 bool		chk_valid(t_list *tmp, int *chk);
 bool		chk_data(t_pdata *p);
 bool		chk_rows(t_pdata *p);
+
+
+uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
+double		dist(t_pos *pos, double bx, double by, double ang);
 
 #endif

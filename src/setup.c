@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 13:06:27 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:17:59 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,12 @@ void	setup_maps(t_maps *maps, t_pdata *pdata)
 	ft_bzero(maps, sizeof(t_maps));
 	maps->max_x = pdata->num_cols - 1;
 	maps->max_y = pdata->num_rows;
-
 	if (maps->max_x >= maps->max_y)
 	{
 		maps->width_mm = WIDTH / COEFF;
 		maps->map_s = maps->width_mm / maps->max_x;
 		maps->width_mm = maps->map_s * maps->max_x;
 		maps->height_mm = maps->map_s * maps->max_y;
-		// maps->map_s = WIDTH / COEFF / maps->max_x;
-		// maps->width_mm = maps->map_s * maps->max_x;
-		// maps->height_mm = maps->width_mm * maps->max_y / maps->max_x;
 	}
 	else
 	{
@@ -45,9 +41,6 @@ void	setup_maps(t_maps *maps, t_pdata *pdata)
 		maps->map_s = maps->height_mm / maps->max_y;
 		maps->height_mm = maps->map_s * maps->max_y;
 		maps->width_mm = maps->max_x * maps->map_s;
-		// maps->height_mm = maps->map_s * maps->max_y;
-		// maps->map_s = HEIGHT / COEFF / maps->max_y;
-		// maps->width_mm = maps->height_mm * maps->max_x / maps->max_y;
 	}
 }
 
