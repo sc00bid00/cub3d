@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:53:34 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 13:45:01 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 13:02:31 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	draw_minimap(t_display *display)
 {
 	drawMap2D(display);
+	// exit (0);
 	draw_player_mm(display);
 }
 
@@ -49,7 +50,7 @@ void	draw_rays_2D(t_display *display, t_pos *pos, t_ray *ray)
 		&& pos->y > 0 && pos->y < display->maps->height_mm && ray->y0 > 0 && ray->y0 < display->maps->height_mm)
 		{
 			draw_line_bresenham(display, pos->x, pos->y, ray->x0, ray->y0, get_rgba(200, 10, 10)); // red
-		}		
+		}
 }
 
 void	draw_player_mm(t_display *display)

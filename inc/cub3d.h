@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 14:09:34 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:30:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 #define WIDTH 1920
-#define HEIGHT 1200	// players height 600 pixel
+#define HEIGHT 1280	// players height 600 pixel
 #define mapS 64   //map cube size
 #define COLOR 0
 #define DR 0.0174533 // 1 degree in radians

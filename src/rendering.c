@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/12 11:12:47 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/13 12:58:26 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 	wall->x0 = 0;
 	while (ray->r < ray->ray_max)
 	{
+		// exit (0);
 		find_horizontal_intersec(display, pos, ray);
 		calc_next_h_intersection(display, pos, ray);
 		find_vertical_intersec(display, pos, ray);

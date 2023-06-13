@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 11:26:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/05/25 13:27:09 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/13 13:06:49 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	my_put_pixel_mm(t_display *display, double x, double y, int color)
 		y = 0;
 	if (x > display->maps->width_mm)
 		x = display->maps->width_mm - 1;
-	if (x < 0)
+	if (x <= 0)
 		x = 0;
 	mlx_put_pixel(display->mm_img, x, y, color);
 }
@@ -83,15 +83,17 @@ void	my_put_pixel_mm(t_display *display, double x, double y, int color)
 /* function protects regular map */
 void	my_put_pixel(mlx_image_t *img, double x, double y, int color)
 {
-	if (y > HEIGHT)
-		y = HEIGHT;
-	if (y < 0)
+	if (y >= HEIGHT - 1)
+		y = HEIGHT - 1;
+	if (y <= 0)
 		y = 0;
-	if (x > WIDTH)
-		x = WIDTH;
-	if (x < 0)
+	if (x >= WIDTH - 1)
+		x = WIDTH -1 ;
+	if (x <= 0)
 		x = 0;
+	// printf("DEBUG x %f y %f\n", x, y);
 	mlx_put_pixel(img, x, y, color);
+	// exit(0);
 }
 
 /* floor and ceiling have their own image layer*/
