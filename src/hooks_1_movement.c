@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_1_movement.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:01:53 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 14:45:29 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:53:07 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ int	border(t_display *d, double y, double x)
 	y = (int) y;
 	x = (int) x;
 	if (y < (d->pdata->num_rows - 1) && y >= 1 && \
-		x < (d->pdata->num_cols -2) && x >= 1)
-	{
+		x < (d->pdata->num_cols -2) && x >= 1 && \
+		!collision(d, y, x))
 		return (0);
-	}
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 16:50:19 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:53:53 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		draw_floor_ceiling(t_display *display);
 /*	HOOKS_1_MOVEMENT */
 int			border(t_display *d, double y, double x);
+int			collision(t_display *d, double y, double x);
 void		move_left_right(t_display *display);
 void		move_up_down(t_display	*display);
 void		rotate(t_display *display);
