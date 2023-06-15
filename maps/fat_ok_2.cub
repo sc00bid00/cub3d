@@ -1,10 +1,10 @@
 NO	./textures/redbrick.png
 SO	./textures/greystone.png
 WE	./textures/bluestone.png
+EA	./textures/walkstone.png
 
-C	225 ,10 ,0
-F 020, 255, 1.1
-EA	./textures/walkstone.png.png
+C	0 ,0 ,255
+F 0, 255, 0
 
 11111111111111111111111111111111111111111
 10000000000000000000000000000000000000001
