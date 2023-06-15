@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:59:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/13 14:45:20 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 10:15:30 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	cub3d(t_display *display)
 	render(display, display->pos, display->ray, display->wall);
 	draw_floor_ceiling(display);
 	image_to_window(display);
-	mlx_key_hook(display->mlx, &my_keyhook, display);
-	mlx_loop_hook(display->mlx, &my_hook, display);
+	mlx_key_hook(display->mlx, my_keyhook, display);
+	mlx_loop_hook(display->mlx, my_hook, display);
 	mlx_loop(display->mlx);
 	return ;
 }

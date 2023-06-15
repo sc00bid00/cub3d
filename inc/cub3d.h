@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 15:53:09 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 09:50:18 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void		my_put_pixel_mm(t_display *display, double x, double y, int color);
 void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		draw_floor_ceiling(t_display *display);
 /*	HOOKS	*/
-int			wall_collision(char **map, double y, double x);
+int			wall_collision(t_display *d, char **map, int y, int x);
 void		my_keyhook(mlx_key_data_t keydata, void *param);
 void		move_left_right(t_display *display);
 void		move_up_down(t_display	*display);
