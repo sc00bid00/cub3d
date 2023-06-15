@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 15:52:16 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 13:27:51 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 		angle_dist -= 2 * M_PI;
 	wall->dis_t = wall->dis_t * cos(angle_dist);
 	wall->line_w = (WIDTH / 2) / tan(pos->fov / 2);
-	wall->line_h = MAPS * wall->line_w / wall->dis_t;
+	if (wall->dis_t <= d->maps->map_s)
+		wall->line_h = HEIGHT;
+	else
+		wall->line_h = MAPS * wall->line_w / wall->dis_t;
+	printf("DEBUG line h is %f\n", wall->line_h);
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
 
