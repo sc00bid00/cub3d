@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:56:42 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 11:49:58 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:46:39 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray)
 			ray->atan = 1;
 	else
 		ray->atan = -1 / tan (ray->a);
-	if (tan (ray->a) == 0)
-		printf("DEBUG ZERO");
 	ray->dis_h = 100000;
 	ray->hx = pos->x;
 	ray->hy = pos->y;
@@ -76,7 +74,6 @@ void	calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray)
 /* calculate y offset, looking left or right*/
 void	find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray)
 {
-	printf("DEBUG vertical\n");
 	ray->ntan = -tan(ray->a);
 	ray->dis_v = 100000;
 	ray->vx = pos->x;
@@ -124,7 +121,6 @@ void	calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray)
 		}
 		count++;
 	}
-	printf("DEBUG next vertical\n");
 }
 
 /* check if horizontal or vertical intersection is closer to player and */

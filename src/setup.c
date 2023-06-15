@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 09:50:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 15:17:59 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:37:25 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	setup_display(t_display *display)
 	setup_rays(display->ray);
 	setup_wall(display->wall, display->pos);
 	setup_windows(display);
+	ft_bzero(display->bresenham, sizeof(t_bresenham));
 	load_tex(display, display->pdata);
 }
 

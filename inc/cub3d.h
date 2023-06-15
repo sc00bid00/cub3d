@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 09:50:18 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:50:19 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,19 @@ typedef struct s_pdata
 	double		player_directionrad;
 }	t_pdata;
 
+typedef struct s_bresenham
+{
+	int		x_start;
+	int		y_start;
+	int		x_end;
+	int		y_end;
+	int		dist[2];
+	int		s[2];
+	int		e2;
+	int		err;
+}t_bresenham;
+
+
 /*	t_pos = struct to hold player data
 x		coordinate on grid
 y		coordinate on grid
@@ -195,6 +208,7 @@ typedef struct s_display
 	t_ray			*ray;
 	t_ray			*ray_max;
 	t_wall			*wall;
+	t_bresenham		*bresenham;
 }	t_display;
 
 /* FUNCTIONS */
@@ -223,26 +237,30 @@ void		compare_dist(t_ray *ray, t_wall *wall);
 void		draw_minimap(t_display *display);
 void		draw_rays(t_display *display, t_pos *pos, t_ray *ray);
 /* DRAW		*/
-void		draw_line(t_display *d, int *dist, int *s, int err, int e2);
-void		bresenham(t_display *display, int x_start, int y_start, int x_end, int y_end);
+void		draw_line(t_display *d, int color);
+// void		bresenham(t_display *display, double x_start, double y_start, double x_end, double y_end);
+void		bresenham(t_display *display, int color);
 void		my_put_pixel_mm(t_display *display, double x, double y, int color);
 void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
 void		draw_floor_ceiling(t_display *display);
-/*	HOOKS	*/
-int			wall_collision(t_display *d, char **map, int y, int x);
-void		my_keyhook(mlx_key_data_t keydata, void *param);
+/*	HOOKS_1_MOVEMENT */
+int			border(t_display *d, double y, double x);
 void		move_left_right(t_display *display);
 void		move_up_down(t_display	*display);
 void		rotate(t_display *display);
 void		my_hook(void *param);
+/*	HOOKS_2_ESCAPE	*/
+void		my_keyhook(mlx_key_data_t keydata, void *param);
 /*	SCENE	*/
 void		calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray);
 void		draw_column(t_display *display, t_ray *ray, t_wall *wall);
 /*	RENDERING	*/
-void		reset_angles(t_display *display);
 void		render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall);
-/*	TEXTURE	*/
+/*	RESSET	*/
 void		reset_offset(t_wall *wall);
+void		reset_player_angle(t_pos *pos);
+void		reset_ray_angle(t_display *display);
+/*	TEXTURE	*/
 void		get_wall_dir(t_display *display);
 void		load_tex(t_display *display, t_pdata *pdata);
 int			get_color(uint8_t *start);

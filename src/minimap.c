@@ -6,11 +6,20 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:53:34 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 15:02:40 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:56:39 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
+
+/* uses pythagoran theorem to return distance from player */
+/* must be adjusted to avoid fishbowl effect */
+double	dist(t_pos *pos, double bx, double by, double ang)
+{
+	(void) ang;
+	return (sqrt((bx - pos->x) * (bx - pos->x) \
+		+ (by - pos->y) * (by - pos->y)));
+}
 
 void	draw_minimap(t_display *d)
 {
@@ -37,7 +46,16 @@ void	draw_minimap(t_display *d)
 	}
 }
 
-void	draw_rays(t_display *display, t_pos *pos, t_ray *ray)
+void	draw_rays(t_display *d, t_pos *pos, t_ray *ray)
 {
-	bresenham(display, pos->x, pos->y, ray->x0, ray->y0);
+	int	color;
+
+	(void) pos;
+	(void) ray;
+	color = get_rgba(200, 10, 10);
+	d->bresenham->x_start = (int)d->pos->x;
+	d->bresenham->y_start = (int)d->pos->y;
+	d->bresenham->x_end = (int)d->ray->x0;
+	d->bresenham->y_end = (int)d->ray->y0;
+	bresenham(d, color);
 }

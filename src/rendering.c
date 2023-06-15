@@ -6,19 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 09:49:54 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 13:37:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:22:56 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-void	reset_angles(t_display *display)
-{
-	if (display->ray->a <= 0)
-		display->ray->a += 2 * M_PI;
-	if (display->ray->a >= 2 * M_PI)
-		display->ray->a -= 2 * M_PI;
-}
 
 /*	set viewer angle to 60 degrees; calculate both horizontal and vertical	*/
 /*	intersections with grid. Find closest vertical and horizontal wall. */
@@ -26,7 +18,7 @@ void	reset_angles(t_display *display)
 void	render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 {
 	ray->a = pos->a - (DR * 30);
-	reset_angles(display);
+	reset_ray_angle(display);
 	ray->r = 0;
 	wall->x0 = 0;
 	while (ray->r < ray->ray_max)
@@ -41,7 +33,7 @@ void	render(t_display *display, t_pos *pos, t_ray *ray, t_wall *wall)
 		calc_3d_param(display, wall, pos, ray);
 		draw_column(display, ray, wall);
 		ray->a += DR * 60 / ray->ray_max;
-		reset_angles(display);
+		reset_ray_angle(display);
 		ray->r++;
 	}
 }

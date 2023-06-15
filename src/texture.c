@@ -6,19 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 15:40:49 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:24:21 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-void	reset_offset(t_wall *wall)
-{
-	while (wall->offset_x < 0)
-		wall->offset_x += 1;
-	while (wall->offset_x > 1)
-		wall->offset_x -= 1;
-}
 
 /* vertical walls: wall_dir  = 1	*/
 void	get_wall_dir(t_display *display)
@@ -79,4 +71,14 @@ int	img_pixel(double x_p, double y_p, mlx_texture_t *tex)
 	y = (int)(y_p * tex->height) * (tex->width);
 	ptr = &tex->pixels[(int)(x * 4 + y * 4)];
 	return (get_color(ptr));
+}
+
+/*	GET_RGBA
+*	----------
+*	Function combines four individual channel bytes into a single integer using
+*	bit-shifting. The last byte is for transparency and always set to 255.
+*/
+uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue)
+{
+	return ((uint32_t)(red << 24 | green << 16 | blue << 8 | 255));
 }

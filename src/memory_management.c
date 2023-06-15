@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/13 14:48:38 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:39:27 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	allocate_memory(t_display *display)
 		clean_up(display);
 	display->tex = ft_calloc(5, sizeof(mlx_texture_t *));
 	if (!display->tex)
+		clean_up(display);
+	display->bresenham = ft_calloc(1, sizeof(t_bresenham));
+	if (!display->bresenham)
 		clean_up(display);
 }
 

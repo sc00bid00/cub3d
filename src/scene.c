@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 13:27:51 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:48:02 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 		wall->line_h = HEIGHT;
 	else
 		wall->line_h = MAPS * wall->line_w / wall->dis_t;
-	printf("DEBUG line h is %f\n", wall->line_h);
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
 
