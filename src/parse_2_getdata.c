@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:45:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:32:47 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:21:00 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ bool	get_rows(t_pdata *p)
 	{
 		p->map[i] = ft_calloc(p->num_cols + 1, 1);
 		p->map_testfill[i] = ft_calloc(p->num_cols + 1, 1);
-		ft_memcpy(p->map[i], tmp->content, (size_t)p->num_cols);
-		ft_memcpy(p->map_testfill[i], tmp->content, (size_t)p->num_cols);
+		ft_memcpy(p->map[i], tmp->content, (size_t)ft_strlen((char *)(tmp->content)) - 1);
+		ft_memcpy(p->map_testfill[i], tmp->content, (size_t)ft_strlen((char *)(tmp->content)) - 1);
 		i++;
 		tmp = tmp->next;
 	}
