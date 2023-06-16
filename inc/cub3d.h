@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 10:54:10 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:30:32 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_ray
 
 }	t_ray;
 
-enum	texture_index
+enum	e_texture_index
 {
 	NO,
 	SO,
@@ -103,7 +103,7 @@ enum	texture_index
 	WE
 };
 
-enum	colors_index
+enum	e_colors_index
 {
 	F,
 	C
@@ -149,7 +149,6 @@ typedef struct s_bresenham
 	int		e2;
 	int		err;
 }t_bresenham;
-
 
 /*	t_pos = struct to hold player data
 x		coordinate on grid
@@ -200,7 +199,6 @@ typedef struct s_display
 	mlx_image_t		*s_img;
 	mlx_image_t		*mm_img;
 	mlx_image_t		*f_c_img;
-	// mlx_image_t		*img_tex; // test layer for texture
 	mlx_texture_t	**tex;
 	t_pos			*pos;
 	t_maps			*maps;
@@ -228,17 +226,20 @@ void		memset_window(t_display *display);
 void		setup_windows(t_display *display);
 void		image_to_window(t_display *display);
 /*	RAYS	*/
-void		find_horizontal_intersec(t_display *display, t_pos *pos, t_ray *ray);
-void		calc_next_h_intersection(t_display *display, t_pos *pos, t_ray *ray);
-void		find_vertical_intersec(t_display *display, t_pos *pos, t_ray *ray);
-void		calc_next_v_intersection(t_display *display, t_pos *pos, t_ray *ray);
+void		find_horizontal_intersec(t_display *display, \
+	t_pos *pos, t_ray *ray);
+void		calc_next_h_intersection(t_display *display, \
+	t_pos *pos, t_ray *ray);
+void		find_vertical_intersec(t_display *display, \
+	t_pos *pos, t_ray *ray);
+void		calc_next_v_intersection(t_display *display, \
+	t_pos *pos, t_ray *ray);
 void		compare_dist(t_ray *ray, t_wall *wall);
 /* MINIMAP	*/
 void		draw_minimap(t_display *display);
 void		draw_rays(t_display *display, t_pos *pos, t_ray *ray);
 /* DRAW		*/
 void		draw_line(t_display *d, int color);
-// void		bresenham(t_display *display, double x_start, double y_start, double x_end, double y_end);
 void		bresenham(t_display *display, int color);
 void		my_put_pixel_mm(t_display *display, double x, double y, int color);
 void		my_put_pixel(mlx_image_t *img, double x, double y, int color);
@@ -273,7 +274,7 @@ bool		chk_name(char *s);
 bool		chk_args(int argc, char **argv);
 bool		init_pdata(t_display *d, char **argv);
 void		change_chartozero(t_pdata *p);
-bool		put_err(error_t ERR_NUM);
+bool		put_err(t_error ERR_NUM);
 
 /* parse_2_getdata.c */
 bool		get_restofdata(t_pdata *p);
@@ -308,7 +309,6 @@ bool		chk_empty(char *str);
 bool		chk_valid(t_list *tmp, int *chk);
 bool		chk_data(t_pdata *p);
 bool		chk_rows(t_pdata *p);
-
 
 uint32_t	get_rgba(uint8_t red, uint8_t green, uint8_t blue);
 double		dist(t_pos *pos, double bx, double by, double ang);
