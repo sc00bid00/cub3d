@@ -1,14 +1,14 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO	./textures/redbrick.png
+SO	./textures/greystone.png
+WE	./textures/bluestone.png
+EA	./textures/walkstone.png
 F 220,100,0
 C 225,30,0
 
 
 
 111111
-100001
-100001
-1000N1
+100101
+10W101
+111101
 111111
