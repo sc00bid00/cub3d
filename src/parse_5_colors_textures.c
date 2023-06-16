@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:29:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 15:51:16 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 16:46:36 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ bool	chk_textures(t_pdata *p)
 	i = 0;
 	while (p->textures_path[i])
 	{
+
 		tmp = mlx_load_png(p->textures_path[i]);
 		if (!tmp)
-			return (false);
+			return (put_err(ERR_OPENFILE));
 		i++;
 		mlx_delete_texture(tmp);
 	}

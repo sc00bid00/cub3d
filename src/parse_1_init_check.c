@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:42:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 11:29:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 16:44:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,20 @@ void	change_chartozero(t_pdata *p)
 bool	put_err(t_error ERR_NUM)
 {
 	const char	*m[] = {NULL, \
-		"cub3D: error: memory error\n", \
-		"cub3D: error: wrong arguments number\n", \
-		"cub3D: error: wrong filename\n", \
-		"cub3D: error: file open failure\n", \
-		"cub3D: error: input parameters not ok\n", \
-		"cub3D: error: texture data\n", \
-		"cub3d: error: wrong color input\n", \
-		"cub3d: error: missing color data\n", \
-		"cub3D: error: missing map data\n", \
-		"cub3D: error: maps contains ivalid data\n", \
-		"cub3D: error: more players on the map\n", \
-		"cub3D: error: invalid player position\n", \
-		"cub3D: error: player missing\n", \
-		"cub3D: error: invalid map design\n"};
+		"Error\nMemory error\n", \
+		"Error\nWrong arguments number\n", \
+		"Error\nWrong filename\n", \
+		"Error\nFile open failure\n", \
+		"Error\nInput parameters not ok\n", \
+		"Error\nTexture data\n", \
+		"Error\nWrong color input\n", \
+		"Error\nMissing color data\n", \
+		"Error\nMissing map data\n", \
+		"Error\nMaps contains ivalid data\n", \
+		"Error\nMore players on the map\n", \
+		"Error\nInvalid player position\n", \
+		"Error\nPlayer missing\n", \
+		"Error\nInvalid map design\n"};
 
 	return (ft_putstr_fd((char *)m[ERR_NUM], 2), false);
 }
