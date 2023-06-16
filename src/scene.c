@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 14:28:56 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:38:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 {
 	float	angle_dist;
 
-	if (d->pdata->num_cols > d->pdata->num_rows)
-		wall->dis_t = ray->dis_t * WIDTH / d->maps->width_mm;
+	if (d->pdata->num_cols - 1 > d->pdata->num_rows)
+		wall->dis_t = ray->dis_t * (double)WIDTH / d->maps->width_mm * 0.8;
 	else
-		wall->dis_t = ray->dis_t * HEIGHT / d->maps->height_mm;
+		wall->dis_t = ray->dis_t * (double)HEIGHT / d->maps->height_mm * 0.8;
 	angle_dist = pos->a - ray->a;
 	if (angle_dist < 0)
 		angle_dist += 2 * M_PI;
