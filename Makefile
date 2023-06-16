@@ -50,8 +50,8 @@ SRC_F	=	draw.c \
 			scene.c \
 			setup.c \
 			texture.c \
+			utils_free.c \
 			utils_print.c \
-			utils_debug.c \
 			reset.c \
 			window.c
 
