@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 17:53:53 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:39:08 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,7 @@ bool		get_table_elements(t_pdata *p);
 /* parse_3_table_fill.c */
 void		flood_fill(int col, int row, t_pdata *p);
 bool		chk_flood_fill(t_pdata *p);
+void		get_numcols(t_list *tmp, t_pdata *p);
 
 /* parse_4_palyerdata.c */
 bool		get_player(t_pdata *p);

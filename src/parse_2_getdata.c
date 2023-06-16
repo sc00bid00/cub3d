@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_2_getdata.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:45:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 09:28:40 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 09:38:27 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,7 @@ bool	get_table(t_pdata *p)
 	if (!p->first_maprow)
 		return (put_err(ERR_NOTABLE));
 	tmp = p->first_maprow;
-	while (tmp)
-	{
-		if (tmp->content && p->num_cols < (int)ft_strlen(tmp->content))
-			p->num_cols = ft_strlen(tmp->content);
-		p->num_rows++;
-		tmp = tmp->next;
-	}
+	get_numcols(tmp, p);
 	if (!get_table_elements(p))
 		return (false);
 	return (true);
