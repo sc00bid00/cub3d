@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_2_getdata.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:45:25 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/15 17:21:00 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:28:40 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	get_restofdata(t_pdata *p)
 {
-	if	(!get_textures(p))
+	if (!get_textures(p))
 		return (false);
 	if (!get_colors(p))
 		return (false);
@@ -22,6 +22,7 @@ bool	get_restofdata(t_pdata *p)
 		return (false);
 	return (true);
 }
+
 bool	get_data(t_pdata *p)
 {
 	int		fd;
@@ -45,6 +46,7 @@ bool	get_data(t_pdata *p)
 		return (false);
 	return (get_restofdata(p));
 }
+
 bool	get_rows(t_pdata *p)
 {
 	t_list	*tmp;
@@ -60,14 +62,17 @@ bool	get_rows(t_pdata *p)
 	{
 		p->map[i] = ft_calloc(p->num_cols + 1, 1);
 		p->map_testfill[i] = ft_calloc(p->num_cols + 1, 1);
-		ft_memcpy(p->map[i], tmp->content, (size_t)ft_strlen((char *)(tmp->content)) - 1);
-		ft_memcpy(p->map_testfill[i], tmp->content, (size_t)ft_strlen((char *)(tmp->content)) - 1);
+		ft_memcpy(p->map[i], tmp->content, \
+			(size_t)ft_strlen((char *)(tmp->content)) - 1);
+		ft_memcpy(p->map_testfill[i], tmp->content, \
+			(size_t)ft_strlen((char *)(tmp->content)) - 1);
 		i++;
 		tmp = tmp->next;
 	}
 	change_chartozero(p);
 	return (true);
 }
+
 bool	get_table(t_pdata *p)
 {
 	t_list	*tmp;
@@ -86,7 +91,7 @@ bool	get_table(t_pdata *p)
 		p->first_maprow = p->first_maprow->next;
 	}
 	if (!p->first_maprow)
-		return(put_err(ERR_NOTABLE));
+		return (put_err(ERR_NOTABLE));
 	tmp = p->first_maprow;
 	while (tmp)
 	{
@@ -99,6 +104,7 @@ bool	get_table(t_pdata *p)
 		return (false);
 	return (true);
 }
+
 bool	get_table_elements(t_pdata *p)
 {
 	if (!get_rows(p))
