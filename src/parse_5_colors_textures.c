@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_5_colors_textures.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:29:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 09:33:45 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 10:37:03 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,10 @@ bool	get_colors(t_pdata *p)
 
 bool	chk_colors(t_pdata *p)
 {
-	int		i[2];
-	int		colors[3];
-	char	**arr;
-	int		n;
-
 	if (!chk_records(p))
 		return (put_err(ERR_MISSINGCOLORS));
-	i[0] = 0;
-	while (p->color_string && p->color_string[i[0]])
-	{
-		arr = ft_split(p->color_string[i[0]], ',');
-		i[1] = 0;
-		while (arr && arr[i[1]])
-		{
-			n = ft_atoi(arr[i[1]]);
-			if (n < 0 || n > 255)
-				return (ft_freesplit(arr), put_err(ERR_COLORBYTE));
-			else
-				colors[i[1]++] = n;
-		}
-		if (i[1] != 3)
-			return (ft_freesplit(arr), put_err(ERR_MISSINGCOLORS));
-		p->colors_fc[i[0]] = get_rgba(colors[0], colors[1], colors[2]);
-		ft_freesplit(arr);
-		i[0]++;
-	}
+	if (chk_colorsdata(p))
+		return (false);
 	return (true);
 }
 

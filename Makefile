@@ -42,6 +42,7 @@ SRC_F	=	draw.c \
 			parse_2_getdata.c \
 			parse_3_gettable.c \
 			parse_4_playerdata.c \
+			parse_5_colors_textures_2.c \
 			parse_5_colors_textures.c \
 			parse_6_other_check.c \
 			rays.c \
