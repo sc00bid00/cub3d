@@ -42,6 +42,7 @@ SRC_F	=	draw.c \
 			parse_2_getdata.c \
 			parse_3_gettable.c \
 			parse_4_playerdata.c \
+			parse_5_colors_textures_2.c \
 			parse_5_colors_textures.c \
 			parse_6_other_check.c \
 			rays.c \
@@ -49,6 +50,7 @@ SRC_F	=	draw.c \
 			scene.c \
 			setup.c \
 			texture.c \
+			utils_print.c \
 			utils_debug.c \
 			reset.c \
 			window.c
