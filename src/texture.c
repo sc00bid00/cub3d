@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 14:24:21 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 12:41:16 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	get_wall_dir(t_display *display)
 			display->wall->texture = display->tex[WE];
 		else if (display->ray->x_off > 0)
 			display->wall->texture = display->tex[EA];
-		display->wall->offset_x = (double)(((int)(display->ray->y0 * COEFF) \
-			% (MAPS)) / (double) MAPS);
+		display->wall->offset_x = (double)((int)(display->ray->y0 * COEFF) \
+			% (display->maps->map_s * COEFF) / \
+			((double) display->maps->map_s * COEFF));
 	}
 	if (display->wall->dir == 0)
 	{
@@ -30,8 +31,9 @@ void	get_wall_dir(t_display *display)
 			display->wall->texture = display->tex[NO];
 		else if (display->ray->y_off > 0)
 			display->wall->texture = display->tex[SO];
-		display->wall->offset_x = (double)(((int)(display->ray->x0 * COEFF) \
-			% (MAPS)) / (double) MAPS);
+		display->wall->offset_x = (double)((int)(display->ray->x0 * COEFF) \
+			% (display->maps->map_s * COEFF) / \
+			((double) display->maps->map_s * COEFF));
 	}
 	reset_offset(display->wall);
 }
