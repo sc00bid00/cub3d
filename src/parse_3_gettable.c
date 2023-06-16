@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_3_table_fill.c                               :+:      :+:    :+:   */
+/*   parse_3_gettable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:46:39 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/01 17:46:31 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:31:28 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ bool	chk_flood_fill(t_pdata *p)
 
 	if (ft_strchr(p->map_testfill[0], 'x')
 		|| ft_strchr(p->map_testfill[p->num_rows - 1], 'x'))
-			return (false);
+		return (false);
 	i = 0;
 	while (i < p->num_rows)
 	{
 		if (p->map_testfill[i][0] == 'x' \
 			|| p->map_testfill[i][p->num_cols - 2] == 'x')
-				return(false);
+			return (false);
 		i++;
 	}
 	return (true);
 }
-

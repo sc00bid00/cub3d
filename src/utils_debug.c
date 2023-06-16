@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:49:02 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/12 17:58:53 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:40:06 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,6 @@ void	ft_freesplit(char **arr)
 	free(arr);
 }
 
-void	tmp_prtlst(t_list *lst)
-{
-	t_list	*tmp;
-
-	tmp = lst;
-	printf("=== debug tmp_prtlst ===\n");
-	while (tmp)
-	{
-		printf("%s", (char *)tmp->content);
-		tmp = tmp->next;
-	}
-	printf("=== debug tmp_prtlst ===\n");
-}
-
 void	tmp_freelst(t_list *lst)
 {
 	t_list	*tmp;
@@ -68,20 +54,6 @@ void	tmp_freelst(t_list *lst)
 			break ;
 		lst = tmp;
 	}
-}
-
-void	tmp_prtarr(char **arr)
-{
-	int	i;
-
-	printf("=== debug tmp_prtarr ===\n");
-	i = 0;
-	while (arr && arr[i])
-	{
-		printf("%s", arr[i]);
-		i++;
-	}
-	printf("\n");
 }
 
 void	tmp_freearr(char **arr)

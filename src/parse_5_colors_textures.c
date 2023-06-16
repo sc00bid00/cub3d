@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_5_colors_textures.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:29:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/12 13:27:40 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:33:45 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	get_colors(t_pdata *p)
 	}
 	if (!chk_colors(p))
 		return (false);
-	return ( true);
+	return (true);
 }
 
 bool	chk_colors(t_pdata *p)
@@ -95,14 +95,14 @@ bool	get_textures(t_pdata *p)
 
 bool	chk_textures(t_pdata *p)
 {
-	int	i;
-
+	int				i;
 	mlx_texture_t	*tmp;
+
 	i = 0;
 	while (p->textures_path[i])
 		i++;
 	if (i != 4)
-		return(put_err(ERR_TEXTURENUMBER));
+		return (put_err(ERR_TEXTURENUMBER));
 	i = 0;
 	while (p->textures_path[i])
 	{
@@ -124,6 +124,5 @@ bool	chk_records(t_pdata *p)
 		i++;
 	if (i != 2)
 		return (false);
-
 	return (true);
 }

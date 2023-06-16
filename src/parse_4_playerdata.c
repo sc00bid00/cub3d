@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_4_playerdata.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:50:55 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/01 17:47:26 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 09:32:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	get_player(t_pdata *p)
 
 bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
 {
-	if(!*player_chk && ft_strchr("NSEW", p->map[i][j]))
+	if (!*player_chk && ft_strchr("NSEW", p->map[i][j]))
 	{
 		*player_chk = 1;
 		p->player_positionxy[0] = j;
@@ -47,7 +47,7 @@ bool	get_xypostion(int *player_chk, t_pdata *p, int i, int j)
 			|| p->player_positionxy[0] == p->num_cols - 2 \
 			|| p->player_positionxy[1] == 0 \
 			|| p->player_positionxy[1] == p->num_rows - 1)
-				return(put_err(ERR_PLAYERPOSITION), false);
+			return (put_err(ERR_PLAYERPOSITION), false);
 		get_direction(&p->player_directionrad, p->map[i][j]);
 	}
 	else if (ft_strchr("NSEW", p->map[i][j]) && player_chk)
