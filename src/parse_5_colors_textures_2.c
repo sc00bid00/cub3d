@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:37:10 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 11:02:33 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:19:31 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ bool	is_whitespace(char c)
 		return (true);
 	else
 		return (false);
+}
+
+int	check_sign(char c)
+{
+	int	sign;
+
+	sign = 1;
+	if (c == '-' || c == '+')
+	{
+		if (c == '-')
+			sign = sign * (-1);
+	}
+	return (sign);
 }
 
 int	ft_atoi_m(const char *str)
@@ -39,9 +52,7 @@ int	ft_atoi_m(const char *str)
 	}
 	while (ft_isdigit(str[i]) == 1)
 	{
-		if ((number * sign) < INT32_MIN)
-			return (0);
-		else if ((number * sign) > INT32_MAX)
+		if ((number * sign) < INT32_MIN || (number * sign) > INT32_MAX)
 			return (-1);
 		number = number * 10 + str[i++] - '0';
 	}
