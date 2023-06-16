@@ -90,6 +90,7 @@ ifeq ($(shell test -d $(LSAN_D) && test -f $(LSAN_F) && echo exists), exists)
 	LIB += -rdynamic -L $(LSAN_D) -llsan -ldl -lstdc++
 endif
 endif
+
 #Object Dependencies
 OBJ_D	= ./obj
 OBJ_F	= $(patsubst %.c,$(OBJ_D)/%.o,$(SRC_F))
@@ -127,7 +128,7 @@ ifneq ($(shell test -d $(MLX42_D) && echo exists), exists)
 endif
 ifneq ($(shell test -d $(MLX42_BUILD_D) && echo exists), exists)
 	@echo "$(COLOR_INSTALL)Cmake MLX42 ...$(DEFCL)"
-	@cmake -H$(MLX42_D) -B $(MLX42_BUILD_D) > logscmake 2>&1
+	@cmake -H$(MLX42_D) -B $(MLX42_BUILD_D)
 endif
 	$(MAKE) -j -C $(MLX42_BUILD_D)
 
@@ -136,8 +137,8 @@ ifneq ($(shell test -d $(LSAN_D) && echo exists), exists)
 	@echo "$(COLOR_INSTALL)Clone LeakSanitizer ...$(DEFCL)"
 	@git clone -q --recursive https://www.github.com/mhahnFr/LeakSanitizer.git $(LSAN_D)
 endif
-	@echo "$(COLOR_MAKE)Make LeakSanitizer (> logslsan) ...$(DEFCL)"
-	@$(MAKE) -s -C $(LSAN_D) 2>logslsan
+	@echo "$(COLOR_MAKE)Make LeakSanitizer...$(DEFCL)"
+	@$(MAKE) -s -C $(LSAN_D)
 
 clean:
 	@echo "$(BRED)Remove objs ...$(DEFCL)"
@@ -157,6 +158,5 @@ endif
 	@rm -f $(NAME)
 
 re: fclean all
-
 
 .PHONY: all fclean clean re lsan
