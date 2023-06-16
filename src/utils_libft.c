@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:35:19 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 10:44:02 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 10:59:55 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int	ft_atoi_m(const char *str)
 			return (-1);
 		number = number * 10 + str[i++] - '0';
 	}
-	// check_other_input(str[i]);
-	if (str[i] != "\0")
+	while (str[i] && is_whitespace(str[i]))
+		i++;
+	if (str[i])
 		return (-1);
 	return ((int)(number * sign));
 }
