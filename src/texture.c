@@ -6,13 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 13:37:35 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:41:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-
 
 /* path to be updated with values from file */
 void	load_tex(t_display *display, t_pdata *pdata)

@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:37:05 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 13:51:31 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:01:17 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	get_vertical_walls(t_display *display)
 		if (display->ray->x_off < 0)
 		{
 			display->wall->texture = display->tex[WE];
-			display->wall->offset_x = 1 -((double)((int)(display->ray->y0 * \
+			display->wall->offset_x = (1 % -1)  - ((double)((int)(display->ray->y0 * \
 				COEFF) % (display->maps->map_s * COEFF)) / \
 				((double) display->maps->map_s * COEFF));
 		}
@@ -47,7 +47,7 @@ void	get_horiz_walls(t_display *display)
 		else if (display->ray->y_off > 0)
 		{
 			display->wall->texture = display->tex[SO];
-			display->wall->offset_x = 1 - ((double)((int)(display->ray->x0 * \
+			display->wall->offset_x = (1 % -1) - ((double)((int)(display->ray->x0 * \
 				COEFF) % (display->maps->map_s * COEFF)) / \
 				((double) display->maps->map_s * COEFF));
 		}
