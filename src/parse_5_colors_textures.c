@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:29:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:53:23 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 15:51:16 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,24 @@ bool	get_colors(t_pdata *p)
 
 bool	chk_colors(t_pdata *p)
 {
+	int	i;
+	int	j;
+	int	commas;
+
+	i = 0;
+	while (p->color_string && p->color_string[i])
+	{
+		j = 0;
+		commas = 0;
+		while (p->color_string[i][j])
+		{
+			if (p->color_string[i][j++] == ',')
+				commas++;
+		}
+		if (commas != 2)
+			return (put_err(ERR_INPUT));
+		i++;
+	}
 	if (!chk_records(p))
 		return (put_err(ERR_MISSINGCOLORS));
 	if (!chk_colorsdata(p))

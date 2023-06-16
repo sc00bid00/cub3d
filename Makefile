@@ -145,8 +145,15 @@ clean:
 	@rm -rf $(OBJ_D)
 
 fclean: clean
+ifeq ($(shell test -d $(LIBFT_D) && echo exists), exists)
 	@$(MAKE) fclean -s -C $(LIBFT_D)
+endif
+ifeq ($(shell test -d $(MLX42_BUILD_D) && echo exists), exists)
+	@$(MAKE) clean -s -C $(MLX42_BUILD_D)
+endif
+ifeq ($(shell test -d $(LSAN_D) && echo exists), exists)
 	@$(MAKE) fclean -s -C $(LSAN_D)
+endif
 	@rm -f $(NAME)
 
 re: fclean all
