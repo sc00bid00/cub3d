@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 09:05:10 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 16:39:27 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 09:11:35 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	clean_up(t_display *display)
 		free_textures(display);
 		free(display->tex);
 	}
+	if (display->bresenham)
+		free(display->bresenham);
 	if (display->mlx)
 		mlx_terminate(display->mlx);
 	if (display)
