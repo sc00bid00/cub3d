@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:46:39 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 09:31:28 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 09:43:06 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,15 @@ bool	chk_flood_fill(t_pdata *p)
 		i++;
 	}
 	return (true);
+}
+
+void	get_numcols(t_list *tmp, t_pdata *p)
+{
+	while (tmp)
+	{
+		if (tmp->content && p->num_cols < (int)ft_strlen(tmp->content))
+			p->num_cols = ft_strlen(tmp->content);
+		p->num_rows++;
+		tmp = tmp->next;
+	}
 }
