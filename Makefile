@@ -100,6 +100,8 @@ DEP_F	= $(patsubst %.c,$(OBJ_D)/%.d,$(SRC_F))
 all: $(LIBFT_F) $(MLX42_F)
 	@$(MAKE) -j $(NAME)
 
+bonus: all
+
 lsan: clean $(LIBFT_F) $(MLX42_F) $(LSAN_F)
 	@$(MAKE) -j $(NAME)
 
