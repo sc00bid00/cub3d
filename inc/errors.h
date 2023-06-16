@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:14:32 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 11:05:50 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:29:12 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ typedef enum e_error
 	ERR_PLAYERPOSITION,
 	ERR_MISSINGPLAYER,
 	ERR_MAPDESIGN
-}	error_t;
+}	t_error;
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_1_init_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:42:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 11:05:04 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:29:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	change_chartozero(t_pdata *p)
 	}
 }
 
-bool	put_err(error_t ERR_NUM)
+bool	put_err(t_error ERR_NUM)
 {
 	const char	*m[] = {NULL, \
 		"cub3D: error: memory error\n", \
