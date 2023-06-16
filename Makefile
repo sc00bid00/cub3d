@@ -33,6 +33,9 @@ endif
 VPATH	= 	./src
 
 SRC_F	=	draw.c \
+			calc_1_rays.c \
+			calc_2_walls.c \
+			calc_3_reset.c \
 			hooks_1_movement.c \
 			hooks_2_escape.c \
 			main.c \
@@ -45,14 +48,12 @@ SRC_F	=	draw.c \
 			parse_5_colors_textures_2.c \
 			parse_5_colors_textures.c \
 			parse_6_other_check.c \
-			rays.c \
 			rendering.c \
 			scene.c \
 			setup.c \
 			texture.c \
 			utils_free.c \
 			utils_print.c \
-			reset.c \
 			window.c
 
 #Libraries

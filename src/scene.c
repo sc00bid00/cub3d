@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:28:32 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 13:28:12 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:32:22 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	calc_3d_param(t_display *d, t_wall *wall, t_pos *pos, t_ray *ray)
 	if (wall->dis_t <= d->maps->map_s)
 		wall->line_h = HEIGHT;
 	else
-		wall->line_h = d->maps->map_s * COEFF * wall->line_w / wall->dis_t;
+		wall->line_h = (double)(d->maps->map_s * COEFF * wall->line_w) / wall->dis_t;
 	wall->line_off = (HEIGHT - wall->line_h) / 2;
 }
 

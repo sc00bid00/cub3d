@@ -6,52 +6,13 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:08:58 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 13:29:47 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:37:35 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-/* vertical walls: wall_dir  = 1	*/
-void	get_wall_dir(t_display *display)
-{
-	if (display->wall->dir == 1)
-	{
-		if (display->ray->x_off < 0)
-		{
-			display->wall->texture = display->tex[WE];
-			display->wall->offset_x = 1 -((double)((int)(display->ray->y0 * COEFF) \
-				% (display->maps->map_s * COEFF)) / \
-				((double) display->maps->map_s * COEFF));
-		}
-		else if (display->ray->x_off > 0)
-		{
-			display->wall->texture = display->tex[EA];
-			display->wall->offset_x = (double)((int)(display->ray->y0 * COEFF) \
-				% (display->maps->map_s * COEFF) / \
-				((double) display->maps->map_s * COEFF));
-		}
-	}
-	if (display->wall->dir == 0)
-	{
-		if (display->ray->y_off < 0)
-		{
-			display->wall->texture = display->tex[NO];
-			display->wall->offset_x = (double)((int)(display->ray->x0 * COEFF) \
-				% (display->maps->map_s * COEFF) / \
-				((double) display->maps->map_s * COEFF));
-		}
-		else if (display->ray->y_off > 0)
-		{
-			display->wall->texture = display->tex[SO];
-			display->wall->offset_x = 1- ((double)((int)(display->ray->x0 * COEFF) \
-				% (display->maps->map_s * COEFF)) / \
-				((double) display->maps->map_s * COEFF));
-			
-		}
-	}
-	reset_offset(display->wall);
-}
+
 
 /* path to be updated with values from file */
 void	load_tex(t_display *display, t_pdata *pdata)

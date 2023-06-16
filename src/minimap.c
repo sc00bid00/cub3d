@@ -6,20 +6,11 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:53:34 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/15 16:56:39 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:44:26 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-/* uses pythagoran theorem to return distance from player */
-/* must be adjusted to avoid fishbowl effect */
-double	dist(t_pos *pos, double bx, double by, double ang)
-{
-	(void) ang;
-	return (sqrt((bx - pos->x) * (bx - pos->x) \
-		+ (by - pos->y) * (by - pos->y)));
-}
 
 void	draw_minimap(t_display *d)
 {
