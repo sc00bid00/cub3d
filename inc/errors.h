@@ -6,7 +6,7 @@
 /*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:14:32 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:01:54 by kczichow         ###   ########.fr       */
+/*   Updated: 2023/06/16 11:05:50 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 	ERR_OPENFILE,			//"cub3D: error: file open failure\n"
 	ERR_INPUT,				//"cub3D: error: input parameters not ok\n"
 	ERR_TEXTURENUMBER,		//"cub3D: error: texture data\n"
-	ERR_COLORBYTE,			//"cub3d: error: wrong color ranges\n"
+	ERR_COLORBYTE,			//"cub3d: error: wrong color input\n",
 	ERR_MISSINGCOLORS,		//"cub3d: error: missing color data\n"
 	ERR_NOTABLE,			//"cub3D: error: missing map data\n"
 	ERR_MAPDATA,			//"cub3D: error: maps contains ivalid data\n"

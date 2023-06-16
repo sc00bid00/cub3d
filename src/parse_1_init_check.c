@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_1_init_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: kczichow <kczichow@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:42:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:47:11 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 11:05:04 by kczichow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	put_err(error_t ERR_NUM)
 		"cub3D: error: file open failure\n", \
 		"cub3D: error: input parameters not ok\n", \
 		"cub3D: error: texture data\n", \
-		"cub3d: error: wrong color ranges\n", \
+		"cub3d: error: wrong color input\n", \
 		"cub3d: error: missing color data\n", \
 		"cub3D: error: missing map data\n", \
 		"cub3D: error: maps contains ivalid data\n", \
