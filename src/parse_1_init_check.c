@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 16:42:38 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:01:36 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 10:47:11 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ bool	put_err(error_t ERR_NUM)
 		"cub3D: error: invalid player position\n", \
 		"cub3D: error: player missing\n", \
 		"cub3D: error: invalid map design\n"};
+
 	return (ft_putstr_fd((char *)m[ERR_NUM], 2), false);
 }
