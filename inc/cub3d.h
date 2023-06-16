@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:05:30 by kczichow          #+#    #+#             */
-/*   Updated: 2023/06/16 10:38:44 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 10:54:10 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ bool		chk_textures(t_pdata *p);
 bool		chk_records(t_pdata *p);
 
 /* parse_5_colors_textures_2.c */
-int			chk_colorsdata(t_pdata *p);
+bool		chk_colorsdata(t_pdata *p);
 int			get_arrsize(char **arr);
 
 /* parse_6_other_check.c */

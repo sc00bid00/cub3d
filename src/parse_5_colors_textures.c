@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:29:58 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:37:03 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 10:53:23 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	chk_colors(t_pdata *p)
 {
 	if (!chk_records(p))
 		return (put_err(ERR_MISSINGCOLORS));
-	if (chk_colorsdata(p))
+	if (!chk_colorsdata(p))
 		return (false);
 	return (true);
 }

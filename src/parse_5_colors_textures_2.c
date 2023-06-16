@@ -6,7 +6,7 @@
 /*   By: lsordo <lsordo@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:37:10 by lsordo            #+#    #+#             */
-/*   Updated: 2023/06/16 10:48:04 by lsordo           ###   ########.fr       */
+/*   Updated: 2023/06/16 10:54:40 by lsordo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	get_arrsize(char **arr)
 	return (i);
 }
 
-int	chk_colorsdata(t_pdata *p)
+bool	chk_colorsdata(t_pdata *p)
 {
 	int		i[2];
 	int		colors[3];
@@ -48,5 +48,5 @@ int	chk_colorsdata(t_pdata *p)
 		ft_freesplit(arr);
 		i[0]++;
 	}
-	return (0);
+	return (true);
 }
