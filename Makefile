@@ -9,6 +9,7 @@ CFLAGS	+=  -O2 -MMD
 # CFLAGS += -fsanitize=address
 
 #Interplatform compatibility
+system:
 ifeq ($(OS), Darwin)
 ifeq ($(shell which brew), )
 	@echo "$(COLOR_INSTALL)Install brew ...$(DEFCL)"
